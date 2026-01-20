@@ -12,9 +12,17 @@ import ServiceCenters from "./components/ServiceCenter";
 
 
 function App() {
-  const [page, setPage] = useState("login");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [page, setPage] = useState(
+  localStorage.getItem("isLoggedIn") === "true" ? "home" : "login"
+);
+
+const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("isLoggedIn") === "true"
+);
+
+const [user, setUser] = useState(
+  JSON.parse(localStorage.getItem("user")) || null
+);
 
 
   
@@ -26,6 +34,11 @@ function App() {
             onLogin={(userdata) => {
               setIsLoggedIn(true);
               setUser(userdata);
+
+                  localStorage.setItem("isLoggedIn", "true");
+                  localStorage.setItem("user", JSON.stringify(userdata));
+
+
               setPage("home");
             }}
             goRegister={() => setPage("register")}
@@ -80,6 +93,9 @@ function App() {
           onClick={() => {
             setIsLoggedIn(false);
             setPage("login");
+
+              localStorage.removeItem("isLoggedIn");
+              localStorage.removeItem("user");
           }}
         >
           Logout

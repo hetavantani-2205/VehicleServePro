@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 function Login({ onLogin, goRegister }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(localStorage.getItem("email") || "");
+const [password, setPassword] = useState(localStorage.getItem("password") || "");
+
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
@@ -50,21 +51,26 @@ function Login({ onLogin, goRegister }) {
 
         {error && <p style={styles.error}>{error}</p>}
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={styles.input}
-        />
+       <input
+         placeholder="Email"
+        value={email}
+        onChange={(e) => {
+    setEmail(e.target.value);
+    localStorage.setItem("email", e.target.value);
+  }}
+/>
 
-        <input
+
+       <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
-        />
+          onChange={(e) => {
+    setPassword(e.target.value);
+    localStorage.setItem("password", e.target.value);
+  }}
+/>
+
 
         <button onClick={handleLogin} style={styles.button}>
           Login
