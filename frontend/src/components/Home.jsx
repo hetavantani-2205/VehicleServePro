@@ -5,20 +5,22 @@ import banner_3 from "../assets/banner_3.jpg";
 
 const images = [banner_1, banner_2, banner_3];
 
-export default function Home() {
+export default function Home({ onBookClick, onViewDashboard }) {
   const [current, setCurrent] = useState(0);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
     }, 4000);
+
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="home">
 
-      {/* HERO SLIDER */}
+      {/* HERO SECTION */}
       <div className="hero-slider">
         <img src={images[current]} alt="banner" />
 
@@ -27,20 +29,15 @@ export default function Home() {
           <p>Your smart solution for vehicle service, tracking, and management.</p>
 
           <div className="hero-buttons">
-            <button>Book Service</button>
-            <button className="outline">View Dashboard</button>
+            <button onClick={onBookClick}>Book Service</button>
+            <button className="outline" onClick={onViewDashboard}>
+              Track Service
+            </button>
           </div>
         </div>
       </div>
-
-      {/* FEATURES */}
-      <div className="features">
-        <div className="card">🚗 Manage Vehicles Easily</div>
-        <div className="card">📅 Smart Service Booking</div>
-        <div className="card">💳 Secure Billing System</div>
-        <div className="card">📊 Track History & Reports</div>
       </div>
 
-    </div>
+ 
   );
 }

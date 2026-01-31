@@ -1,11 +1,13 @@
 import { useState } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import QRCode from "qrcode";
 
 export default function Billing() {
-  const [items, setItems] = useState([
-    { name: "", price: "", qty: 1 }
-  ]);
 
-  const[gst,setGst] = useState(18);
+  const [items, setItems] = useState([{ name: "", price: "", qty: 1 }]);
+  const [gst, setGst] = useState(18);
+  const [upiQR, setUpiQR] = useState("");
 
   const handleChange = (index, field, value) => {
     const updated = [...items];
@@ -25,11 +27,60 @@ export default function Billing() {
   const gstAmount = (total * gst) / 100;
   const grandtotal = total + gstAmount;
 
+  const downloadPDF = () => {
+  const bill = document.getElementById("bill-area");
+
+  html2canvas(bill, {
+    scale: 2,
+    useCORS: true
+  }).then((canvas) => {
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pageWidth = 210;  
+    const pageHeight = 297;  
+
+    const imgWidth = pageWidth - 20; 
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let positionY = 10;
+
+  
+    let heightLeft = imgHeight;
+
+    pdf.addImage(imgData, "PNG", 10, positionY, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+      positionY = heightLeft - imgHeight + 10;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 10, positionY, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save("VehicleServePro_Invoice.pdf");
+  });
+};
+
+  const generateUpiQR = async () => {
+
+    const amount = grandtotal.toFixed(2);
+
+    const upiUrl =
+      `upi://pay?pa=hetav.antani-1@oksbi&pn=VehicleServePro&am=${amount}&cu=INR&tn=Vehicle%20Service%20Bill`;
+
+    const qr = await QRCode.toDataURL(upiUrl);
+    setUpiQR(qr);
+  };
 
   return (
     <div className="billing-wrapper">
-      <div className="billing-card">
-        <h2>Billing System</h2>
+
+      <div className="billing-card" id="bill-area">
+
+        <h2>Vehicle Service Bill</h2>
 
         <input placeholder="Customer Name" />
         <input placeholder="Vehicle Number" />
@@ -61,13 +112,14 @@ export default function Billing() {
         <button onClick={addItem}>+ Add Service</button>
 
         <div className="bill-summary">
+
           <div>
-            <span>Subtotal:</span>
+            <span>Subtotal</span>
             <span>₹{total.toFixed(2)}</span>
           </div>
 
           <div>
-            <span>GST (%):</span>
+            <span>GST (%)</span>
             <input
               type="number"
               value={gst}
@@ -77,19 +129,40 @@ export default function Billing() {
           </div>
 
           <div>
-            <span>GST Amount:</span>
+            <span>GST Amount</span>
             <span>₹{gstAmount.toFixed(2)}</span>
           </div>
 
           <hr />
 
           <div className="total">
-            <span>Total Payable:</span>
+            <span>Total Payable</span>
             <span>₹{grandtotal.toFixed(2)}</span>
           </div>
+
+        </div>
+
       </div>
+
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+
+        <button onClick={downloadPDF}>
+          Download Invoice PDF
+        </button>
+
+        <button onClick={generateUpiQR} style={{ marginLeft: "10px" }}>
+          Pay Now (Scan QR)
+        </button>
+
+        {upiQR && (
+          <div style={{ marginTop: "15px" }}>
+            <p>Scan using any UPI app</p>
+            <img src={upiQR} width="220" alt="UPI QR" />
+          </div>
+        )}
+
+      </div>
+
     </div>
-    </div>
-    
   );
 }

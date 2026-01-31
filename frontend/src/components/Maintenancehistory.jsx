@@ -11,7 +11,11 @@ function MaintenanceHistory() {
     ],
     "MH43V2787": [
       { date: "15 Feb 2024", service: "General Service", cost: 1800 }
-    ]
+    ],
+    "GJ03KP5291": [
+      { date: "10 march 2024", service: "Oil Change", cost: 1200 },
+      { date: "05 Aug 2023", service: "Brake Repair", cost: 2500 }
+    ],
   };
 
   const handleSearch = () => {

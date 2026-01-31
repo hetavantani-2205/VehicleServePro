@@ -22,7 +22,7 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
     }
 
     try {
-      const response = await fetch("http://localhost:8081/api/auth/login", {
+    const response = await fetch("http://localhost:8081/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,6 +52,7 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
         {error && <p style={styles.error}>{error}</p>}
 
        <input
+         style={styles.input}
          placeholder="Email"
         value={email}
         onChange={(e) => {
@@ -62,6 +63,7 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
 
 
        <input
+          style={styles.input}
           type="password"
           placeholder="Password"
           value={password}

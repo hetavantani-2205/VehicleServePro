@@ -16,9 +16,7 @@ export default function Services({ openBilling, openvehicle, user, openCenters }
             🚗 Vehicle Management
           </div>
 
-          <div className="service-card">
-            📅 Service Booking
-          </div>
+         
 
           {/* ✅ Maintenance clickable */}
           <div

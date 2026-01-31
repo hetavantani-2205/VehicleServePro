@@ -39,6 +39,7 @@ public Map<String,Object> login(@RequestBody User user) {
     if (u != null && u.getPassword().equals(user.getPassword())) {
         return Map.of(
             "status","success",
+             "name",u.getName(),
             "email" , u.getEmail(),
             "role" ,u.getRole() == null ? "CUSTOMER" : u.getRole()
             
