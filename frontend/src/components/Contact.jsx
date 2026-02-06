@@ -26,6 +26,7 @@ const handleSubmit = () => {
     <section id="contact">
       <div className="section-content">
         <h2>Contact Us</h2>
+      <div className="contact-form">
         <input 
         name="name"
         placeholder="Name" value={form.name}
@@ -39,6 +40,7 @@ const handleSubmit = () => {
         placeholder="Message" value={form.message}
         onChange={handleChange}/>
         <button onClick={handleSubmit}>Send</button>
+      </div>
       </div>
     </section>
   );

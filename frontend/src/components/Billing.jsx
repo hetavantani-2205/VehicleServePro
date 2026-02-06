@@ -32,7 +32,8 @@ export default function Billing() {
 
   html2canvas(bill, {
     scale: 2,
-    useCORS: true
+    useCORS: true,
+    windowWidth: bill.scrollWidth
   }).then((canvas) => {
 
     const imgData = canvas.toDataURL("image/png");

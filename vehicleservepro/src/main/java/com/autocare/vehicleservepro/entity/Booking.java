@@ -25,6 +25,15 @@ public class Booking {
     @Column(name = "service_type")
     private String serviceType;
 
+    @Column(name = "oil_health") 
+    private Integer oilHealth;
+
+    @Column(name = "tire_health")
+    private Integer tireHealth;
+
+    @Column(name = "battery_health")
+    private Integer batteryHealth;
+
    
 
     public Long getId() {
@@ -70,6 +79,15 @@ public class Booking {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Integer getOilHealth() { return oilHealth; }
+    public void setOilHealth(Integer oilHealth) { this.oilHealth = oilHealth; }
+
+    public Integer getTireHealth() { return tireHealth; }
+    public void setTireHealth(Integer tireHealth) { this.tireHealth = tireHealth; }
+
+    public Integer getBatteryHealth() { return batteryHealth; }
+    public void setBatteryHealth(Integer batteryHealth) { this.batteryHealth = batteryHealth; }
 
 
 }

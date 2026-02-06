@@ -26,15 +26,11 @@ function ServiceCenters() {
         </h2>
 
         <p style={{ marginBottom: "20px", color: "#555" }}>
-          Search your city to find vehicle service centers.
+          Currently showing results for: <strong>{city}</strong>
         </p>
 
         {/* Search box */}
-        <div style={{
-          display: "flex",
-          gap: "10px",
-          marginBottom: "20px"
-        }}>
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
           <input
             type="text"
             placeholder="Enter city name (e.g. Mumbai, Delhi)"
@@ -56,26 +52,27 @@ function ServiceCenters() {
               color: "white",
               border: "none",
               borderRadius: "8px",
-              cursor: "pointer"
+              cursor: "pointer",
+              fontWeight: "bold"
             }}
           >
             Search
           </button>
         </div>
 
-        {/* Map */}
-          <div className="map-container">
+        {/* Map Container */}
+        <div className="map-container" style={{ height: "450px", width: "100%", borderRadius: "12px", overflow: "hidden" }}>
           <iframe
             key={city}
-            src={`https://www.google.com/maps?q=car+service+centers+in+${encodeURIComponent(city)}&output=embed`}
+            title="Google Maps"
+            src={`https://maps.google.com/maps?q=vehicle%20service%20center%20in%20${encodeURIComponent(city)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
             width="100%"
             height="100%"
             style={{ border: 0 }}
             loading="lazy"
-            allowFullScreen = {true}
+            allowFullScreen={true}
           ></iframe>
-          </div>
-        
+        </div>
       </div>
     </section>
   );

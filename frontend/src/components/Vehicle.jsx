@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./App.css";
-
+// Ensure you have the CSS provided below in your App.css or a dedicated Vehicle.css
+import "./App.css"; 
 
 const API_URL = "http://localhost:8081/api/vehicles";
 
@@ -21,6 +21,11 @@ export default function VehicleCrud() {
   };
 
   const saveVehicle = () => {
+    if (!owner || !model || !number) {
+      alert("Please fill in all fields");
+      return;
+    }
+
     const data = { ownerName: owner, vehicleModel: model, vehicleNumber: number };
 
     if (!editId) {
@@ -40,45 +45,84 @@ export default function VehicleCrud() {
     setOwner(v.ownerName);
     setModel(v.vehicleModel);
     setNumber(v.vehicleNumber);
+    // Optional: Scroll to top so user sees the inputs are populated
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const deleteVehicle = (id) => {
-    axios.delete(`${API_URL}/${id}`).then(loadVehicles);
+    if(window.confirm("Are you sure you want to delete this vehicle?")) {
+        axios.delete(`${API_URL}/${id}`).then(loadVehicles);
+    }
   };
 
   return (
-    <section id="crud">
-    <div className="section-content">
-      <h2>Vehicle Management</h2>
+    <div className="vehicle-mgmt-container">
+      {/* Header Section */}
+      <div className="mgmt-header">
+        <h2>🚗 Vehicle Fleet Management</h2>
+        <p>Registry of all vehicles under your service profile.</p>
+      </div>
 
-      <input value={owner} onChange={e => setOwner(e.target.value)} placeholder="Owner" />
-      <input value={model} onChange={e => setModel(e.target.value)} placeholder="Model" />
-      <input value={number} onChange={e => setNumber(e.target.value)} placeholder="Number" />
+      {/* Modern Input Bar */}
+      <div className="add-vehicle-bar">
+        <input 
+          value={owner} 
+          onChange={e => setOwner(e.target.value)} 
+          placeholder="Owner Name" 
+          className="mgmt-input"
+        />
+        <input 
+          value={model} 
+          onChange={e => setModel(e.target.value)} 
+          placeholder="Model (e.g. BMW X5)" 
+          className="mgmt-input"
+        />
+        <input 
+          value={number} 
+          onChange={e => setNumber(e.target.value)} 
+          placeholder="Plate Number" 
+          className="mgmt-input"
+        />
+        <button 
+          className={editId ? "add-btn-main update-mode" : "add-btn-main"} 
+          onClick={saveVehicle}
+        >
+          {editId ? "Update Vehicle" : "+ Add Vehicle"}
+        </button>
+      </div>
 
-      <button onClick={saveVehicle}>
-        {editId ? "Update" : "Add"}
-      </button>
+      {/* Modern List View (Replacing the Table) */}
+      <div className="vehicle-list-wrapper">
+        {vehicles.length > 0 ? (
+          vehicles.map((v, index) => (
+            <div key={v.id} className="vehicle-item-row">
+              <div className="v-id">{index + 1}</div>
+              
+              <div className="v-details">
+                <span className="v-owner">{v.ownerName}</span>
+                <span className="v-model">{v.vehicleModel}</span>
+              </div>
 
-      <table>
-        <thead>
-          <tr><th>Serial No.</th><th>Owner</th><th>Model</th><th>Number</th><th>Action</th></tr>
-        </thead>
-        <tbody>
-          {vehicles.map((v,index) => (
-            <tr key={v.id}>
-              <td>{index + 1}</td>
-              <td>{v.ownerName}</td>
-              <td>{v.vehicleModel}</td>
-              <td>{v.vehicleNumber}</td>
-              <td>
-                <button onClick={() => editVehicle(v)}>Edit</button>
-                <button onClick={() => deleteVehicle(v.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <div className="v-plate-box">
+                <span className="v-plate">{v.vehicleNumber}</span>
+              </div>
+
+              <div className="v-actions">
+                <button className="edit-icon-btn" onClick={() => editVehicle(v)}>
+                  ✏️ Edit
+                </button>
+                <button className="delete-icon-btn" onClick={() => deleteVehicle(v.id)}>
+                  🗑️ Delete
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="empty-state">
+            <p>No vehicles registered yet. Use the bar above to add one.</p>
+          </div>
+        )}
+      </div>
     </div>
-   </section>
-  )
+  );
 }
