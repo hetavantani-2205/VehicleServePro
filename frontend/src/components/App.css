@@ -877,7 +877,11 @@ footer a:hover {
 
 @media (max-width: 768px) {
     .add-vehicle-bar {
+        display: flex;
         flex-direction: column;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
     }
     .vehicle-item-row {
         flex-direction: column;

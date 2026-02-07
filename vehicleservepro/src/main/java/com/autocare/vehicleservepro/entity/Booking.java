@@ -8,6 +8,10 @@ public class Booking {
 
     @Column(name = "status",nullable = false)
     private String status;
+    private Double price;
+
+    @Column(name = "city_name")
+    private String city;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,5 +93,12 @@ public class Booking {
     public Integer getBatteryHealth() { return batteryHealth; }
     public void setBatteryHealth(Integer batteryHealth) { this.batteryHealth = batteryHealth; }
 
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
 
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
 }
+
+
+

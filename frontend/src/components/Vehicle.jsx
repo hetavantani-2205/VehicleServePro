@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-// Ensure you have the CSS provided below in your App.css or a dedicated Vehicle.css
-import "./App.css"; 
+import "./App.css";
 
 const API_URL = "http://localhost:8081/api/vehicles";
 
@@ -16,28 +15,39 @@ export default function VehicleCrud() {
     loadVehicles();
   }, []);
 
-  const loadVehicles = () => {
-    axios.get(API_URL).then(res => setVehicles(res.data));
+  const loadVehicles = async () => {
+    try {
+      const res = await axios.get(API_URL);
+      setVehicles(res.data);
+    } catch (err) {
+      console.error("Error loading vehicles:", err);
+    }
   };
 
-  const saveVehicle = () => {
+  const saveVehicle = async () => {
+    // ERROR FIX: Prevent empty submissions
     if (!owner || !model || !number) {
-      alert("Please fill in all fields");
+      alert("Please fill all fields before saving.");
       return;
     }
 
     const data = { ownerName: owner, vehicleModel: model, vehicleNumber: number };
 
-    if (!editId) {
-      axios.post(API_URL, data).then(loadVehicles);
-    } else {
-      axios.put(`${API_URL}/${editId}`, data).then(() => {
+    try {
+      if (!editId) {
+        // ERROR FIX: Wait for the post to finish before reloading
+        await axios.post(API_URL, data);
+      } else {
+        await axios.put(`${API_URL}/${editId}`, data);
         setEditId(null);
-        loadVehicles();
-      });
+      }
+      
+      // Reset form and reload
+      setOwner(""); setModel(""); setNumber("");
+      loadVehicles();
+    } catch (err) {
+      alert("Failed to save vehicle. Is the backend running?");
     }
-
-    setOwner(""); setModel(""); setNumber("");
   };
 
   const editVehicle = (v) => {
@@ -45,84 +55,104 @@ export default function VehicleCrud() {
     setOwner(v.ownerName);
     setModel(v.vehicleModel);
     setNumber(v.vehicleNumber);
-    // Optional: Scroll to top so user sees the inputs are populated
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const deleteVehicle = (id) => {
-    if(window.confirm("Are you sure you want to delete this vehicle?")) {
-        axios.delete(`${API_URL}/${id}`).then(loadVehicles);
+  const deleteVehicle = async (id) => {
+    // SAFETY: Add a confirmation before deleting
+    if (window.confirm("Are you sure you want to delete this vehicle?")) {
+      try {
+        await axios.delete(`${API_URL}/${id}`);
+        loadVehicles();
+      } catch (err) {
+        console.error("Delete failed:", err);
+      }
     }
   };
 
-  return (
-    <div className="vehicle-mgmt-container">
-      {/* Header Section */}
-      <div className="mgmt-header">
-        <h2>🚗 Vehicle Fleet Management</h2>
-        <p>Registry of all vehicles under your service profile.</p>
-      </div>
-
-      {/* Modern Input Bar */}
-      <div className="add-vehicle-bar">
-        <input 
-          value={owner} 
-          onChange={e => setOwner(e.target.value)} 
-          placeholder="Owner Name" 
-          className="mgmt-input"
-        />
-        <input 
-          value={model} 
-          onChange={e => setModel(e.target.value)} 
-          placeholder="Model (e.g. BMW X5)" 
-          className="mgmt-input"
-        />
-        <input 
-          value={number} 
-          onChange={e => setNumber(e.target.value)} 
-          placeholder="Plate Number" 
-          className="mgmt-input"
-        />
-        <button 
-          className={editId ? "add-btn-main update-mode" : "add-btn-main"} 
-          onClick={saveVehicle}
-        >
-          {editId ? "Update Vehicle" : "+ Add Vehicle"}
-        </button>
-      </div>
-
-      {/* Modern List View (Replacing the Table) */}
-      <div className="vehicle-list-wrapper">
-        {vehicles.length > 0 ? (
-          vehicles.map((v, index) => (
-            <div key={v.id} className="vehicle-item-row">
-              <div className="v-id">{index + 1}</div>
-              
-              <div className="v-details">
-                <span className="v-owner">{v.ownerName}</span>
-                <span className="v-model">{v.vehicleModel}</span>
-              </div>
-
-              <div className="v-plate-box">
-                <span className="v-plate">{v.vehicleNumber}</span>
-              </div>
-
-              <div className="v-actions">
-                <button className="edit-icon-btn" onClick={() => editVehicle(v)}>
-                  ✏️ Edit
-                </button>
-                <button className="delete-icon-btn" onClick={() => deleteVehicle(v.id)}>
-                  🗑️ Delete
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="empty-state">
-            <p>No vehicles registered yet. Use the bar above to add one.</p>
+   return (
+    <div className="page-wrapper">
+      <div className="page-content">
+        <section className="section-content">
+          <div className="mgmt-header">
+            <h2>Vehicle Management</h2>
+            <p>Manage and track all registered vehicles in the system.</p>
           </div>
-        )}
+
+          {/* Optimized Input Bar - Matches your app's horizontal action bars */}
+          <div className="add-vehicle-bar">
+            <input 
+              className="mgmt-input"
+              value={owner} 
+              onChange={e => setOwner(e.target.value)} 
+              placeholder="Owner Name" 
+            />
+            <input 
+              className="mgmt-input"
+              value={model} 
+              onChange={e => setModel(e.target.value)} 
+              placeholder="Model (e.g. Thar)" 
+            />
+            <input 
+              className="mgmt-input"
+              value={number} 
+              onChange={e => setNumber(e.target.value)} 
+              placeholder="Vehicle Number" 
+            />
+
+            <button 
+              className={editId ? "add-btn-main update-mode" : "add-btn-main"} 
+              onClick={saveVehicle}
+            >
+              {editId ? "Update" : "+ Add Vehicle"}
+            </button>
+            
+            {editId && (
+              <button 
+                className="detail-btn" 
+                onClick={() => {setEditId(null); setOwner(""); setModel(""); setNumber("");}}
+                style={{ marginLeft: '10px' }}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+
+          {/* Modern List View - Replaces the <table> for better mobile responsiveness */}
+          <div className="vehicle-list-wrapper">
+            {vehicles.length > 0 ? (
+              vehicles.map((v, index) => (
+                <div key={v.id || index} className="vehicle-item-row">
+                  <div className="v-id">{index + 1}</div>
+                  
+                  <div className="v-details">
+                    <span className="v-owner">{v.ownerName}</span>
+                    <span className="v-model">{v.vehicleModel}</span>
+                  </div>
+
+                  <div className="v-plate-box">
+                    <span className="v-plate">{v.vehicleNumber}</span>
+                  </div>
+
+                  <div className="v-actions">
+                    <button className="edit-icon-btn" onClick={() => editVehicle(v)}>
+                      ✏️ Edit
+                    </button>
+                    <button className="delete-icon-btn" onClick={() => deleteVehicle(v.id)}>
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="empty-state">
+                <p>No vehicles registered. Use the bar above to add your first vehicle.</p>
+              </div>
+            )}
+          </div>
+        </section>
       </div>
     </div>
   );
+
 }
+ 
