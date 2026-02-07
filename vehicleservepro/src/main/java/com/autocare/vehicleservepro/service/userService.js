@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/users";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/users`;
 
 export const getUsers = () => axios.get(API_URL);
-export const addUsers = (user) => axios.get(API_URL,user);
-export const deleteUsers = (id) => axios.get(`${API_URL}/${id}`);
+export const addUsers = (user) => axios.post(API_URL,user);
+export const deleteUsers = (id) => axios.delete(`${API_URL}/${id}`);
