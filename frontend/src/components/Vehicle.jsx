@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = "http://localhost:8081/api/vehicles";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/vehicles`;
 
 export default function VehicleCrud() {
   const [vehicles, setVehicles] = useState([]);

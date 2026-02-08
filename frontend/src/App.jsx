@@ -67,7 +67,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn && user?.email) {
-      fetch(`http://localhost:8081/api/bookings?email=${user.email}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/bookings?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => setUserVehicles(data))
         .catch((err) => console.error("Database connection error:", err));

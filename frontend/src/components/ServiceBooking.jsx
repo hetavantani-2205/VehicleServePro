@@ -21,7 +21,7 @@ function ServiceBooking({ onComplete }) {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await fetch("http://localhost:8081/api/cities");
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cities`);
         const data = await response.json();
         setCities(data);
       } catch (error) {
@@ -40,7 +40,7 @@ function ServiceBooking({ onComplete }) {
       }
       try {
         
-        const response = await fetch(`http://localhost:8081/api/centers?city=${formData.city}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/centers?city=${formData.city}`);
         const data = await response.json();
         setCenters(data);
       } catch (error) {
@@ -88,7 +88,7 @@ function ServiceBooking({ onComplete }) {
     };
 
     try {
-      const response = await fetch("http://localhost:8081/api/bookings/add", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bookings/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

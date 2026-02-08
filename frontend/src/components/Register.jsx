@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const API = "http://localhost:8081/api/auth/register";
+const API = `${import.meta.env.VITE_API_URL}/api/auth/register`;
 
 export default function Register({ goLogin }) {
   const [name, setName] = useState("");
@@ -49,7 +49,7 @@ export default function Register({ goLogin }) {
 };
 
 const handleGoogleResponse = (response) => {
-  axios.post("http://localhost:8081/api/auth/google", {
+  axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
     token: response.credential
   }).then(res => {
     localStorage.setItem("loggedIn", "true");

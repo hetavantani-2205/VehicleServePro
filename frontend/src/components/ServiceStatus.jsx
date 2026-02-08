@@ -7,7 +7,7 @@ export default function ServiceStatus({ bookingId }) {
   if (!bookingId) return;
 
   const fetchBooking = () => {
-    fetch(`http://localhost:8081/api/bookings/${bookingId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/bookings/${bookingId}`)
       .then(res => {
         if (!res.ok) {
           throw new Error("Booking not found");
