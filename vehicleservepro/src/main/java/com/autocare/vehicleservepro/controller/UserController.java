@@ -12,7 +12,7 @@ import com.autocare.vehicleservepro.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class UserController {
 
     @Autowired
