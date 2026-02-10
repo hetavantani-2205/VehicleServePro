@@ -13,7 +13,7 @@ import com.autocare.vehicleservepro.repository.BookingRepository;
 
 @RestController
 @RequestMapping("/api/bookings")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class BookingController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class BookingController {
 
   
 
-    // CREATE BOOKING
+
     @PostMapping("/add")
     public ResponseEntity<Booking> saveBooking(@RequestBody Booking booking) {
         try {
@@ -39,9 +39,12 @@ public class BookingController {
 
   
     @GetMapping
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+       public List<Booking> getBookingsByEmail(@RequestParam(required = false) String email) {
+    if (email != null && !email.isEmpty()) {
+        return bookingRepository.findByEmail(email); 
     }
+    return bookingRepository.findAll();
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getBooking(@PathVariable Long id) {
