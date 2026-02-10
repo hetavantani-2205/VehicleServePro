@@ -168,12 +168,16 @@ function App() {
                   <div className="service-card" onClick={() => setActiveSubService("locker")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
                     <h3>📁 Document Locker</h3>
                   </div>
+                  <div className="service-card" onClick={() => setActiveSubService("status")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: "1", textAlign: "center", background: "#e1f5fe" }}>
+          <h3>⏱️ Live Service Status</h3>
+        </div>
                 </div>
               ) : (
                 <div>
                   <button onClick={() => setActiveSubService(null)}>← Back</button>
                   {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
                   {activeSubService === "locker" && <DocumentLocker />}
+                  {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
                 </div>
               )}
             </div>
