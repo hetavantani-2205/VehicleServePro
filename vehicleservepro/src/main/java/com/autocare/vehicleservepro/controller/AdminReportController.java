@@ -7,7 +7,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class AdminReportController {
 
     @Autowired
