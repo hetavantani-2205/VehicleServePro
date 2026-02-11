@@ -156,8 +156,34 @@ function App() {
           {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
 
           {/* Service Tracking Logic */}
-          {page === "track" && user?.role === "CUSTOMER" && (
-            <div className="section-content">
+          {page === "track" && user?.role === "ADMIN" ? ( 
+
+            <div style={{ textAlign: 'center', padding: '50px', background: '#fff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+      <h2 style={{ color: '#0a3d62' }}>Vehicle Tracking & Management</h2>
+      <div style={{ 
+        backgroundColor: "#fff3cd", 
+        color: "#856404", 
+        padding: "20px", 
+        borderRadius: "8px",
+        border: "1px solid #ffeeba",
+        margin: "20px auto",
+        maxWidth: "600px"
+      }}>
+        <strong>Notice:</strong> Personal vehicle tracking is for Customer accounts. 
+        As an Administrator, please use the <strong>Sales Report</strong> to view and manage all customer bookings.
+      </div>
+      <button 
+        style={{ background: "#0a3d62", color: "white", padding: "10px 20px", border: "none", borderRadius: "5px", cursor: "pointer" }}
+        onClick={() => setPage("home")}
+      >
+        Return to Home
+      </button>
+    </div>
+
+          ) : (
+          
+          
+              <div className="section-content">
               <h2>Vehicle Management & Status</h2>
               {!activeSubService ? (
                 <div className="services-grid" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
