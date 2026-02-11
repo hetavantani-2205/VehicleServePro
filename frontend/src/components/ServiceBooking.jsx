@@ -4,6 +4,13 @@ const formatCarNumber = (value) => {
   return value.replace(/\s/g, '').toUpperCase();
 };
 
+const servicePrices = {
+  "General Service": 1500,
+  "Oil Change": 800,
+  "Brake Inspection": 1200,
+  "Wheel Alignment": 1000
+};
+
 function ServiceBooking({ onComplete }) {
   const [formData, setFormData] = useState({
     name: '',
