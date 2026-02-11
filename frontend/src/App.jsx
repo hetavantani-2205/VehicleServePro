@@ -127,7 +127,6 @@ function App() {
         {/* Customer Specific Links */}
         {user?.role === "CUSTOMER" && (
           <>
-            <button onClick={() => setPage("track")}>Track Service</button>
             <button onClick={() => setPage("feedback")}>Feedback</button>
           </>
         )}
