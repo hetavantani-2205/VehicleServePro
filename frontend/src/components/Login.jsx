@@ -46,7 +46,18 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
 
   return (
     <div style={styles.container}>
-      <div style={styles.card}>
+
+      <div style = {styles.contentWrapper}>
+
+
+          <div style={styles.titleContainer}>
+        <h1 style={styles.mainTitle}>VehicleServePro</h1>
+        <p style={styles.subtitle}>Secure Access to Your Garage Dashboard</p>
+
+
+        </div>
+
+       <div style={styles.card}>
         <h2>Login</h2>
 
         {error && <p style={styles.error}>{error}</p>}
@@ -84,13 +95,41 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
             Register
           </span>
         </p>
+        </div>
       </div>
     </div>
   );
 }
 
 const styles = {
-  container: {
+
+  contentWrapper: {
+  display: 'flex',
+  flexDirection: 'column', 
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  },
+
+    titleContainer: {
+  marginBottom: "30px", 
+  textAlign: "center",
+},
+mainTitle: {
+  fontSize: "2.5rem",
+  fontWeight: "800",
+  color: "#ffffff", 
+  textShadow: "0 2px 10px rgba(0,0,0,0.3)", 
+  margin: "0",
+  letterSpacing: "-1px",
+},
+subtitle: {
+  fontSize: "1rem",
+  color: "rgba(255, 255, 255, 0.8)",
+  marginTop: "5px",
+},
+
+ container: {
     minHeight: "100vh",
     width: "100vw",
     background: "#0a3d62",
@@ -98,14 +137,18 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
-  card: {
-    background: "white",
+card: {
+    background: 'rgba(255, 255, 255, 0.85)', 
+    backdropFilter: 'blur(12px)',           
+    WebkitBackdropFilter: 'blur(12px)',    
+    border: '1px solid rgba(255, 255, 255, 0.3)', 
     padding: "40px",
-    borderRadius: "15px",
-    width: "350px",
+    borderRadius: "20px",                  
+    width: "380px",                        
     textAlign: "center",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-  },
+    boxShadow: "0 15px 35px rgba(0, 0, 0, 0.2)", 
+    transition: "transform 0.3s ease",      
+},
   input: {
     width: "100%",
     padding: "10px",
@@ -113,6 +156,13 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ccc",
   },
+  inputFocus: {
+
+    borderColor: '#1e90ff',
+    boxShadow: '0 0 8px rgba(30, 144, 255, 0.2)',
+    outline: 'none',
+},
+
   button: {
     width: "100%",
     padding: "10px",
