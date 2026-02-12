@@ -155,19 +155,15 @@ function App() {
           {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
           {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
 
-          {/* Service Tracking Logic */}
-          {page === "track" && user?.role === "ADMIN" ? ( 
-
-            <div style={{ textAlign: 'center', padding: '50px', background: '#fff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+         {/* --- CORRECTED TRACKING LOGIC --- */}
+{page === "track" && (
+  user?.role === "ADMIN" ? (
+    
+    <div style={{ textAlign: 'center', padding: '50px', background: '#fff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
       <h2 style={{ color: '#0a3d62' }}>Vehicle Tracking & Management</h2>
       <div style={{ 
-        backgroundColor: "#fff3cd", 
-        color: "#856404", 
-        padding: "20px", 
-        borderRadius: "8px",
-        border: "1px solid #ffeeba",
-        margin: "20px auto",
-        maxWidth: "600px"
+        backgroundColor: "#fff3cd", color: "#856404", padding: "20px", borderRadius: "8px",
+        border: "1px solid #ffeeba", margin: "20px auto", maxWidth: "600px"
       }}>
         <strong>Notice:</strong> Personal vehicle tracking is for Customer accounts. 
         As an Administrator, please use the <strong>Sales Report</strong> to view and manage all customer bookings.
@@ -179,34 +175,33 @@ function App() {
         Return to Home
       </button>
     </div>
-
-          ) : (
-          
-          
-              <div className="section-content">
-              <h2>Vehicle Management & Status</h2>
-              {!activeSubService ? (
-                <div className="services-grid" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-                  <div className="service-card" onClick={() => setActiveSubService("health")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
-                    <h3>🚗 Vehicle Health</h3>
-                  </div>
-                  <div className="service-card" onClick={() => setActiveSubService("locker")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
-                    <h3>📁 Document Locker</h3>
-                  </div>
-                  <div className="service-card" onClick={() => setActiveSubService("status")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: "1", textAlign: "center", background: "#e1f5fe" }}>
-          <h3>⏱️ Live Service Status</h3>
+  ) : (
+    
+    <div className="section-content">
+      <h2>Vehicle Management & Status</h2>
+      {!activeSubService ? (
+        <div className="services-grid" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
+          <div className="service-card" onClick={() => setActiveSubService("health")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
+            <h3>🚗 Vehicle Health</h3>
+          </div>
+          <div className="service-card" onClick={() => setActiveSubService("locker")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
+            <h3>📁 Document Locker</h3>
+          </div>
+          <div className="service-card" onClick={() => setActiveSubService("status")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: "1", textAlign: "center", background: "#e1f5fe" }}>
+            <h3>⏱️ Live Service Status</h3>
+          </div>
         </div>
-                </div>
-              ) : (
-                <div>
-                  <button onClick={() => setActiveSubService(null)}>← Back</button>
-                  {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
-                  {activeSubService === "locker" && <DocumentLocker />}
-                  {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
-                </div>
-              )}
-            </div>
-          )}
+      ) : (
+        <div>
+          <button onClick={() => setActiveSubService(null)}>← Back</button>
+          {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
+          {activeSubService === "locker" && <DocumentLocker />}
+          {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
+        </div>
+      )}
+    </div>
+  )
+)}
 
           {/* Booking Logic with Admin Guard */}
           {page === "booking" && (
