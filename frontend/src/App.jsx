@@ -15,6 +15,7 @@ import Feedback from "./components/Feedback";
 import VehicleHealth from "./components/VehicleHealth";
 import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
+import MechanicChecklist from "./components/MechanicChecklist";
 
 const normalizeRole = (role) => {
   if (!role) return "CUSTOMER";
@@ -198,7 +199,26 @@ function App() {
           <button onClick={() => setActiveSubService(null)}>← Back</button>
           {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
           {activeSubService === "locker" && user.role === "CUSTOMER" && <DocumentLocker />}
-          {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
+          {activeSubService === "status" && user.role === "MECHANIC" && (
+  <div>
+    <button onClick={() => setActiveSubService(null)}>← Back to Workstation</button>
+    
+    {/* Pass mock data or actual vehicle data here */}
+    <MechanicChecklist 
+      serviceType="Oil Change" 
+      onJobComplete={() => {
+        alert("Success! Customer will be notified that service is complete.");
+        setActiveSubService(null);
+        
+      }} 
+    />
+
+    <hr style={{ margin: '30px 0' }} />
+    
+    {/* Keep your original ServiceStatus view below for reference */}
+    <ServiceStatus vehicles={userVehicles} />
+  </div>
+)}
         </div>
       )}
     </div>
