@@ -44,6 +44,7 @@ export default function Register({ goLogin }) {
      {
        
         setError("Password must contain at least one special character");
+        return;
      }
 
    axios.post(API, {
