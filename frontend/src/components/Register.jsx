@@ -38,7 +38,7 @@ export default function Register({ goLogin }) {
     return;
   } 
   if (!/[@$!%*?&]/.test(password)) {
-    setError("Password must contain at least one special character (@$!%*?&)");
+    setError("Password must contain at least one special character");
     return;
   } 
 
