@@ -201,7 +201,7 @@ function App() {
           {activeSubService === "locker" && user.role === "CUSTOMER" && <DocumentLocker />}
           {activeSubService === "status" && user.role === "MECHANIC" && (
   <div>
-    <button onClick={() => setActiveSubService(null)}>← Back to Workstation</button>
+    <button onClick={() => setActiveSubService(null)}></button>
     
     {/* Pass mock data or actual vehicle data here */}
     <MechanicChecklist 
