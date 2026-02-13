@@ -10,42 +10,47 @@ export default function Register({ goLogin }) {
   const [error, setError] = useState("");
 
   const register = () => {
+  setError("");
 
-    setError("");
 
-    if (!name || !email || !password) {
-      setError("All fields are required");
-      return;
-    }
+  if (!name || !email || !password) {
+    setError("All fields are required");
+  } 
+  else if (!email.includes("@")) {
+    setError("Invalid email format");
+  } 
 
-    if (!email.includes("@")) {
-      setError("Invalid email format");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
-
-    if(!/[A-Z]/.test(password))
-    {
-      setError("Password must contain at least one uppercase letter");
-    }
-     if(!/[a-z]/.test(password))
-    {
-      setError("Password must contain at least one lowercase letter");
-    }
-     if(!/\d/.test(password))
-     {
-        setError("Password must contain at least one number");
-     }
-     if (!/[@$!%*?&]/.test(password))
-     {
-       
-        setError("Password must contain at least one special character");
-        return;
-     }
+  else if (password.length < 8) {
+    setError("Password must be at least 8 characters");
+  } 
+  else if (!/[A-Z]/.test(password)) {
+    setError("Password must contain at least one uppercase letter");
+  } 
+  else if (!/[a-z]/.test(password)) {
+    setError("Password must contain at least one lowercase letter");
+  } 
+  else if (!/\d/.test(password)) {
+    setError("Password must contain at least one number");
+  } 
+  else if (!/[@$!%*?&]/.test(password)) {
+    setError("Password must contain at least one special character (@$!%*?&)");
+  } 
+  
+  else {
+    axios.post(API, {
+      name,
+      email,
+      password
+    })
+    .then(() => {
+      alert("Registration successful");
+      goLogin();
+    })
+    .catch((err) => {
+      console.error(err);
+      setError("Registration failed. Email might already exist.");
+    });
+  }
 
    axios.post(API, {
       name,
