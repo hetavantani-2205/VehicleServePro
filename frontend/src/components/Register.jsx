@@ -28,6 +28,24 @@ export default function Register({ goLogin }) {
       return;
     }
 
+    if(!/[A-Z]/.test(password))
+    {
+      setError("Password must contain at least one uppercase letter");
+    }
+     if(!/[a-z]/.test(password))
+    {
+      setError("Password must contain at least one lowercase letter");
+    }
+     if(!/\d/.test(password))
+     {
+        setError("Password must contain at least one number");
+     }
+     if (!/[@$!%*?&]/.test(password))
+     {
+       
+        setError("Password must contain at least one special character");
+     }
+
    axios.post(API, {
       name,
       email,
