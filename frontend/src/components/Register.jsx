@@ -12,47 +12,48 @@ export default function Register({ goLogin }) {
   const register = () => {
   setError("");
 
-
+  // 1. Validation Logic
   if (!name || !email || !password) {
     setError("All fields are required");
+    return;
   } 
-  else if (!email.includes("@")) {
+  if (!email.includes("@")) {
     setError("Invalid email format");
+    return;
+  } 
+  if (password.length < 8) {
+    setError("Password must be at least 8 characters");
+    return;
+  } 
+  if (!/[A-Z]/.test(password)) {
+    setError("Password must contain at least one uppercase letter");
+    return;
+  } 
+  if (!/[a-z]/.test(password)) {
+    setError("Password must contain at least one lowercase letter");
+    return;
+  } 
+  if (!/\d/.test(password)) {
+    setError("Password must contain at least one number");
+    return;
+  } 
+  if (!/[@$!%*?&]/.test(password)) {
+    setError("Password must contain at least one special character (@$!%*?&)");
+    return;
   } 
 
-  else if (password.length < 8) {
-    setError("Password must be at least 8 characters");
-  } 
-  else if (!/[A-Z]/.test(password)) {
-    setError("Password must contain at least one uppercase letter");
-  } 
-  else if (!/[a-z]/.test(password)) {
-    setError("Password must contain at least one lowercase letter");
-  } 
-  else if (!/\d/.test(password)) {
-    setError("Password must contain at least one number");
-  } 
-  else if (!/[@$!%*?&]/.test(password)) {
-    setError("Password must contain at least one special character (@$!%*?&)");
-  } 
   
-  else {
-    axios.post(API, {
-      name,
-      email,
-      password
-    })
+  console.log("Validation passed. Sending request...");
+  axios.post(API, { name, email, password })
     .then(() => {
       alert("Registration successful");
       goLogin();
     })
     .catch((err) => {
-      console.error(err);
-      setError("Registration failed. Email might already exist.");
+      console.error("Backend Error:", err);
+      setError("Registration failed. Please try again later.");
     });
-  }
-
-}
+};
 
 
  const googleLogin = () => {
