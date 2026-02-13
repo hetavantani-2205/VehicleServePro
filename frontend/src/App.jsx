@@ -178,24 +178,26 @@ function App() {
   ) : (
     
     <div className="section-content">
-      <h2>Vehicle Management & Status</h2>
+      <h2>{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Management & Status"}</h2>
       {!activeSubService ? (
         <div className="services-grid" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
           <div className="service-card" onClick={() => setActiveSubService("health")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
             <h3>🚗 Vehicle Health</h3>
           </div>
+          {user.role === "CUSTOMER" && (
           <div className="service-card" onClick={() => setActiveSubService("locker")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
             <h3>📁 Document Locker</h3>
           </div>
+          )}
           <div className="service-card" onClick={() => setActiveSubService("status")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: "1", textAlign: "center", background: "#e1f5fe" }}>
-            <h3>⏱️ Live Service Status</h3>
+            <h3>⏱️ {user.role === "MECHANIC" ? "Update Status" : "Live Service Status"}</h3>
           </div>
         </div>
       ) : (
         <div>
           <button onClick={() => setActiveSubService(null)}>← Back</button>
           {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
-          {activeSubService === "locker" && <DocumentLocker />}
+          {activeSubService === "locker" && user.role === "CUSTOMER" && <DocumentLocker />}
           {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
         </div>
       )}
@@ -205,10 +207,10 @@ function App() {
 
           {/* Booking Logic with Admin Guard */}
           {page === "booking" && (
-            user.role === "ADMIN" ? (
+            (user.role === "ADMIN" || user.role === "MECHANIC") ? (
               <div style={{ textAlign: 'center', padding: '50px' }}>
-                <h2>Admin Access</h2>
-                <p>Admins handle reports. Please use the "Sales Report" button above.</p>
+                <h2>Restricted Access</h2>
+                <p>Only customers can create new service bookings.</p>
                 <button onClick={() => setPage("home")}>Go Home</button>
               </div>
             ) : (
