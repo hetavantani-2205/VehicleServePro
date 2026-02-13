@@ -52,16 +52,8 @@ export default function Register({ goLogin }) {
     });
   }
 
-   axios.post(API, {
-      name,
-      email,
-      password
-    }).then(() => {
-      alert("Registration successful");
-      goLogin();
-    })
-       .catch(() => setError("Registration failed"));
-  };
+}
+
 
  const googleLogin = () => {
   window.google.accounts.id.initialize({
