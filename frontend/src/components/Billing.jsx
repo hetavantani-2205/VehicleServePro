@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import QRCode from "qrcode";
 
-export default function Billing() {
+export default function Billing({user}) {
 
   const [items, setItems] = useState([{ name: "", price: "", qty: 1 }]);
   const [gst, setGst] = useState(18);
@@ -151,19 +151,33 @@ export default function Billing() {
           Download Invoice PDF
         </button>
 
-        <button onClick={generateUpiQR} style={{ marginLeft: "10px" }}>
-          Pay Now (Scan QR)
-        </button>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+  <button onClick={downloadPDF}>
+    Download Invoice PDF
+  </button>
 
-        {upiQR && (
-          <div style={{ marginTop: "15px" }}>
-            <p>Scan using any UPI app</p>
-            <img src={upiQR} width="220" alt="UPI QR" />
-          </div>
-        )}
+  {/* Only Customers see the Payment Module */}
+  {user?.role === "CUSTOMER" ? (
+    <>
+      <button onClick={generateUpiQR} style={{ marginLeft: "10px" }}>
+        Pay Now (Scan QR)
+      </button>
 
-      </div>
+      {upiQR && (
+        <div style={{ marginTop: "15px" }}>
+          <p>Scan using any UPI app</p>
+          <img src={upiQR} width="220" alt="UPI QR" />
+        </div>
+      )}
+    </>
+  ) : (
+    <div style={{ marginTop: "20px", color: "#666", fontStyle: "italic" }}>
+      <p>⚠️ Payment options are only available to Customers.</p>
+    </div>
+  )}
+</div>
+    
+    </div>
 
     </div>
-  );
-}
+  )};
