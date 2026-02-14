@@ -151,11 +151,6 @@ export default function Billing({user}) {
           Download Invoice PDF
         </button>
 
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-  <button onClick={downloadPDF}>
-    Download Invoice PDF
-  </button>
-
   {/* Only Customers see the Payment Module */}
   {user?.role === "CUSTOMER" ? (
     <>
