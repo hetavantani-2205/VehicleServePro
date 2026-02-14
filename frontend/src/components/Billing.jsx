@@ -173,6 +173,4 @@ export default function Billing({user}) {
 </div>
     
     </div>
-
-    </div>
   )};
