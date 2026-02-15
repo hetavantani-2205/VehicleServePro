@@ -152,7 +152,7 @@ function App() {
           {page === "contact" && <Contact />}
           {page === "vehicle" && <Dashboard />}
           {page === "centers" && <ServiceCenters />}
-          {page === "billing" && <Billing />}
+          {page === "billing" && <Billing user = {user} />}
           {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
           {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
 
