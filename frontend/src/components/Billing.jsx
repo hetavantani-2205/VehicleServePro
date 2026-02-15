@@ -56,90 +56,68 @@ export default function Billing({ user }) {
     setUpiQR(qr);
   };
 
-  return (
-    <div className="billing-wrapper">
-      {/* 1. VEHICLE SERVICE BILL SECTION - ONLY VISIBLE TO ADMIN */}
-      {user?.role === "ADMIN" && (
-        <div className="billing-card" id="bill-area" style={{ padding: '20px', border: '1px solid #ddd', borderRadius: '8px', background: '#fff' }}>
-          <h2>Vehicle Service Bill</h2>
-          <input placeholder="Customer Name" style={{ marginBottom: '10px', display: 'block' }} />
-          <input placeholder="Vehicle Number" style={{ marginBottom: '10px', display: 'block' }} />
-
-          <h4>Services</h4>
-          {items.map((item, index) => (
-            <div className="bill-row" key={index} style={{ marginBottom: '10px' }}>
-              <input
-                placeholder="Service Name"
-                value={item.name}
-                onChange={(e) => handleChange(index, "name", e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Price"
-                value={item.price}
-                onChange={(e) => handleChange(index, "price", e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Qty"
-                value={item.qty}
-                onChange={(e) => handleChange(index, "qty", e.target.value)}
-              />
-            </div>
-          ))}
-
-          <button onClick={addItem} style={{ marginBottom: '20px' }}>+ Add Service</button>
-
-          <div className="bill-summary">
-            <div><span>Subtotal: </span><span>₹{total.toFixed(2)}</span></div>
-            <div>
-              <span>GST (%): </span>
-              <input
-                type="number"
-                value={gst}
-                onChange={(e) => setGst(e.target.value)}
-                style={{ width: '50px' }}
-              />
-            </div>
-            <div><span>GST Amount: </span><span>₹{gstAmount.toFixed(2)}</span></div>
-            <hr />
-            <div className="total" style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
-              <span>Total Payable: </span>
-              <span>₹{grandtotal.toFixed(2)}</span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 2. CUSTOMER ACTION BUTTONS - ONLY VISIBLE TO CUSTOMER */}
-      <div style={{ textAlign: "center", marginTop: "30px" }}>
-        {user?.role === "CUSTOMER" ? (
-          <>
-            <button 
-              onClick={downloadPDF} 
-              style={{ padding: '10px 20px', background: '#0a3d62', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-            >
-              Download Invoice PDF
-            </button>
-
-            <button 
-              onClick={generateUpiQR} 
-              style={{ marginLeft: "10px", padding: '10px 20px', background: '#27ae60', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-            >
-              Pay Now (Scan QR)
-            </button>
-
-            {upiQR && (
-              <div style={{ marginTop: "15px", border: '1px solid #eee', display: 'inline-block', padding: '10px' }}>
-                <p>Scan using any UPI app</p>
-                <img src={upiQR} width="220" alt="UPI QR" />
-              </div>
-            )}
-          </>
-        ) : (
-          user?.role !== "ADMIN" && <p>Please log in as a Customer to make payments.</p>
-        )}
+ return (
+  <div className="billing-wrapper">
+    {/* 1. EDITABLE VERSION - ONLY FOR ADMIN */}
+    {user?.role === "ADMIN" && (
+      <div className="billing-card" id="bill-area">
+        <h2>Vehicle Service Bill</h2>
+        {/* ... your existing inputs and 'Add Service' button ... */}
       </div>
+    )}
+
+    {/* 2. READ-ONLY HIDDEN VERSION - FOR CUSTOMER (Used for PDF generation) */}
+    {user?.role === "CUSTOMER" && (
+      <div id="bill-area" style={{ position: "absolute", left: "-9999px", top: "0", background: "white", padding: "40px", width: "800px" }}>
+        <h2 style={{ textAlign: 'center', color: '#0a3d62' }}>VehicleServePro Official Invoice</h2>
+        <hr />
+        <p><strong>Customer Name:</strong> {document.querySelector('input[placeholder="Customer Name"]')?.value || "Valued Customer"}</p>
+        <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ background: '#eee' }}>
+              <th style={{ textAlign: 'left', padding: '10px' }}>Service</th>
+              <th style={{ textAlign: 'right', padding: '10px' }}>Price</th>
+              <th style={{ textAlign: 'center', padding: '10px' }}>Qty</th>
+              <th style={{ textAlign: 'right', padding: '10px' }}>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index} style={{ borderBottom: '1px solid #ddd' }}>
+                <td style={{ padding: '10px' }}>{item.name || "Service"}</td>
+                <td style={{ textAlign: 'right', padding: '10px' }}>₹{Number(item.price).toFixed(2)}</td>
+                <td style={{ textAlign: 'center', padding: '10px' }}>{item.qty}</td>
+                <td style={{ textAlign: 'right', padding: '10px' }}>₹{(item.price * item.qty).toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ textAlign: 'right', marginTop: '20px' }}>
+          <p>Subtotal: ₹{total.toFixed(2)}</p>
+          <p>GST ({gst}%): ₹{gstAmount.toFixed(2)}</p>
+          <h3 style={{ color: '#0a3d62' }}>Grand Total: ₹{grandtotal.toFixed(2)}</h3>
+        </div>
+      </div>
+    )}
+
+    {/* 3. VISIBLE BUTTONS FOR CUSTOMER */}
+    <div style={{ textAlign: "center", marginTop: "30px" }}>
+      {user?.role === "CUSTOMER" && (
+        <>
+          <button onClick={downloadPDF} style={{ padding: '10px 20px', background: '#0a3d62', color: '#fff', border: 'none', borderRadius: '5px' }}>
+            Download Invoice PDF
+          </button>
+          <button onClick={generateUpiQR} style={{ marginLeft: "10px", padding: '10px 20px', background: '#27ae60', color: '#fff', border: 'none', borderRadius: '5px' }}>
+            Pay Now (Scan QR)
+          </button>
+          {upiQR && (
+            <div style={{ marginTop: "15px" }}>
+              <img src={upiQR} width="200" alt="QR" />
+            </div>
+          )}
+        </>
+      )}
     </div>
-  );
+  </div>
+);
 }
