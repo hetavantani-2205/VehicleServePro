@@ -47,7 +47,7 @@ export default function Billing({ user }) {
     });
   };
 
-  // --- NEW RAZORPAY LOGIC ---
+ 
   const handlePayment = () => {
     if (!window.Razorpay) {
       alert("Razorpay SDK not found. Please add the script to your index.html");
@@ -55,14 +55,14 @@ export default function Billing({ user }) {
     }
 
     const options = {
-      key: "rzp_test_YOUR_KEY_HERE", // PASTE YOUR KEY STARTING WITH rzp_test_ HERE
-      amount: Math.round(grandtotal * 100), // Amount in paise
+      key: "rzp_test_SGIih6cP2nRxni",
+      amount: Math.round(grandtotal * 100), 
       currency: "INR",
       name: "VehicleServePro",
       description: "Vehicle Service Payment",
       handler: function (response) {
         alert("Payment Successful! ID: " + response.razorpay_payment_id);
-        // Automatically download invoice after payment
+  
         downloadPDF();
       },
       prefill: {
