@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Home from "./components/Home";
-import About from "./components/About";
 import Services from "./components/Services";
 import Team from "./components/Team";
 import Dashboard from "./components/Vehicle";
@@ -110,7 +109,6 @@ function App() {
       {/* --- NAVIGATION BAR --- */}
       <nav style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px", background: "#0a3d62", padding: "15px" }}>
         <button onClick={() => setPage("home")}>Home</button>
-        <button onClick={() => setPage("about")}>About</button>
         <button onClick={() => setPage("services")}>Services</button>
         <button onClick={() => setPage("team")}>Team</button>
         <button onClick={() => setPage("contact")}>Contact</button>
@@ -147,7 +145,6 @@ function App() {
       <div className="page-wrapper">
         <div className="page-content" style={{ padding: "20px" }}>
           {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
-          {page === "about" && <About />}
           {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
           {page === "team" && <Team />}
           {page === "contact" && <Contact />}
