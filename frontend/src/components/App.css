@@ -10,14 +10,14 @@ body {
   display: block;
   background: #f4f6f8;
   width: 100%;
-  overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+  overflow-x: hidden;
 }
 
 #root {
   width: 100%;
 }
 
-/* --- HEADER & NAVIGATION --- */
+
 .site-header {
   text-align: center;
   padding: 20px;
