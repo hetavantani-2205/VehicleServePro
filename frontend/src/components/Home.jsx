@@ -36,7 +36,7 @@ export default function Home({ onBookClick, onViewDashboard }) {
       </div>
 
       {/* INTEGRATED ABOUT SECTION CONTENT */}
-      <div className="about-container" style={{ padding: '60px 20px', background: '#fff' }}>
+      <div className="about-container" style={{ marginTop: '100px', padding: '60px 20px' }}>
         
         {/* Driving Excellence Section */}
         <div className="about-hero" style={{ textAlign: 'center', marginBottom: '50px' }}>
