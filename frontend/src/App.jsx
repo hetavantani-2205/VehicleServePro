@@ -15,6 +15,7 @@ import VehicleHealth from "./components/VehicleHealth";
 import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
 import MechanicChecklist from "./components/MechanicChecklist";
+import DamageScanner from "./components/DamageScanner";
 
 const normalizeRole = (role) => {
   if (!role) return "CUSTOMER";
@@ -107,9 +108,20 @@ function App() {
       </div>
 
       {/* --- NAVIGATION BAR --- */}
-      <nav style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px", background: "#0a3d62", padding: "15px" }}>
+      <nav style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px", background: "#0a3d62", padding: "15px", flexWrap: "wrap" }}>
         <button onClick={() => setPage("home")}>Home</button>
         <button onClick={() => setPage("services")}>Services</button>
+        
+        {/* --- AI DAMAGE SCANNER NAV LINK --- */}
+        {(user?.role === "CUSTOMER" || user?.role === "MECHANIC") && (
+          <button 
+            style={{ background: "#27ae60", color: "white", fontWeight: "bold", border: "none", padding: "8px 15px", borderRadius: "5px", cursor: "pointer" }} 
+            onClick={() => setPage("ai-scan")}
+          >
+            🔍 AI Damage Scan
+          </button>
+        )}
+
         <button onClick={() => setPage("team")}>Team</button>
         <button onClick={() => setPage("contact")}>Contact</button>
 
@@ -145,6 +157,10 @@ function App() {
       <div className="page-wrapper">
         <div className="page-content" style={{ padding: "20px" }}>
           {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
+          
+          {/* --- NEW AI SCANNER PAGE --- */}
+          {page === "ai-scan" && <DamageScanner />}
+
           {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
           {page === "team" && <Team />}
           {page === "contact" && <Contact />}
@@ -154,74 +170,66 @@ function App() {
           {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
           {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
 
-         {/* --- CORRECTED TRACKING LOGIC --- */}
-{page === "track" && (
-  user?.role === "ADMIN" ? (
-    
-    <div style={{ textAlign: 'center', padding: '50px', background: '#fff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
-      <h2 style={{ color: '#0a3d62' }}>Vehicle Tracking & Management</h2>
-      <div style={{ 
-        backgroundColor: "#fff3cd", color: "#856404", padding: "20px", borderRadius: "8px",
-        border: "1px solid #ffeeba", margin: "20px auto", maxWidth: "600px"
-      }}>
-        <strong>Notice:</strong> Personal vehicle tracking is for Customer accounts. 
-        As an Administrator, please use the <strong>Sales Report</strong> to view and manage all customer bookings.
-      </div>
-      <button 
-        style={{ background: "#0a3d62", color: "white", padding: "10px 20px", border: "none", borderRadius: "5px", cursor: "pointer" }}
-        onClick={() => setPage("home")}
-      >
-        Return to Home
-      </button>
-    </div>
-  ) : (
-    
-    <div className="section-content">
-      <h2>{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Management & Status"}</h2>
-      {!activeSubService ? (
-        <div className="services-grid" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-          <div className="service-card" onClick={() => setActiveSubService("health")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
-            <h3>🚗 Vehicle Health</h3>
-          </div>
-          {user.role === "CUSTOMER" && (
-          <div className="service-card" onClick={() => setActiveSubService("locker")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
-            <h3>📁 Document Locker</h3>
-          </div>
+          {/* --- TRACKING LOGIC --- */}
+          {page === "track" && (
+            user?.role === "ADMIN" ? (
+              <div style={{ textAlign: 'center', padding: '50px', background: '#fff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+                <h2 style={{ color: '#0a3d62' }}>Vehicle Tracking & Management</h2>
+                <div style={{ 
+                  backgroundColor: "#fff3cd", color: "#856404", padding: "20px", borderRadius: "8px",
+                  border: "1px solid #ffeeba", margin: "20px auto", maxWidth: "600px"
+                }}>
+                  <strong>Notice:</strong> Personal vehicle tracking is for Customer accounts. 
+                  As an Administrator, please use the <strong>Sales Report</strong> to view and manage all customer bookings.
+                </div>
+                <button 
+                  style={{ background: "#0a3d62", color: "white", padding: "10px 20px", border: "none", borderRadius: "5px", cursor: "pointer" }}
+                  onClick={() => setPage("home")}
+                >
+                  Return to Home
+                </button>
+              </div>
+            ) : (
+              <div className="section-content">
+                <h2>{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Management & Status"}</h2>
+                {!activeSubService ? (
+                  <div className="services-grid" style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
+                    <div className="service-card" onClick={() => setActiveSubService("health")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
+                      <h3>🚗 Vehicle Health</h3>
+                    </div>
+                    {user.role === "CUSTOMER" && (
+                    <div className="service-card" onClick={() => setActiveSubService("locker")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px" }}>
+                      <h3>📁 Document Locker</h3>
+                    </div>
+                    )}
+                    <div className="service-card" onClick={() => setActiveSubService("status")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: "1", textAlign: "center", background: "#e1f5fe" }}>
+                      <h3>⏱️ {user.role === "MECHANIC" ? "Update Status" : "Live Service Status"}</h3>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <button onClick={() => setActiveSubService(null)}>← Back</button>
+                    {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
+                    {activeSubService === "locker" && user.role === "CUSTOMER" && <DocumentLocker />}
+                    {activeSubService === "status" && user.role === "MECHANIC" && (
+                      <div>
+                        <MechanicChecklist 
+                          serviceType="Oil Change" 
+                          onJobComplete={() => {
+                            alert("Success! Customer will be notified that service is complete.");
+                            setActiveSubService(null);
+                          }} 
+                        />
+                        <hr style={{ margin: '30px 0' }} />
+                        <ServiceStatus vehicles={userVehicles} />
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+              </div>
+            )
           )}
-          <div className="service-card" onClick={() => setActiveSubService("status")} style={{ cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: "1", textAlign: "center", background: "#e1f5fe" }}>
-            <h3>⏱️ {user.role === "MECHANIC" ? "Update Status" : "Live Service Status"}</h3>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <button onClick={() => setActiveSubService(null)}>← Back</button>
-          {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
-          {activeSubService === "locker" && user.role === "CUSTOMER" && <DocumentLocker />}
-          {activeSubService === "status" && user.role === "MECHANIC" && (
-  <div>
-    <button onClick={() => setActiveSubService(null)}></button>
-    
-    {/* Pass mock data or actual vehicle data here */}
-    <MechanicChecklist 
-      serviceType="Oil Change" 
-      onJobComplete={() => {
-        alert("Success! Customer will be notified that service is complete.");
-        setActiveSubService(null);
-        
-      }} 
-    />
-
-    <hr style={{ margin: '30px 0' }} />
-    
-    {/* Keep your original ServiceStatus view below for reference */}
-    <ServiceStatus vehicles={userVehicles} />
-  </div>
-)}
-        </div>
-      )}
-    </div>
-  )
-)}
 
           {/* Booking Logic with Admin Guard */}
           {page === "booking" && (
@@ -238,8 +246,9 @@ function App() {
         </div>
       </div>
 
-        {/* Footer */}
+      {/* Footer */}
       <footer style={{ background: "#0a3d62", color: "white", padding: "30px 20px", marginTop: "50px" }}>
+        {/* ... Footer Content Remains Same ... */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", maxWidth: "1100px", margin: "0 auto" }}>
           <div>
             <h3>VehicleServePro</h3>
@@ -250,6 +259,7 @@ function App() {
             <p onClick={() => setPage("home")} style={{ cursor: "pointer" }}>Home</p>
             <p onClick={() => setPage("services")} style={{ cursor: "pointer" }}>Services</p>
             <p onClick={() => setPage("booking")} style={{ cursor: "pointer" }}>Book Now</p>
+            <p onClick={() => setPage("ai-scan")} style={{ cursor: "pointer" }}>AI Inspection</p>
           </div>
           <div>
             <h4>Contact</h4>
