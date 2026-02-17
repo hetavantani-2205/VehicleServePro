@@ -24,8 +24,8 @@ const DamageScanner = () => {
 
         const raw = JSON.stringify({
             "user_app_id": {
-                "user_id": meta.env.REACT_APP_CLARIFAI_USER_ID,
-                "app_id": meta.env.REACT_APP_CLARIFAI_APP_ID
+                "user_id": import.meta.env.REACT_APP_CLARIFAI_USER_ID,
+                "app_id": import.meta.env.REACT_APP_CLARIFAI_APP_ID
             },
             "inputs": [
                 {
@@ -43,7 +43,7 @@ const DamageScanner = () => {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
-                        'Authorization': 'Key ' + meta.env.REACT_APP_CLARIFAI_API_KEY
+                        'Authorization': 'Key ' + import.meta.env.REACT_APP_CLARIFAI_API_KEY
                     },
                     body: raw
                 }
