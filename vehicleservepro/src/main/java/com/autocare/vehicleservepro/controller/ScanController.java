@@ -9,8 +9,7 @@ import java.util.Map;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "*")  
+@RequestMapping("/api")  
 public class ScanController {
 
     @Value("${clarifai.api.key}")
