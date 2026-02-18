@@ -14,60 +14,45 @@ public class ScanController {
 
     @Value("${clarifai.api.key}")
     private String apiKey;
+ 
 
     @PostMapping("/scan")
-    public ResponseEntity<?> handleScan(@RequestBody Map<String, String> payload) {
+public ResponseEntity<Object> handleScan(@RequestBody Map<String, String> payload) {
 
-        try {
+    String imageBase64 = payload.get("imageBase64");
 
-            String imageBase64 = payload.get("imageBase64");
+    String clarifaiUrl =
+        "https://api.clarifai.com/v2/users/" +
+        System.getenv("CLARIFAI_USER_ID") +
+        "/apps/" +
+        System.getenv("CLARIFAI_APP_ID") +
+        "/models/general-image-recognition/outputs";
 
-            if (imageBase64 == null || imageBase64.isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(Map.of("error", "Image data missing"));
-            }
+    String apiKey = System.getenv("CLARIFAI_API_KEY");
 
-            String clarifaiUrl =
-                    "https://api.clarifai.com/v2/models/general-image-detection/outputs";
+    RestTemplate restTemplate = new RestTemplate();
 
-            RestTemplate restTemplate = new RestTemplate();
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.set("Authorization", "Key " + apiKey);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", "Key " + apiKey);
+    Map<String, Object> body = Map.of(
+        "inputs", List.of(
+            Map.of("data", Map.of("image", Map.of("base64", imageBase64)))
+        )
+    );
 
-            Map<String, Object> body = Map.of(
-                    "inputs", List.of(
-                            Map.of("data",
-                                    Map.of("image",
-                                            Map.of("base64", imageBase64)
-                                    )
-                            )
-                    )
-            );
+    HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
-            HttpEntity<Map<String, Object>> entity =
-                    new HttpEntity<>(body, headers);
+    try {
+        ResponseEntity<Object> response =
+                restTemplate.postForEntity(clarifaiUrl, entity, Object.class);
 
-            ResponseEntity<Object> response =
-                    restTemplate.exchange(
-                            clarifaiUrl,
-                            HttpMethod.POST,
-                            entity,
-                            Object.class
-                    );
+        return ResponseEntity.ok(response.getBody());
 
-            if (!response.getStatusCode().is2xxSuccessful()) {
-                return ResponseEntity.status(response.getStatusCode())
-                        .body(Map.of("error", "Clarifai API error"));
-            }
-
-            return ResponseEntity.ok(response.getBody());
-
-        } catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", e.getMessage()));
-        }
+    } catch (Exception e) {
+        return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
     }
+}
+
 }
