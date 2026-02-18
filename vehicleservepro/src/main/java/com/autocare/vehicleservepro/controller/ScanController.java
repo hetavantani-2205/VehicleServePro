@@ -21,8 +21,7 @@ public ResponseEntity<Object> handleScan(@RequestBody Map<String, String> payloa
 
     String imageBase64 = payload.get("imageBase64");
 
-        String clarifaiUrl =
-    "https://api.clarifai.com/v2/models/vehicle-recognition/outputs";
+    String clarifaiUrl = "https://api.clarifai.com/v2/models/car-damage-detection/outputs";
 
     String apiKey = System.getenv("CLARIFAI_API_KEY");
 
