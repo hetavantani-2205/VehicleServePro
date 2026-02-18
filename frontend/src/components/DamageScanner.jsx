@@ -16,48 +16,40 @@ const DamageScanner = () => {
         }
     };
 
-    const scanImage = async () => {
-        if (!image) return alert("Please upload an image first!");
-        
-        setLoading(true);
-        const base64Data = image.split(',')[1];
+   const scanImage = async () => {
+    if (!image) return alert("Please upload an image first!");
+    
+    setLoading(true);
+    const base64Data = image.split(',')[1]; 
 
-        const raw = JSON.stringify({
-            "user_app_id": {
-                "user_id": import.meta.env.REACT_APP_CLARIFAI_USER_ID,
-                "app_id": import.meta.env.REACT_APP_CLARIFAI_APP_ID
+    try {
+  
+        const response = await fetch("/api/scan", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            "inputs": [
-                {
-                    "data": {
-                        "image": { "base64": base64Data }
-                    }
-                }
-            ]
+            body: JSON.stringify({ imageBase64: base64Data })
         });
 
-        try {
-            const response = await fetch(
-                "https://api.clarifai.com/v2/models/vehicle-detection/outputs",
-                {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Key ' + import.meta.env.REACT_APP_CLARIFAI_API_KEY
-                    },
-                    body: raw
-                }
-            );
+        if (!response.ok) throw new Error('Backend request failed');
 
-            const result = await response.json();
-            
+        const result = await response.json();
+        
+      
+        if (result.outputs && result.outputs.length > 0) {
             setResults(result.outputs[0].data.concepts || []);
-        } catch (error) {
-            console.error('AI Scan Error:', error);
-        } finally {
-            setLoading(false);
+        } else {
+            alert("AI could not process the image. Check your API keys.");
         }
-    };
+
+    } catch (error) {
+        console.error('AI Scan Error:', error);
+        alert("Connection failed. Make sure your environment variables are set.");
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <div style={containerStyle}>
