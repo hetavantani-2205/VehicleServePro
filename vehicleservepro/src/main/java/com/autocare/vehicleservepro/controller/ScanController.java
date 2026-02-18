@@ -22,7 +22,7 @@ public ResponseEntity<Object> handleScan(@RequestBody Map<String, String> payloa
     String imageBase64 = payload.get("imageBase64");
 
         String clarifaiUrl =
-    "https://api.clarifai.com/v2/models/general-image-detection/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs";
+    "https://api.clarifai.com/v2/models/vehicle-recognition/outputs";
 
     String apiKey = System.getenv("CLARIFAI_API_KEY");
 
