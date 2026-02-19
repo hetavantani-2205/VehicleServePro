@@ -112,15 +112,8 @@ function App() {
         <button onClick={() => setPage("home")}>Home</button>
         <button onClick={() => setPage("services")}>Services</button>
         
-        {/* --- AI DAMAGE SCANNER NAV LINK --- */}
-        {(user?.role === "CUSTOMER" || user?.role === "MECHANIC") && (
-          <button 
-            style={{ background: "#27ae60", color: "white", fontWeight: "bold", border: "none", padding: "8px 15px", borderRadius: "5px", cursor: "pointer" }} 
-            onClick={() => setPage("ai-scan")}
-          >
-            🔍 AI Damage Scan
-          </button>
-        )}
+        
+      
 
         <button onClick={() => setPage("team")}>Team</button>
         <button onClick={() => setPage("contact")}>Contact</button>
