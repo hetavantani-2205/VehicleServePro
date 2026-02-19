@@ -3,51 +3,46 @@ package com.autocare.vehicleservepro.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.Map;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")  
+@RequestMapping("/api")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class ScanController {
 
-    @Value("${clarifai.api.key}")
-    private String apiKey;
- 
-
     @PostMapping("/scan")
-public ResponseEntity<Object> handleScan(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<Object> handleScan(@RequestBody Map<String, String> payload) {
+        String imageBase64 = payload.get("imageBase64");
+        String apiKey = System.getenv("GEMINI_API_KEY");
 
-    String imageBase64 = payload.get("imageBase64");
-  
-  String clarifaiUrl = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/general-image-recognition/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs";
+     
+        String geminiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
-    String apiKey = System.getenv("CLARIFAI_API_KEY");
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-    RestTemplate restTemplate = new RestTemplate();
+        
+        Map<String, Object> body = Map.of(
+            "contents", List.of(
+                Map.of("parts", List.of(
+                    Map.of("text", "Identify any car damage in this image. List only the damaged parts and a confidence percentage from 0 to 1 for each. Format as a list of concepts."),
+                    Map.of("inline_data", Map.of(
+                        "mime_type", "image/png",
+                        "data", imageBase64
+                    ))
+                ))
+            )
+        );
 
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.set("Authorization", "Key " + apiKey);
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
-    Map<String, Object> body = Map.of(
-        "inputs", List.of(
-            Map.of("data", Map.of("image", Map.of("base64", imageBase64)))
-        )
-    );
-
-    HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-    try {
-        ResponseEntity<Object> response =
-                restTemplate.postForEntity(clarifaiUrl, entity, Object.class);
-
-        return ResponseEntity.ok(response.getBody());
-
-    } catch (Exception e) {
-        return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+        try {
+            ResponseEntity<Object> response = restTemplate.postForEntity(geminiUrl, entity, Object.class);
+            return ResponseEntity.ok(response.getBody());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", "Gemini API Error: " + e.getMessage()));
+        }
     }
-}
-
 }
