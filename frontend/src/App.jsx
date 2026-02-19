@@ -15,7 +15,7 @@ import VehicleHealth from "./components/VehicleHealth";
 import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
 import MechanicChecklist from "./components/MechanicChecklist";
-import DamageScanner from "./components/DamageScanner";
+
 
 const normalizeRole = (role) => {
   if (!role) return "CUSTOMER";
@@ -158,8 +158,7 @@ function App() {
         <div className="page-content" style={{ padding: "20px" }}>
           {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
           
-          {/* --- NEW AI SCANNER PAGE --- */}
-          {page === "ai-scan" && <DamageScanner />}
+          
 
           {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
           {page === "team" && <Team />}
