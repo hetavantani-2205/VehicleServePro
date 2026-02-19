@@ -258,7 +258,7 @@ function App() {
             <p onClick={() => setPage("home")} style={{ cursor: "pointer" }}>Home</p>
             <p onClick={() => setPage("services")} style={{ cursor: "pointer" }}>Services</p>
             <p onClick={() => setPage("booking")} style={{ cursor: "pointer" }}>Book Now</p>
-            <p onClick={() => setPage("ai-scan")} style={{ cursor: "pointer" }}>AI Inspection</p>
+           
           </div>
           <div>
             <h4>Contact</h4>
