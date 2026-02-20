@@ -31,7 +31,7 @@ public class AIController {
                 return ResponseEntity.status(500).body(Map.of("error", "API Key not found in Environment Variables"));
             }
 
-            String url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+            String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
             RestTemplate restTemplate = new RestTemplate();
 
