@@ -23,7 +23,8 @@ export default function Billing({ user }) {
 };
 
   const total = items.reduce(
-    (sum, item) => sum + item.price,
+    (sum, item) => sum + item.price *
+    item.qty,
     0
   );
 
@@ -93,27 +94,18 @@ export default function Billing({ user }) {
           <input placeholder="Customer Name" />
           <input placeholder="Vehicle Number" />
           <h4>Services</h4>
-          {items.map((item, index) => (
-            <div className="bill-row" key={index}>
-              <input
-                placeholder="Service Name"
-                value={item.name}
-                onChange={(e) => handleChange(index, "name", e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Price"
-                value={item.price}
-                onChange={(e) => handleChange(index, "price", e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Qty"
-                value={item.qty}
-                onChange={(e) => handleChange(index, "qty", e.target.value)}
-              />
-            </div>
-          ))}
+         {services.map((service) => (
+  <div key={service.id} style={{ marginBottom: "8px" }}>
+    <input
+      type="checkbox"
+      checked={items.some((item) => item.id === service.id)}
+      onChange={() => toggleService(service)}
+    />
+    <span style={{ marginLeft: "8px" }}>
+      {service.name} - ₹{service.price}
+    </span>
+  </div>
+))}
         
           <div className="bill-summary">
             <div><span>Subtotal</span><span>₹{total.toFixed(2)}</span></div>
@@ -138,29 +130,29 @@ export default function Billing({ user }) {
           <hr />
           <p><strong>Customer Name:</strong> {user?.name || "Valued Customer"}</p>
           <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ background: '#eee' }}>
-                <th style={{ textAlign: 'left', padding: '10px' }}>Service</th>
-                <th style={{ textAlign: 'right', padding: '10px' }}>Price</th>
-                <th style={{ textAlign: 'center', padding: '10px' }}>Qty</th>
-                <th style={{ textAlign: 'right', padding: '10px' }}>Total</th>
-              </tr>
-            </thead>
+  <thead>
+    <tr style={{ background: '#eee' }}>
+      <th style={{ textAlign: 'left', padding: '10px' }}>Service</th>
+      <th style={{ textAlign: 'right', padding: '10px' }}>Price</th>
+      <th style={{ textAlign: 'center', padding: '10px' }}>Qty</th>
+      <th style={{ textAlign: 'right', padding: '10px' }}>Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {items.map((item) => (
+      <tr key={item.id} style={{ borderBottom: '1px solid #ddd' }}>
+        <td style={{ padding: '10px' }}>{item.name}</td>
+        <td style={{ textAlign: 'right', padding: '10px' }}>₹{item.price}</td>
+        <td style={{ textAlign: 'center', padding: '10px' }}>{item.qty}</td>
+        <td style={{ textAlign: 'right', padding: '10px' }}>
+          ₹{(item.price * item.qty).toFixed(2)}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
           
-             {services.map((service) => (
-            <div key={service.id} style={{ marginBottom: "8px" }}>
-    <input
-      type="checkbox"
-      checked={items.some((item) => item.id === service.id)}
-      onChange={() => toggleService(service)}
-    />
-    <span style={{ marginLeft: "8px" }}>
-      {service.name} - ₹{service.price}
-    </span>
-  </div>
-))}
-            
-          </table>
           <div style={{ textAlign: 'right', marginTop: '20px' }}>
             <p>Subtotal: ₹{total.toFixed(2)}</p>
             <p>GST ({gst}%): ₹{gstAmount.toFixed(2)}</p>
