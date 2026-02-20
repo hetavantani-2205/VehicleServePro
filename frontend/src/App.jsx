@@ -15,6 +15,7 @@ import VehicleHealth from "./components/VehicleHealth";
 import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
 import MechanicChecklist from "./components/MechanicChecklist";
+import VirtualMechanic from "./components/VirtualMechanic";
 
 const normalizeRole = (role) => {
   if (!role) return "CUSTOMER";
@@ -127,6 +128,15 @@ function App() {
           </>
         )}
 
+        {user?.role === "CUSTOMER" && (
+     <button 
+           style={{ background: "#8e44ad", color: "white" }} 
+          onClick={() => setPage("ai-mechanic")}
+  >
+         🤖 AI Mechanic
+    </button>
+)}
+
         <button style={{ background: "crimson", color: "white" }} onClick={handleLogout}>Logout</button>
 
         <div style={{ display: "flex", alignItems: "center", marginLeft: "20px", color: "white" }}>
@@ -148,6 +158,7 @@ function App() {
         {page === "billing" && <Billing user={user} />}
         {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
         {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
+        {page === "ai-mechanic" && <VirtualMechanic />}
 
         {page === "track" && (
           <div className="section-content">

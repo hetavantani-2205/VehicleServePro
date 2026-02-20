@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@stomp/stompjs": "^7.2.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.0.0",
