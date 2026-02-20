@@ -184,17 +184,75 @@ function App() {
         )}
       </div>
 
-      {/* --- FOOTER --- */}
+     
+      {/* Footer */}
+
       <footer style={{ background: "#0a3d62", color: "white", padding: "30px 20px", marginTop: "50px" }}>
+
+        {/* ... Footer Content Remains Same ... */}
+
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", maxWidth: "1100px", margin: "0 auto" }}>
-          <div><h3>VehicleServePro</h3><p>Smart Vehicle Management System.</p></div>
-          <div><h4>Quick Links</h4><p onClick={() => setPage("home")} style={{ cursor: "pointer" }}>Home</p></div>
-          <div><h4>Contact</h4><p>📍 Made in India</p></div>
+
+          <div>
+
+            <h3>VehicleServePro</h3>
+
+            <p>Smart Vehicle Service & Maintenance Management System.</p>
+
+          </div>
+
+          <div>
+
+            <h4>Quick Links</h4>
+
+            <p onClick={() => setPage("home")} style={{ cursor: "pointer" }}>Home</p>
+
+            <p onClick={() => setPage("services")} style={{ cursor: "pointer" }}>Services</p>
+
+            <p onClick={() => setPage("booking")} style={{ cursor: "pointer" }}>Book Now</p>
+
+           
+
+          </div>
+
+          <div>
+
+            <h4>Contact</h4>
+
+            <p>
+
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vehicleservepro@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFFFFF", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", fontWeight: "bold" }}>
+
+                ✉️ Email Us
+
+              </a>
+
+            </p>
+
+            <p>
+
+              <a href="https://wa.me/919925203480" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px", fontWeight: "bold" }}>
+
+                💬 WhatsApp Us
+
+              </a>
+
+            </p>
+
+            <p>📍 Made in India</p>
+
+          </div>
+
         </div>
-        <div style={{ textAlign: "center", marginTop: "20px", paddingTop: "10px", fontSize: "14px" }}>
+
+        <div style={{ textAlign: "center", marginTop: "20px", borderTop: "1px solid rgba(255,255,255,0.2)", paddingTop: "10px", fontSize: "14px" }}>
+
           © 2026 VehicleServePro | All Rights Reserved
+
         </div>
+
       </footer>
+
     </>
   );
 }
