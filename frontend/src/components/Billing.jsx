@@ -3,21 +3,27 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 export default function Billing({ user }) {
-  const [items, setItems] = useState([{ name: "", price: "", qty: 1 }]);
+  const [items, setItems] = useState([]);
   const [gst, setGst] = useState(18);
+  const [services, setServices] = useState([
+  { id: 1, name: "Oil Change", price: 1200 },
+  { id: 2, name: "Brake Inspection", price: 800 },
+  { id: 3, name: "Wheel Alignment", price: 1500 },
+  { id: 4, name: "Battery Check", price: 500 },
+]);
 
-  const handleChange = (index, field, value) => {
-    const updated = [...items];
-    updated[index][field] = value;
-    setItems(updated);
-  };
+ const toggleService = (service) => {
+  const exists = items.find((item) => item.id === service.id);
 
-  const addItem = () => {
-    setItems([...items, { name: "", price: "", qty: 1 }]);
-  };
+  if (exists) {
+    setItems(items.filter((item) => item.id !== service.id));
+  } else {
+    setItems([...items, { ...service, qty: 1 }]);
+  }
+};
 
   const total = items.reduce(
-    (sum, item) => sum + (Number(item.price) || 0) * (Number(item.qty) || 0),
+    (sum, item) => sum + item.price,
     0
   );
 
@@ -140,16 +146,20 @@ export default function Billing({ user }) {
                 <th style={{ textAlign: 'right', padding: '10px' }}>Total</th>
               </tr>
             </thead>
-            <tbody>
-              {items.map((item, index) => (
-                <tr key={index} style={{ borderBottom: '1px solid #ddd' }}>
-                  <td style={{ padding: '10px' }}>{item.name || "Service"}</td>
-                  <td style={{ textAlign: 'right', padding: '10px' }}>₹{Number(item.price).toFixed(2)}</td>
-                  <td style={{ textAlign: 'center', padding: '10px' }}>{item.qty}</td>
-                  <td style={{ textAlign: 'right', padding: '10px' }}>₹{(item.price * item.qty).toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
+          
+             {services.map((service) => (
+            <div key={service.id} style={{ marginBottom: "8px" }}>
+    <input
+      type="checkbox"
+      checked={items.some((item) => item.id === service.id)}
+      onChange={() => toggleService(service)}
+    />
+    <span style={{ marginLeft: "8px" }}>
+      {service.name} - ₹{service.price}
+    </span>
+  </div>
+))}
+            
           </table>
           <div style={{ textAlign: 'right', marginTop: '20px' }}>
             <p>Subtotal: ₹{total.toFixed(2)}</p>

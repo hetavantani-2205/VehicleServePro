@@ -23,19 +23,50 @@ public class BookingController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<Booking> saveBooking(@RequestBody Booking booking) {
-        try {
-            booking.setStatus("PENDING");
+public ResponseEntity<Booking> saveBooking(@RequestBody Booking booking) {
+    try {
 
-            Booking saved = bookingRepository.save(booking);
+        booking.setStatus("PENDING");
 
+        double total = 0;
 
-            return ResponseEntity.ok(saved);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).build();
+        if (booking.getServiceType() != null) {
+
+            String[] services = booking.getServiceType().split(",");
+
+            for (String service : services) {
+                switch (service.trim()) {
+
+                    case "Oil Change":
+                        total += 1200;
+                        break;
+
+                    case "Brake Inspection":
+                        total += 800;
+                        break;
+
+                    case "Wheel Alignment":
+                        total += 1500;
+                        break;
+
+                    case "Battery Check":
+                        total += 500;
+                        break;
+                }
+            }
         }
+
+        booking.setPrice(total);
+
+        Booking saved = bookingRepository.save(booking);
+
+        return ResponseEntity.ok(saved);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(500).build();
     }
+}
 
   
     @GetMapping
