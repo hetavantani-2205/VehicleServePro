@@ -114,7 +114,7 @@ export default function Billing({ user }) {
               />
             </div>
           ))}
-          <button onClick={addItem}>+ Add Service</button>
+        
           <div className="bill-summary">
             <div><span>Subtotal</span><span>₹{total.toFixed(2)}</span></div>
             <div>
