@@ -3,9 +3,9 @@ package com.autocare.vehicleservepro.controller;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,57 +22,75 @@ public class AIController {
 
     @PostMapping("/diagnose")
     public ResponseEntity<?> diagnose(@RequestBody Map<String, String> payload) {
+
         try {
             String symptom = payload.get("symptom");
-            String apiKey = System.getenv("GEMINI_API_KEY");
 
-         
-            if (apiKey == null || apiKey.isEmpty()) {
-                return ResponseEntity.status(500).body(Map.of("error", "API Key not found in Environment Variables"));
+            if (symptom == null || symptom.isBlank()) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Symptom is required"));
             }
 
-            String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+            String apiKey = System.getenv("GEMINI_API_KEY");
+
+            if (apiKey == null || apiKey.isBlank()) {
+                return ResponseEntity.status(500)
+                        .body(Map.of("error", "GEMINI_API_KEY not found in environment"));
+            }
+
+          String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
 
             RestTemplate restTemplate = new RestTemplate();
 
- 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             String prompt = "You are a professional senior car mechanic. A customer says: \""
-                    + symptom + "\". Briefly explain what might be wrong. Suggest 2-3 maintenance checks. End with: Would you like to book an inspection?";
+                    + symptom
+                    + "\". 1. Briefly explain what might be wrong. "
+                    + "2. Suggest 2-3 maintenance checks. "
+                    + "3. Keep it professional and concise. "
+                    + "4. End with: Would you like to book an inspection?";
 
-            
             Map<String, Object> body = Map.of(
-                "contents", List.of(
-                    Map.of("parts", List.of(
-                        Map.of("text", prompt)
-                    ))
-                )
+                    "contents", List.of(
+                            Map.of("parts", List.of(
+                                    Map.of("text", prompt)
+                            ))
+                    )
             );
 
-      
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
-            ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
+            ResponseEntity<Map> response =
+                    restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
 
             Map responseBody = response.getBody();
 
+            if (responseBody == null || !responseBody.containsKey("candidates")) {
+                return ResponseEntity.status(500)
+                        .body(Map.of("error", "Invalid AI response", "raw", responseBody));
+            }
 
-List candidates = (List) responseBody.get("candidates");
-Map firstCandidate = (Map) candidates.get(0);
-Map content = (Map) firstCandidate.get("content");
-List parts = (List) content.get("parts");
-Map firstPart = (Map) parts.get(0);
+            List candidates = (List) responseBody.get("candidates");
 
-String aiText = (String) firstPart.get("text");
+            if (candidates.isEmpty()) {
+                return ResponseEntity.status(500)
+                        .body(Map.of("error", "No AI candidates returned"));
+            }
 
+            Map firstCandidate = (Map) candidates.get(0);
+            Map content = (Map) firstCandidate.get("content");
+            List parts = (List) content.get("parts");
+            Map firstPart = (Map) parts.get(0);
 
-return ResponseEntity.ok(Map.of("advice", aiText));
+            String aiText = (String) firstPart.get("text");
 
-          
+            return ResponseEntity.ok(Map.of("advice", aiText));
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 }
