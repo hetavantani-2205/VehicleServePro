@@ -92,48 +92,50 @@ function App() {
 
   return (
     <>
-      {/* --- STICKY HEADER SECTION --- */}
-      <header style={{ 
+      {/* --- STICKY HEADING SECTION --- */}
+      <div style={{ 
         position: "sticky", 
         top: 0, 
-        zIndex: 1000, 
-        background: "#fff", 
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)" 
+        zIndex: 1100, 
+        background: "#ffffff", 
+        textAlign: "center", 
+        padding: "10px 20px",
+        borderBottom: "1px solid #eee",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.05)"
       }}>
-        <div style={{ textAlign: "center", padding: "10px 20px" }}>
-          <h1 style={{ margin: 0, color: "#0a3d62", fontSize: "1.8rem" }}>VehicleServePro</h1>
-          <p style={{ margin: 0, fontSize: "0.8rem", color: "#666" }}>Manage services, vehicles, and bookings in one place.</p>
-        </div>
+        <h1 style={{ margin: 0, color: "#0a3d62", fontSize: "1.8rem" }}>VehicleServePro</h1>
+        <p style={{ margin: 0, fontSize: "0.8rem", color: "#666" }}>Manage services, vehicles, and bookings in one place.</p>
+      </div>
 
-        <nav style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px", background: "#0a3d62", padding: "12px", flexWrap: "wrap" }}>
-          <button onClick={() => setPage("home")}>Home</button>
-          <button onClick={() => setPage("services")}>Services</button>
-          <button onClick={() => setPage("team")}>Team</button>
-          <button onClick={() => setPage("contact")}>Contact</button>
+      {/* --- NAVIGATION BAR (Moves with scroll) --- */}
+      <nav style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px", background: "#0a3d62", padding: "12px", flexWrap: "wrap" }}>
+        <button onClick={() => setPage("home")}>Home</button>
+        <button onClick={() => setPage("services")}>Services</button>
+        <button onClick={() => setPage("team")}>Team</button>
+        <button onClick={() => setPage("contact")}>Contact</button>
 
-          {user?.role === "ADMIN" && (
-            <button style={{ background: "#f39c12", color: "white", fontWeight: "bold", border: "none", padding: "8px 15px", borderRadius: "5px", cursor: "pointer" }} onClick={() => setPage("sales-report")}>
-              📈 Sales Report
-            </button>
-          )}
+        {user?.role === "ADMIN" && (
+          <button style={{ background: "#f39c12", color: "white", fontWeight: "bold", border: "none", padding: "8px 15px", borderRadius: "5px", cursor: "pointer" }} onClick={() => setPage("sales-report")}>
+            📈 Sales Report
+          </button>
+        )}
 
-          {user?.role === "CUSTOMER" && (
-            <>
-              <button onClick={() => setPage("billing")}>My Bills</button>
-              <button onClick={() => setPage("feedback")}>Feedback</button>
-            </>
-          )}
+        {user?.role === "CUSTOMER" && (
+          <>
+            <button onClick={() => setPage("billing")}>My Bills</button>
+            <button onClick={() => setPage("feedback")}>Feedback</button>
+          </>
+        )}
 
-          <button style={{ background: "crimson", color: "white" }} onClick={handleLogout}>Logout</button>
+        <button style={{ background: "crimson", color: "white" }} onClick={handleLogout}>Logout</button>
 
-          <div style={{ display: "flex", alignItems: "center", marginLeft: "20px", color: "white" }}>
-            <div style={{ width: "30px", height: "30px", background: "#1e90ff", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginRight: "8px", fontWeight: "bold", fontSize: "14px" }}>
-              {(user.name || "U").charAt(0).toUpperCase()}
-            </div>
-            <span style={{ fontSize: "14px" }}>{user.name || "User"}</span>
+        <div style={{ display: "flex", alignItems: "center", marginLeft: "20px", color: "white" }}>
+          <div style={{ width: "30px", height: "30px", background: "#1e90ff", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginRight: "8px", fontWeight: "bold", fontSize: "14px" }}>
+            {(user.name || "U").charAt(0).toUpperCase()}
           </div>
-        </nav>
-      </header>
+          <span style={{ fontSize: "14px" }}>{user.name || "User"}</span>
+        </div>
+      </nav>
 
       {/* --- MAIN PAGE CONTENT --- */}
       <div className="page-wrapper" style={{ padding: "20px" }}>
