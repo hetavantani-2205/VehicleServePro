@@ -20,7 +20,8 @@ const VirtualMechanic = () => {
       });
       const data = await response.json();
       
-      // Add AI response to chat
+    
+
       setChat([...newChat, { role: "bot", text: data.advice }]);
       setInput("");
     } catch (err) {
@@ -40,7 +41,7 @@ const VirtualMechanic = () => {
               display: "inline-block", 
               padding: "8px 12px", 
               borderRadius: "15px", 
-              background: msg.role === "user" ? "#1e90ff" : "#eee",
+              background: msg.role === "user" ? "#FFFFFF" : "#eee",
               color: msg.role === "user" ? "white" : "black"
             }}>
               {msg.text}
