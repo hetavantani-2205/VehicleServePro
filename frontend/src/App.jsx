@@ -16,9 +16,10 @@ import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
 import MechanicChecklist from "./components/MechanicChecklist";
 import VirtualMechanic from "./components/VirtualMechanic";
+import './App.css';
 
 const normalizeRole = (role) => {
-  if (!role) return "CUSTOMER";
+  if (!role) return "CUSTOMER";a
   const r = role.toUpperCase();
   if (r.includes("ADMIN")) return "ADMIN";
   if (r.includes("MECHANIC")) return "MECHANIC";
