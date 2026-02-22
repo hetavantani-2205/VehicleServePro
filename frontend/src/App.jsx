@@ -93,10 +93,15 @@ function App() {
 
   return (
     <>
-      <header className="site-header">
-        <h1>VehicleServePro</h1>
-        <p>Manage services, vehicles, and bookings in one place.</p>
-      </header>
+      <section className="hero">
+  <div>
+    <h1>VehicleServePro</h1>
+    <p>
+      Smart vehicle service management platform with AI diagnostics,
+      automated billing, and seamless tracking — built for modern workshops.
+    </p>
+  </div>
+</section>
 
       <nav>
         <button onClick={() => setPage("home")}>Home</button>
