@@ -2,14 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Cinematic Color Palette */
+  /* Color Palette */
   --bg-deep: #080a0f;
   --bg-surface: #11141d;
   --bg-card: rgba(23, 27, 38, 0.7);
   
-  --primary: #5b8cff; /* Electric Blue */
+  --primary: #5b8cff;
+  --primary-deep: #1e3a8a; /* Added missing variable */
   --primary-glow: rgba(91, 140, 255, 0.3);
-  --accent: #8c5bff;   /* AI Purple */
+  --accent: #8c5bff;
+  --success: #22c55e;      /* Added missing variable */
+  
   --text-main: #ffffff;
   --text-muted: #94a3b8;
   
@@ -20,7 +23,16 @@
   --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* --- BASE STYLES --- */
+/* Custom Scrollbar for 2026 Aesthetic */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { 
+  background: var(--bg-surface); 
+  border-radius: 10px; 
+  border: 2px solid var(--bg-deep);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -31,13 +43,13 @@ body {
     radial-gradient(circle at 90% 80%, rgba(140, 91, 255, 0.05) 0%, transparent 40%);
   min-height: 100vh;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* --- HERO SECTION (Cinematic Entry) --- */
+/* --- HERO SECTION --- */
 .hero {
-  padding: 100px 5% 60px;
+  padding: 120px 5% 60px; /* Increased padding for sticky nav clearance */
   text-align: center;
-  background: linear-gradient(to bottom, rgba(8, 10, 15, 0) 0%, var(--bg-deep) 100%);
 }
 
 .hero h1 {
@@ -50,14 +62,7 @@ body {
   letter-spacing: -2px;
 }
 
-.hero p {
-  color: var(--text-muted);
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-}
-
-/* --- MODERN NAVIGATION (Capsule Design) --- */
+/* --- MODERN NAVIGATION --- */
 .modern-nav {
   position: sticky;
   top: 20px;
@@ -76,238 +81,53 @@ body {
   box-shadow: var(--glass-shadow);
 }
 
-.modern-nav button {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  padding: 10px 20px;
-  border-radius: 100px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.modern-nav button:hover {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Featured Nav Buttons */
-.book-btn-small {
-  background: var(--primary) !important;
-  color: white !important;
-  box-shadow: 0 10px 20px var(--primary-glow);
-}
-
-.ai-btn {
-  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
-  border: none !important;
-}
-
-.logout-btn {
-  background: rgba(239, 68, 68, 0.1) !important;
-  color: #ef4444 !important;
-  border: 1px solid rgba(239, 68, 68, 0.2) !important;
-}
-
-/* Avatar Styling */
-.user-avatar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-left: auto;
-  padding-left: 20px;
-  border-left: var(--glass-border);
-}
-
-.avatar-circle {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  color: white;
+/* Nav Link Hover States */
+.modern-nav button:not(.book-btn-small):not(.logout-btn):hover {
+  color: var(--primary);
+  background: rgba(91, 140, 255, 0.1);
 }
 
 /* --- BENTO CARD SYSTEM --- */
-.container {
-  max-width: 1300px;
-  padding: 40px 5%;
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-}
-
 .service-card {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
   padding: 40px;
   border: var(--glass-border);
   transition: var(--transition);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  height: 100%; /* Ensure cards in grid match height */
+  box-sizing: border-box;
 }
 
-.service-card:hover {
-  transform: translateY(-10px);
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--primary);
-  box-shadow: 0 0 30px var(--primary-glow);
-}
-
-.service-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-}
-
-/* --- BILLING & FORMS (Glass Design) --- */
-.section-content {
-  background: var(--bg-card);
-  padding: 50px;
-  border-radius: var(--radius-xl);
-  border: var(--glass-border);
-  backdrop-filter: blur(10px);
-}
-
+/* --- FORMS --- */
 input, select, textarea {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   border: var(--glass-border);
   border-radius: var(--radius-md);
-  padding: 15px;
+  padding: 16px;
   color: white;
-  width: 100%;
-  margin-bottom: 20px;
+  font-family: inherit;
   transition: var(--transition);
 }
 
 input:focus {
-  outline: none;
+  background: rgba(255, 255, 255, 0.08);
   border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px var(--primary-glow);
+  outline: none;
 }
 
-/* --- FOOTER (Dark & Minimal) --- */
-.site-footer {
-  margin-top: 100px;
-  padding: 80px 5%;
-  background: #000;
-  border-top: var(--glass-border);
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 40px;
-  max-width: 1300px;
-  margin: 0 auto;
-}
-
-.footer-grid h3, .footer-grid h4 {
-  color: white;
-  margin-bottom: 20px;
-}
-
-.footer-grid p, .contact-link, .whatsapp-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  display: block;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.footer-grid p:hover {
-  color: var(--primary);
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 50px;
-  margin-top: 50px;
-  border-top: var(--glass-border);
-  font-size: 0.9rem;
-  color: #444;
-}
-
-/* --- RESPONSIVE MOBILE TWEAKS --- */
-@media (max-width: 768px) {
-  .modern-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 30px;
-    top: 10px;
-  }
-  
-  .user-avatar {
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px 0;
-    border-left: none;
-    border-top: var(--glass-border);
-    justify-content: center;
-  }
-}
-
-/* --- HOME SPECIFIC 2026 ADDITIONS --- */
+/* --- HOME ADDITIONS --- */
 .gradient-text {
   background: linear-gradient(90deg, #ffffff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
-}
-
-.subtitle {
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  margin-top: 15px;
-}
-
-.icon-main {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 0 10px var(--primary-glow));
-}
-
-.outline-btn {
-  background: transparent !important;
-  border: 1px solid var(--primary) !important;
-  color: var(--primary) !important;
-}
-
-.mission-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: center;
-  margin-top: 80px;
-}
-
-.feature-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-}
-
-.feature-list li {
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text-muted);
 }
 
 .bento-glow {
   background: linear-gradient(135deg, var(--bg-surface), var(--primary-deep));
-  height: 350px;
+  padding: 40px;
   border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
@@ -315,26 +135,18 @@ input:focus {
   align-items: center;
   border: var(--glass-border);
   position: relative;
-  box-shadow: 0 0 50px rgba(91, 140, 255, 0.1);
-}
-
-.brand-logo {
-  font-size: 2rem;
-  font-weight: 900;
-  letter-spacing: -1px;
+  overflow: hidden;
 }
 
 .badge {
   position: absolute;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   background: var(--success);
-  padding: 6px 18px;
-  border-radius: 100px;
+  color: #000;
+  padding: 4px 14px;
+  border-radius: 50px;
   font-weight: 700;
-  font-size: 0.8rem;
-}
-
-@media (max-width: 768px) {
-  .mission-layout { grid-template-columns: 1fr; }
+  font-size: 0.75rem;
+  text-transform: uppercase;
 }

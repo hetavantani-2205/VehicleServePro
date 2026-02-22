@@ -58,6 +58,7 @@ function App() {
 
   useEffect(() => {
     setActiveSubService(null);
+    window.scrollTo(0, 0); // Reset scroll on page change
   }, [page]);
 
   useEffect(() => {
@@ -71,7 +72,7 @@ function App() {
 
   if (!isLoggedIn) {
     return (
-      <>
+      <div className="auth-wrapper">
         {page === "login" && (
           <Login
             onLogin={(userdata) => {
@@ -87,142 +88,144 @@ function App() {
           />
         )}
         {page === "register" && <Register goLogin={() => setPage("login")} />}
-      </>
+      </div>
     );
   }
 
   return (
-    <>
-      <section className="hero">
-  <div>
-    <h1>VehicleServePro</h1>
-    <p>
-      Smart vehicle service management platform with AI diagnostics,
-      automated billing, and seamless tracking — built for modern workshops.
-    </p>
-  </div>
-</section>
+    <div className="app-main-layout">
+      {/* 1. STICKY NAVIGATION */}
+      <nav className="modern-nav">
+        <div className="nav-logo" onClick={() => setPage("home")}>VSP</div>
+        
+        <div className="nav-links">
+          <button className={page === "home" ? "active" : ""} onClick={() => setPage("home")}>Home</button>
+          <button className={page === "services" ? "active" : ""} onClick={() => setPage("services")}>Services</button>
+          <button className={page === "team" ? "active" : ""} onClick={() => setPage("team")}>Team</button>
+          <button className={page === "contact" ? "active" : ""} onClick={() => setPage("contact")}>Contact</button>
 
-      <nav>
-        <button onClick={() => setPage("home")}>Home</button>
-        <button onClick={() => setPage("services")}>Services</button>
-        <button onClick={() => setPage("team")}>Team</button>
-        <button onClick={() => setPage("contact")}>Contact</button>
-
-        {user?.role === "ADMIN" && (
-          <button className="book-btn-small" onClick={() => setPage("sales-report")}>
-            📈 Sales Report
-          </button>
-        )}
-
-        {user?.role === "CUSTOMER" && (
-          <>
-            <button className="book-btn-small" onClick={() => setPage("billing")}>My Bills</button>
-            <button className="book-btn-small" onClick={() => setPage("feedback")}>Feedback</button>
-            <button className="book-btn-small ai-btn" onClick={() => setPage("ai-mechanic")}>
-              🤖 AI Mechanic
+          {user?.role === "ADMIN" && (
+            <button className="book-btn-small" onClick={() => setPage("sales-report")}>
+              📈 Sales
             </button>
-          </>
-        )}
+          )}
 
-        <button className="book-btn-small logout-btn" onClick={handleLogout}>Logout</button>
+          {user?.role === "CUSTOMER" && (
+            <>
+              <button className="book-btn-small" onClick={() => setPage("billing")}>My Bills</button>
+              <button className="book-btn-small ai-btn" onClick={() => setPage("ai-mechanic")}>
+                🤖 AI Mechanic
+              </button>
+            </>
+          )}
+        </div>
 
-        <div className="user-avatar">
-          <div className="avatar-circle">
-            {(user.name || "U").charAt(0).toUpperCase()}
+        <div className="user-profile-section">
+          <button className="logout-icon-btn" onClick={handleLogout} title="Logout">Logout</button>
+          <div className="user-avatar">
+            <div className="avatar-circle">
+              {(user.name || "U").charAt(0).toUpperCase()}
+            </div>
+            <span className="user-name-label">{user.name || "User"}</span>
           </div>
-          <span>{user.name || "User"}</span>
         </div>
       </nav>
 
-      <div className="container page-wrapper">
+      {/* 2. PAGE CONTENT AREA */}
+      <main className="content-area">
         {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
-        {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
-        {page === "team" && <Team />}
-        {page === "contact" && <Contact />}
-        {page === "vehicle" && <Dashboard />}
-        {page === "centers" && <ServiceCenters />}
-        {page === "billing" && <Billing user={user} />}
-        {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
-        {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
-        {page === "ai-mechanic" && <VirtualMechanic />}
+        
+        <div className="container">
+          {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
+          {page === "team" && <Team />}
+          {page === "contact" && <Contact />}
+          {page === "vehicle" && <Dashboard />}
+          {page === "centers" && <ServiceCenters />}
+          {page === "billing" && <Billing user={user} />}
+          {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
+          {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
+          {page === "ai-mechanic" && <VirtualMechanic />}
 
-        {page === "track" && (
-          <div className="section-content">
-            {user?.role === "ADMIN" ? (
-              <div className="service-card" style={{ textAlign: 'center', padding: '3rem' }}>
-                <h2>Vehicle Tracking</h2>
-                <p>Personal tracking is for Customers. Use Sales Report for Admin tasks.</p>
-                <button className="book-btn-small" onClick={() => setPage("home")}>Return Home</button>
-              </div>
-            ) : (
-              <div>
-                <h2>{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Status"}</h2>
-                {!activeSubService ? (
-                  <div className="services-grid">
-                    <div className="service-card" onClick={() => setActiveSubService("health")}>
-                      <h3>🚗 Health</h3>
-                    </div>
-                    {user.role === "CUSTOMER" && (
-                      <div className="service-card" onClick={() => setActiveSubService("locker")}>
-                        <h3>📁 Locker</h3>
+          {page === "track" && (
+            <div className="section-content">
+              {user?.role === "ADMIN" ? (
+                <div className="service-card centered-card">
+                  <h2>Vehicle Tracking</h2>
+                  <p>Personal tracking is for Customers. Use Sales Report for Admin tasks.</p>
+                  <button className="book-btn-small" onClick={() => setPage("home")}>Return Home</button>
+                </div>
+              ) : (
+                <div className="tracking-sub-module">
+                  <h2 className="section-title">{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Status"}</h2>
+                  {!activeSubService ? (
+                    <div className="services-grid bento-grid">
+                      <div className="service-card bento-item" onClick={() => setActiveSubService("health")}>
+                        <div className="bento-icon">🚗</div>
+                        <h3>Health Metrics</h3>
                       </div>
-                    )}
-                    <div className="service-card" onClick={() => setActiveSubService("status")}>
-                      <h3>⏱️ Status</h3>
+                      {user.role === "CUSTOMER" && (
+                        <div className="service-card bento-item" onClick={() => setActiveSubService("locker")}>
+                          <div className="bento-icon">📁</div>
+                          <h3>Document Locker</h3>
+                        </div>
+                      )}
+                      <div className="service-card bento-item" onClick={() => setActiveSubService("status")}>
+                        <div className="bento-icon">⏱️</div>
+                        <h3>Live Status</h3>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div>
-                    <button className="book-btn-small" onClick={() => setActiveSubService(null)}>← Back</button>
-                    {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
-                    {activeSubService === "locker" && <DocumentLocker />}
-                    {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {page === "booking" && (
-          user.role === "CUSTOMER" ? 
-            <ServiceBooking onComplete={() => setPage("home")} /> : 
-            <div className="service-card" style={{ textAlign: 'center', maxWidth: '400px', margin: '2rem auto' }}>
-              <h2>Access Denied</h2>
-              <button className="book-btn-small" onClick={() => setPage("home")}>Go Home</button>
+                  ) : (
+                    <div className="active-sub-view">
+                      <button className="back-btn" onClick={() => setActiveSubService(null)}>← Back to Dashboard</button>
+                      <div className="sub-component-render">
+                        {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
+                        {activeSubService === "locker" && <DocumentLocker />}
+                        {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-        )}
-      </div>
+          )}
 
+          {page === "booking" && (
+            user.role === "CUSTOMER" ? 
+              <ServiceBooking onComplete={() => setPage("home")} /> : 
+              <div className="service-card centered-card">
+                <h2>Access Denied</h2>
+                <button className="book-btn-small" onClick={() => setPage("home")}>Go Home</button>
+              </div>
+          )}
+        </div>
+      </main>
+
+      {/* 3. SITE FOOTER */}
       <footer className="site-footer">
         <div className="footer-grid">
-          <div>
+          <div className="footer-brand">
             <h3>VehicleServePro</h3>
-            <p>Smart Vehicle Service & Maintenance Management System.</p>
+            <p>The future of smart vehicle maintenance management.</p>
           </div>
-          <div>
-            <h4>Quick Links</h4>
-            <p onClick={() => setPage("home")}>Home</p>
-            <p onClick={() => setPage("services")}>Services</p>
-            <p onClick={() => setPage("booking")}>Book Now</p>
+          <div className="footer-links">
+            <h4>Sitemap</h4>
+            <ul>
+              <li onClick={() => setPage("home")}>Home</li>
+              <li onClick={() => setPage("services")}>Services</li>
+              <li onClick={() => setPage("booking")}>Book Now</li>
+            </ul>
           </div>
-          <div>
-            <h4>Contact</h4>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vehicleservepro@gmail.com" target="_blank" rel="noopener noreferrer" className="contact-link">
-              ✉️ Email Us
-            </a>
-            <a href="https://wa.me/919925203480" target="_blank" rel="noopener noreferrer" className="whatsapp-link">
-              💬 WhatsApp Us
-            </a>
-            <p>📍 Made in India</p>
+          <div className="footer-contact">
+            <h4>Support</h4>
+            <a href="mailto:vehicleservepro@gmail.com" className="contact-link">✉️ Email</a>
+            <a href="https://wa.me/919925203480" className="whatsapp-link">💬 WhatsApp</a>
           </div>
         </div>
         <div className="footer-bottom">
-          © 2026 VehicleServePro | All Rights Reserved
+          &copy; 2026 VehicleServePro | Designed for Excellence
         </div>
       </footer>
-    </>
+    </div>
   );
 }
 
