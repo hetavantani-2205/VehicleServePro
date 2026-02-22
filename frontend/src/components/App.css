@@ -384,3 +384,15 @@ button, .book-btn-small {
   .services-grid { grid-template-columns: 1fr; }
   .home .hero-overlay h2 { font-size: clamp(2rem, 10vw, 3.5rem); }
 }
+
+.user-avatar { display: flex; align-items: center; gap: 0.75rem; color: white; margin-left: auto; }
+.avatar-circle { width: 2.25rem; height: 2.25rem; background: var(--accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; flex-shrink: 0; }
+.ai-btn, .logout-btn { margin-left: 0.5rem; }
+.site-footer { background: linear-gradient(135deg, var(--primary), var(--primary-deep)); color: white; padding: 3rem 1.5rem; margin-top: 4rem; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 2rem; max-width: 68rem; margin: 0 auto 1.5rem; }
+.site-footer h3, .site-footer h4 { margin-bottom: 1rem; }
+.site-footer p { margin-bottom: 0.5rem; cursor: pointer; }
+.contact-link { color: white; text-decoration: none; display: block; margin-bottom: 0.5rem; }
+.whatsapp-link { color: #25d366 !important; display: block; margin-bottom: 0.5rem; }
+.footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; font-size: 0.875rem; }
+

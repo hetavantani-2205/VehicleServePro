@@ -93,62 +93,44 @@ function App() {
 
   return (
     <>
-      {/* --- STICKY HEADING SECTION --- */}
-      <div style={{ 
-        position: "sticky", 
-        top: 0, 
-        zIndex: 1100, 
-        background: "#ffffff", 
-        textAlign: "center", 
-        padding: "10px 20px",
-        borderBottom: "1px solid #eee",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.05)"
-      }}>
-        <h1 style={{ margin: 0, color: "#0a3d62", fontSize: "1.8rem" }}>VehicleServePro</h1>
-        <p style={{ margin: 0, fontSize: "0.8rem", color: "#666" }}>Manage services, vehicles, and bookings in one place.</p>
-      </div>
+      <header className="site-header">
+        <h1>VehicleServePro</h1>
+        <p>Manage services, vehicles, and bookings in one place.</p>
+      </header>
 
-      {/* --- NAVIGATION BAR (Moves with scroll) --- */}
-      <nav style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px", background: "#0a3d62", padding: "12px", flexWrap: "wrap" }}>
+      <nav>
         <button onClick={() => setPage("home")}>Home</button>
         <button onClick={() => setPage("services")}>Services</button>
         <button onClick={() => setPage("team")}>Team</button>
         <button onClick={() => setPage("contact")}>Contact</button>
 
         {user?.role === "ADMIN" && (
-          <button style={{ background: "#f39c12", color: "white", fontWeight: "bold", border: "none", padding: "8px 15px", borderRadius: "5px", cursor: "pointer" }} onClick={() => setPage("sales-report")}>
+          <button className="book-btn-small" onClick={() => setPage("sales-report")}>
             📈 Sales Report
           </button>
         )}
 
         {user?.role === "CUSTOMER" && (
           <>
-            <button onClick={() => setPage("billing")}>My Bills</button>
-            <button onClick={() => setPage("feedback")}>Feedback</button>
+            <button className="book-btn-small" onClick={() => setPage("billing")}>My Bills</button>
+            <button className="book-btn-small" onClick={() => setPage("feedback")}>Feedback</button>
+            <button className="book-btn-small ai-btn" onClick={() => setPage("ai-mechanic")}>
+              🤖 AI Mechanic
+            </button>
           </>
         )}
 
-        {user?.role === "CUSTOMER" && (
-     <button 
-           style={{ background: "#8e44ad", color: "white" }} 
-          onClick={() => setPage("ai-mechanic")}
-  >
-         🤖 AI Mechanic
-    </button>
-)}
+        <button className="book-btn-small logout-btn" onClick={handleLogout}>Logout</button>
 
-        <button style={{ background: "crimson", color: "white" }} onClick={handleLogout}>Logout</button>
-
-        <div style={{ display: "flex", alignItems: "center", marginLeft: "20px", color: "white" }}>
-          <div style={{ width: "30px", height: "30px", background: "#1e90ff", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginRight: "8px", fontWeight: "bold", fontSize: "14px" }}>
+        <div className="user-avatar">
+          <div className="avatar-circle">
             {(user.name || "U").charAt(0).toUpperCase()}
           </div>
-          <span style={{ fontSize: "14px" }}>{user.name || "User"}</span>
+          <span>{user.name || "User"}</span>
         </div>
       </nav>
 
-      {/* --- MAIN PAGE CONTENT --- */}
-      <div className="page-wrapper" style={{ padding: "20px" }}>
+      <div className="container page-wrapper">
         {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
         {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
         {page === "team" && <Team />}
@@ -163,23 +145,31 @@ function App() {
         {page === "track" && (
           <div className="section-content">
             {user?.role === "ADMIN" ? (
-              <div style={{ textAlign: 'center', padding: '50px', background: '#fff', borderRadius: '15px' }}>
+              <div className="service-card" style={{ textAlign: 'center', padding: '3rem' }}>
                 <h2>Vehicle Tracking</h2>
                 <p>Personal tracking is for Customers. Use Sales Report for Admin tasks.</p>
-                <button onClick={() => setPage("home")}>Return Home</button>
+                <button className="book-btn-small" onClick={() => setPage("home")}>Return Home</button>
               </div>
             ) : (
               <div>
                 <h2>{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Status"}</h2>
                 {!activeSubService ? (
-                  <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-                    <div className="service-card" onClick={() => setActiveSubService("health")} style={cardStyle}><h3>🚗 Health</h3></div>
-                    {user.role === "CUSTOMER" && <div className="service-card" onClick={() => setActiveSubService("locker")} style={cardStyle}><h3>📁 Locker</h3></div>}
-                    <div className="service-card" onClick={() => setActiveSubService("status")} style={{ ...cardStyle, background: "#e1f5fe" }}><h3>⏱️ Status</h3></div>
+                  <div className="services-grid">
+                    <div className="service-card" onClick={() => setActiveSubService("health")}>
+                      <h3>🚗 Health</h3>
+                    </div>
+                    {user.role === "CUSTOMER" && (
+                      <div className="service-card" onClick={() => setActiveSubService("locker")}>
+                        <h3>📁 Locker</h3>
+                      </div>
+                    )}
+                    <div className="service-card" onClick={() => setActiveSubService("status")}>
+                      <h3>⏱️ Status</h3>
+                    </div>
                   </div>
                 ) : (
                   <div>
-                    <button onClick={() => setActiveSubService(null)}>← Back</button>
+                    <button className="book-btn-small" onClick={() => setActiveSubService(null)}>← Back</button>
                     {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
                     {activeSubService === "locker" && <DocumentLocker />}
                     {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
@@ -191,83 +181,44 @@ function App() {
         )}
 
         {page === "booking" && (
-          user.role === "CUSTOMER" ? <ServiceBooking onComplete={() => setPage("home")} /> : <div style={{ textAlign: 'center' }}><h2>Access Denied</h2><button onClick={() => setPage("home")}>Go Home</button></div>
+          user.role === "CUSTOMER" ? 
+            <ServiceBooking onComplete={() => setPage("home")} /> : 
+            <div className="service-card" style={{ textAlign: 'center', maxWidth: '400px', margin: '2rem auto' }}>
+              <h2>Access Denied</h2>
+              <button className="book-btn-small" onClick={() => setPage("home")}>Go Home</button>
+            </div>
         )}
       </div>
 
-     
-      {/* Footer */}
-
-      <footer style={{ background: "#0a3d62", color: "white", padding: "30px 20px", marginTop: "50px" }}>
-
-        {/* ... Footer Content Remains Same ... */}
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px", maxWidth: "1100px", margin: "0 auto" }}>
-
+      <footer className="site-footer">
+        <div className="footer-grid">
           <div>
-
             <h3>VehicleServePro</h3>
-
             <p>Smart Vehicle Service & Maintenance Management System.</p>
-
           </div>
-
           <div>
-
             <h4>Quick Links</h4>
-
-            <p onClick={() => setPage("home")} style={{ cursor: "pointer" }}>Home</p>
-
-            <p onClick={() => setPage("services")} style={{ cursor: "pointer" }}>Services</p>
-
-            <p onClick={() => setPage("booking")} style={{ cursor: "pointer" }}>Book Now</p>
-
-           
-
+            <p onClick={() => setPage("home")}>Home</p>
+            <p onClick={() => setPage("services")}>Services</p>
+            <p onClick={() => setPage("booking")}>Book Now</p>
           </div>
-
           <div>
-
             <h4>Contact</h4>
-
-            <p>
-
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vehicleservepro@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFFFFF", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", fontWeight: "bold" }}>
-
-                ✉️ Email Us
-
-              </a>
-
-            </p>
-
-            <p>
-
-              <a href="https://wa.me/919925203480" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px", fontWeight: "bold" }}>
-
-                💬 WhatsApp Us
-
-              </a>
-
-            </p>
-
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vehicleservepro@gmail.com" target="_blank" rel="noopener noreferrer" className="contact-link">
+              ✉️ Email Us
+            </a>
+            <a href="https://wa.me/919925203480" target="_blank" rel="noopener noreferrer" className="whatsapp-link">
+              💬 WhatsApp Us
+            </a>
             <p>📍 Made in India</p>
-
           </div>
-
         </div>
-
-        <div style={{ textAlign: "center", marginTop: "20px", borderTop: "1px solid rgba(255,255,255,0.2)", paddingTop: "10px", fontSize: "14px" }}>
-
+        <div className="footer-bottom">
           © 2026 VehicleServePro | All Rights Reserved
-
         </div>
-
       </footer>
-
     </>
   );
 }
-
-const cardStyle = { cursor: "pointer", border: "1px solid #ccc", padding: "20px", borderRadius: "10px", flex: 1, textAlign: "center" };
 
 export default App;
