@@ -19,7 +19,7 @@ import VirtualMechanic from "./components/VirtualMechanic";
 import './App.css';
 
 const normalizeRole = (role) => {
-  if (!role) return "CUSTOMER";a
+  if (!role) return "CUSTOMER";
   const r = role.toUpperCase();
   if (r.includes("ADMIN")) return "ADMIN";
   if (r.includes("MECHANIC")) return "MECHANIC";
@@ -59,7 +59,7 @@ function App() {
 
   useEffect(() => {
     setActiveSubService(null);
-    window.scrollTo(0, 0); // Reset scroll on page change
+    window.scrollTo(0, 0);
   }, [page]);
 
   useEffect(() => {
@@ -73,70 +73,81 @@ function App() {
 
   if (!isLoggedIn) {
     return (
-      <div className="auth-wrapper">
-        {page === "login" && (
-          <Login
-            onLogin={(userdata) => {
-              const fixedUser = { ...userdata, role: normalizeRole(userdata?.role || userdata?.user?.role) };
-              localStorage.setItem("isLoggedIn", "true");
-              localStorage.setItem("user", JSON.stringify(fixedUser));
-              localStorage.setItem("loginTimestamp", new Date().getTime().toString());
-              setIsLoggedIn(true);
-              setUser(fixedUser);
-              setPage("home");
-            }}
-            goRegister={() => setPage("register")}
-          />
-        )}
-        {page === "register" && <Register goLogin={() => setPage("login")} />}
+      <div className="min-h-screen bg-[#080a0f] flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-[#11141d] border border-white/10 p-8 rounded-[40px] shadow-2xl">
+          {page === "login" && (
+            <Login
+              onLogin={(userdata) => {
+                const fixedUser = { ...userdata, role: normalizeRole(userdata?.role || userdata?.user?.role) };
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("user", JSON.stringify(fixedUser));
+                localStorage.setItem("loginTimestamp", new Date().getTime().toString());
+                setIsLoggedIn(true);
+                setUser(fixedUser);
+                setPage("home");
+              }}
+              goRegister={() => setPage("register")}
+            />
+          )}
+          {page === "register" && <Register goLogin={() => setPage("login")} />}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="app-main-layout">
-      {/* 1. STICKY NAVIGATION */}
-      <nav className="modern-nav">
-        <div className="nav-logo" onClick={() => setPage("home")}>VSP</div>
+    <div className="min-h-screen bg-[#080a0f] text-slate-200 flex flex-col font-sans selection:bg-blue-500/30">
+      
+      {/* 1. STICKY GLASSMORPHISM NAV */}
+      <nav className="sticky top-4 z-50 w-[94%] max-w-7xl mx-auto bg-[#11141d]/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-2xl transition-all">
+        <div className="text-2xl font-black bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform" onClick={() => setPage("home")}>
+          VSP
+        </div>
         
-        <div className="nav-links">
-          <button className={page === "home" ? "active" : ""} onClick={() => setPage("home")}>Home</button>
-          <button className={page === "services" ? "active" : ""} onClick={() => setPage("services")}>Services</button>
-          <button className={page === "team" ? "active" : ""} onClick={() => setPage("team")}>Team</button>
-          <button className={page === "contact" ? "active" : ""} onClick={() => setPage("contact")}>Contact</button>
-
-          {user?.role === "ADMIN" && (
-            <button className="book-btn-small" onClick={() => setPage("sales-report")}>
-              📈 Sales
+        <div className="hidden lg:flex items-center gap-2">
+          {["home", "services", "team", "contact"].map((item) => (
+            <button 
+              key={item}
+              onClick={() => setPage(item)}
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all capitalize ${page === item ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+            >
+              {item}
             </button>
-          )}
-
-          {user?.role === "CUSTOMER" && (
-            <>
-              <button className="book-btn-small" onClick={() => setPage("billing")}>My Bills</button>
-              <button className="book-btn-small ai-btn" onClick={() => setPage("ai-mechanic")}>
-                🤖 AI Mechanic
-              </button>
-            </>
+          ))}
+          
+          {user?.role === "ADMIN" && (
+            <button className="px-5 py-2 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-sm font-bold hover:bg-amber-500 hover:text-white transition-all ml-2" onClick={() => setPage("sales-report")}>
+              📊 Admin Sales
+            </button>
           )}
         </div>
 
-        <div className="user-profile-section">
-          <button className="logout-icon-btn" onClick={handleLogout} title="Logout">Logout</button>
-          <div className="user-avatar">
-            <div className="avatar-circle">
-              {(user.name || "U").charAt(0).toUpperCase()}
+        <div className="flex items-center gap-4 border-l border-white/10 pl-6">
+          <div className="hidden sm:flex flex-col items-end leading-tight">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-tighter">Verified {user.role}</span>
+            <span className="text-sm font-medium text-white">{user.name || "Member"}</span>
+          </div>
+          <div className="relative group">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 p-[2px] cursor-pointer group-hover:rotate-12 transition-transform">
+              <div className="w-full h-full rounded-full bg-[#11141d] flex items-center justify-center font-bold text-white">
+                {(user.name || "U").charAt(0).toUpperCase()}
+              </div>
             </div>
-            <span className="user-name-label">{user.name || "User"}</span>
+            <button 
+              onClick={handleLogout} 
+              className="absolute top-12 right-0 bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+            >
+              LOGOUT
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* 2. PAGE CONTENT AREA */}
-      <main className="content-area">
+      {/* 2. MAIN CONTENT AREA */}
+      <main className="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 py-12">
         {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
         
-        <div className="container">
+        <div className="space-y-12">
           {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
           {page === "team" && <Team />}
           {page === "contact" && <Contact />}
@@ -147,83 +158,88 @@ function App() {
           {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
           {page === "ai-mechanic" && <VirtualMechanic />}
 
+          {/* VEHICLE TRACKING BENTO MODULE */}
           {page === "track" && (
-            <div className="section-content">
-              {user?.role === "ADMIN" ? (
-                <div className="service-card centered-card">
-                  <h2>Vehicle Tracking</h2>
-                  <p>Personal tracking is for Customers. Use Sales Report for Admin tasks.</p>
-                  <button className="book-btn-small" onClick={() => setPage("home")}>Return Home</button>
+            <div className="bg-[#11141d]/50 border border-white/5 rounded-[48px] p-8 md:p-12 backdrop-blur-3xl animate-in fade-in zoom-in duration-500">
+              <div className="mb-12 text-center">
+                <h2 className="text-4xl font-black text-white mb-3">Vehicle Command Center</h2>
+                <p className="text-slate-500">Intelligent real-time monitoring for {user.name}'s fleet</p>
+              </div>
+
+              {!activeSubService ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    { id: "health", icon: "🚀", title: "Health Metrics", color: "from-blue-500/20" },
+                    { id: "locker", icon: "🛡️", title: "Document Locker", color: "from-purple-500/20", role: "CUSTOMER" },
+                    { id: "status", icon: "⚡", title: "Live Status", color: "from-emerald-500/20" }
+                  ].map((card) => (
+                    (!card.role || card.role === user.role) && (
+                      <div 
+                        key={card.id}
+                        onClick={() => setActiveSubService(card.id)}
+                        className={`group cursor-pointer bg-white/5 border border-white/10 p-10 rounded-[40px] hover:border-blue-500/50 hover:bg-gradient-to-br ${card.color} to-transparent transition-all duration-300`}
+                      >
+                        <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-500">{card.icon}</div>
+                        <h3 className="text-xl font-bold text-white group-hover:text-blue-400">{card.title}</h3>
+                        <p className="text-slate-500 text-sm mt-2">Access encrypted cloud data</p>
+                      </div>
+                    )
+                  ))}
                 </div>
               ) : (
-                <div className="tracking-sub-module">
-                  <h2 className="section-title">{user.role === "MECHANIC" ? "Mechanic Workstation" : "Vehicle Status"}</h2>
-                  {!activeSubService ? (
-                    <div className="services-grid bento-grid">
-                      <div className="service-card bento-item" onClick={() => setActiveSubService("health")}>
-                        <div className="bento-icon">🚗</div>
-                        <h3>Health Metrics</h3>
-                      </div>
-                      {user.role === "CUSTOMER" && (
-                        <div className="service-card bento-item" onClick={() => setActiveSubService("locker")}>
-                          <div className="bento-icon">📁</div>
-                          <h3>Document Locker</h3>
-                        </div>
-                      )}
-                      <div className="service-card bento-item" onClick={() => setActiveSubService("status")}>
-                        <div className="bento-icon">⏱️</div>
-                        <h3>Live Status</h3>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="active-sub-view">
-                      <button className="back-btn" onClick={() => setActiveSubService(null)}>← Back to Dashboard</button>
-                      <div className="sub-component-render">
-                        {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
-                        {activeSubService === "locker" && <DocumentLocker />}
-                        {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
-                      </div>
-                    </div>
-                  )}
+                <div className="animate-in slide-in-from-right-8 duration-500">
+                  <button className="flex items-center gap-2 text-slate-400 hover:text-white mb-8 group" onClick={() => setActiveSubService(null)}>
+                    <span className="group-hover:-translate-x-1 transition-transform">←</span> Return to Dashboard
+                  </button>
+                  <div className="bg-white/5 border border-white/10 rounded-[32px] p-6 shadow-inner">
+                    {activeSubService === "health" && <VehicleHealth vehicles={userVehicles} />}
+                    {activeSubService === "locker" && <DocumentLocker />}
+                    {activeSubService === "status" && <ServiceStatus vehicles={userVehicles} />}
+                  </div>
                 </div>
               )}
             </div>
           )}
 
           {page === "booking" && (
-            user.role === "CUSTOMER" ? 
-              <ServiceBooking onComplete={() => setPage("home")} /> : 
-              <div className="service-card centered-card">
-                <h2>Access Denied</h2>
-                <button className="book-btn-small" onClick={() => setPage("home")}>Go Home</button>
-              </div>
+            <div className="max-w-4xl mx-auto">
+               <ServiceBooking onComplete={() => setPage("home")} />
+            </div>
           )}
         </div>
       </main>
 
       {/* 3. SITE FOOTER */}
-      <footer className="site-footer">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <h3>VehicleServePro</h3>
-            <p>The future of smart vehicle maintenance management.</p>
+      <footer className="bg-black/50 border-t border-white/5 py-16 px-6 mt-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="space-y-4">
+            <h3 className="text-2xl font-black text-white">VehicleServePro</h3>
+            <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
+              Next-generation automotive service platform leveraging AI diagnostics and cloud fleet management.
+            </p>
           </div>
-          <div className="footer-links">
-            <h4>Sitemap</h4>
-            <ul>
-              <li onClick={() => setPage("home")}>Home</li>
-              <li onClick={() => setPage("services")}>Services</li>
-              <li onClick={() => setPage("booking")}>Book Now</li>
-            </ul>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-2">Platform</h4>
+              <button onClick={() => setPage("services")} className="block text-slate-500 hover:text-blue-400 text-sm">Services</button>
+              <button onClick={() => setPage("track")} className="block text-slate-500 hover:text-blue-400 text-sm">Tracking</button>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-2">Company</h4>
+              <button onClick={() => setPage("team")} className="block text-slate-500 hover:text-blue-400 text-sm">Our Team</button>
+              <button onClick={() => setPage("contact")} className="block text-slate-500 hover:text-blue-400 text-sm">Contact</button>
+            </div>
           </div>
-          <div className="footer-contact">
-            <h4>Support</h4>
-            <a href="mailto:vehicleservepro@gmail.com" className="contact-link">✉️ Email</a>
-            <a href="https://wa.me/919925203480" className="whatsapp-link">💬 WhatsApp</a>
+          <div className="bg-white/5 p-6 rounded-3xl border border-white/10 space-y-4">
+            <h4 className="text-white font-bold text-sm">Concierge Support</h4>
+            <div className="flex flex-col gap-2">
+              <a href="mailto:support@vsp.com" className="text-blue-400 text-sm hover:underline">✉️ official@vsp.io</a>
+              <a href="https://wa.me/919925203480" className="text-green-400 text-sm hover:underline">💬 WhatsApp Direct</a>
+            </div>
           </div>
         </div>
-        <div className="footer-bottom">
-          &copy; 2026 VehicleServePro | Designed for Excellence
+        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 text-center text-slate-600 text-[11px] font-bold uppercase tracking-[0.2em]">
+          &copy; 2026 VehicleServePro &bull; Automotive Intelligence System &bull; All Rights Reserved
         </div>
       </footer>
     </div>
