@@ -2,11 +2,9 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@stomp/stompjs": "^7.2.1",
-    "@tailwindcss/vite": "^4.2.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.0.0",
     "qrcode": "^1.5.4",
-    "sockjs-client": "^1.6.1",
-    "tailwindcss": "^4.2.0"
+    "sockjs-client": "^1.6.1"
   }
 }
