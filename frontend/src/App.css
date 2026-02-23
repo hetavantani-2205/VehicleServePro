@@ -10,7 +10,7 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: radial-gradient(circle at top, #0f172a, #0a0f1c 60%);
+  background-color: #0f172a;
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -333,6 +333,7 @@ body {
 }
 
 section {
+  color: white;
  animation: fadeup 0.8s ease forwards;
 }
 
