@@ -17,6 +17,7 @@ import AdminSalesReport from "./components/AdminSalesReport";
 import MechanicChecklist from "./components/MechanicChecklist";
 import VirtualMechanic from "./components/VirtualMechanic";
 import "./App.css";
+import workshop from "./assets/workshop.jpeg";
 
 const normalizeRole = (role) => {
   if (!role) return "CUSTOMER";
@@ -59,7 +60,7 @@ function App() {
 
   useEffect(() => {
     setActiveSubService(null);
-    window.scrollTo(0, 0); // Reset scroll on page change
+    window.scrollTo(0, 0);
   }, [page]);
 
   useEffect(() => {
@@ -72,15 +73,25 @@ function App() {
   }, [isLoggedIn, user]);
 
   if (!isLoggedIn) {
-    return (
-      <div className="auth-wrapper">
+  return (
+    <div
+      className="auth-wrapper"
+      style={{ backgroundImage: `url(${workshop})`}}
+    >
+      <div className="auth-overlay"></div>
+
+      <div className="login-box">
         {page === "login" && (
           <Login
             onLogin={(userdata) => {
-              const fixedUser = { ...userdata, role: normalizeRole(userdata?.role || userdata?.user?.role) };
+              const fixedUser = {
+                ...userdata,
+                role: normalizeRole(
+                  userdata?.role || userdata?.user?.role
+                ),
+              };
               localStorage.setItem("isLoggedIn", "true");
               localStorage.setItem("user", JSON.stringify(fixedUser));
-              localStorage.setItem("loginTimestamp", new Date().getTime().toString());
               setIsLoggedIn(true);
               setUser(fixedUser);
               setPage("home");
@@ -88,10 +99,14 @@ function App() {
             goRegister={() => setPage("register")}
           />
         )}
-        {page === "register" && <Register goLogin={() => setPage("login")} />}
+
+        {page === "register" && (
+          <Register goLogin={() => setPage("login")} />
+        )}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="app-main-layout">
