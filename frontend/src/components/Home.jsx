@@ -16,112 +16,73 @@ export default function Home({ onBookClick, onViewDashboard }) {
   }, []);
 
   return (
-    <div className="home-wrapper">
-
+    <div className="home">
       {/* HERO SECTION */}
-      <section className="hero">
-        {images.map((img, idx) => (
-          <div
-            key={idx}
-            className={`hero-slide ${idx === current ? "active" : ""}`}
-          >
-            <img src={img} alt="Vehicle banner" />
-          </div>
-        ))}
-
-        <div className="hero-overlay" />
-
-        <div className="hero-content">
-          <h1>
-            Experience <span>Precision</span> Care
-          </h1>
-          <p>
-            Smart vehicle service, real-time tracking, and seamless
-            digital maintenance — engineered for the road ahead.
-          </p>
-
+      <div className="hero-slider">
+        <img src={images[current]} alt="banner" />
+        <div className="hero-overlay">
+          <h2>Welcome to VehicleServePro</h2>
+          <p>Your smart solution for vehicle service, tracking, and management.</p>
           <div className="hero-buttons">
-            <button className="primary-btn" onClick={onBookClick}>
-              Book Service
-            </button>
-            <button className="secondary-btn" onClick={onViewDashboard}>
-              Track Vehicle
+            <button className="book-btn-small" onClick={onBookClick}>Book Service</button>
+            <button className="outline-btn" onClick={onViewDashboard}>
+              Track Service
             </button>
           </div>
         </div>
+      </div>
 
-        <div className="hero-dots">
-          {images.map((_, i) => (
-            <div
-              key={i}
-              className={`dot ${i === current ? "active" : ""}`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* FEATURES SECTION */}
-      <section className="features">
-        <h2>Driving Excellence</h2>
-        <p className="features-subtitle">
-          Cutting-edge technology meets automotive expertise.
-        </p>
-
-        <div className="feature-grid">
-          <div className="feature-card">
-            <div className="icon">⚡</div>
-            <h3>Real-time Tracking</h3>
-            <p>
-              Monitor your vehicle's health and service status instantly
-              from your personalized dashboard.
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <div className="icon">🛡️</div>
-            <h3>Secure Locker</h3>
-            <p>
-              Keep your RC, Insurance and documents safe in our encrypted
-              cloud vault.
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <div className="icon">🛠️</div>
-            <h3>Expert Service</h3>
-            <p>
-              Connected with verified top-tier service centers to give your
-              vehicle the care it deserves.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* MISSION SECTION */}
-      <section className="mission">
-        <div className="mission-text">
-          <h4>OUR MISSION</h4>
-          <h2>Making maintenance as seamless as driving.</h2>
-          <p>
-            VehicleServePro digitizes the entire automotive lifecycle.
-            No paper trails. No guesswork. Just clarity, automation,
-            and control.
+      {/* ABOUT SECTION */}
+      <div className="container about-wrapper">
+        
+        <div className="about-hero">
+          <h2 className="gradient-text">Driving Excellence in Vehicle Care</h2>
+          <p className="subtitle">
+            At <strong>VehicleServePro</strong>, we combine cutting-edge technology with 
+            automotive expertise to ensure your journey never stops.
           </p>
-
-          <ul>
-            <li>Automated Reminders</li>
-            <li>Transparent Metrics</li>
-            <li>Verified Partners</li>
-            <li>Cloud Storage</li>
-          </ul>
         </div>
 
-        <div className="mission-card">
-          <h3>VehicleServePro</h3>
-          <span>Established 2026</span>
+        {/* BENTO STATS GRID */}
+        <div className="services-grid">
+          <div className="service-card">
+            <span className="icon-main">⚡</span>
+            <h4>Real-time Tracking</h4>
+            <p>Monitor your vehicle's health and service status instantly from your dashboard.</p>
+          </div>
+          <div className="service-card">
+            <span className="icon-main">🛡️</span>
+            <h4>Secure Locker</h4>
+            <p>Keep your RC, Insurance, and PUC documents safe and accessible anywhere.</p>
+          </div>
+          <div className="service-card">
+            <span className="icon-main">🛠️</span>
+            <h4>Expert Service</h4>
+            <p>Connected with the finest service centers to provide top-tier maintenance.</p>
+          </div>
         </div>
-      </section>
 
+        {/* MISSION SECTION */}
+        <div className="section-content mission-layout">
+          <div className="about-text">
+            <h3 className="accent-text">Our Mission</h3>
+            <p>
+              VehicleServePro was born out of a simple idea: making vehicle maintenance 
+              as seamless as driving itself. We digitize the entire lifecycle of your vehicle.
+            </p>
+            <ul className="feature-list">
+              <li><span>✅</span> Automated Service Reminders</li>
+              <li><span>✅</span> Transparent Health Metrics</li>
+              <li><span>✅</span> Verified Service Partners</li>
+            </ul>
+          </div>
+          
+          <div className="about-image-placeholder bento-glow">
+             <div className="brand-logo">VehicleServePro</div>
+             <div className="badge">Established 2026</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
