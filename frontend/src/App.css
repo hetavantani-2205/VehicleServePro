@@ -10,7 +10,7 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: var(--dark-bg);
+  background-color: radial-gradient(circle at top, #0f172a, #0a0f1c 60%);
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -27,12 +27,15 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(17, 20, 29, 0.8);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+   border-radius: 40px;
+   margin: 15px auto;
+   width: 92%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  transition: 0.3s ease;
 }
 
 .nav-logo {
@@ -77,7 +80,7 @@ body {
   font-weight: bold;
 }
 
-/* --- HERO SLIDER --- */
+
 .hero-slider {
   position: relative;
   height: 70vh;
@@ -85,11 +88,14 @@ body {
   overflow: hidden;
 }
 
+.hero-slider:hover img {
+  transform: scale(1.08);
+}
+
 .hero-slider img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 1s ease-in-out;
+  filter: brightness(0.6);
+  transform: scale(1);
+  transition: transform 12s ease-in-out;
 }
 
 .hero-overlay {
@@ -104,8 +110,10 @@ body {
 }
 
 .hero-overlay h2 {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
+  font-size: 4rem;
+  font-weight: 800;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  letter-spacing: -1px;
 }
 
 .hero-buttons {
@@ -114,7 +122,7 @@ body {
   margin-top: 20px;
 }
 
-/* --- BENTO / SERVICES GRID --- */
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -123,15 +131,17 @@ body {
 }
 
 .service-card {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
   padding: 30px;
-  border-radius: 20px;
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: var(--transition);
+  transition: 0.4s ease;
 }
 
 .service-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-12px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
   border-color: var(--primary);
 }
 
@@ -141,15 +151,21 @@ body {
   display: block;
 }
 
-/* --- BUTTONS --- */
 .book-btn-small {
-  background: var(--primary);
+  background: linear-gradient(135deg, #5b8cff, #3b6dff);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 10px 25px rgba(91,140,255,0.4);
+}
+
+.book-btn-small:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(91,140,255,0.6);
 }
 
 .outline-btn {
@@ -166,7 +182,7 @@ body {
   background: linear-gradient(45deg, #5b8cff, #8c5bff);
 }
 
-/* --- FOOTER --- */
+
 .site-footer {
   background: #000;
   padding: 60px 5% 20px;
@@ -288,8 +304,8 @@ body {
 }
 
 .team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+  transform: translateY(-12px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
 }
 
 .team-photo {
@@ -314,4 +330,19 @@ body {
 .member-info p {
   color: #ccc;
   font-size: 0.9rem;
+}
+
+section {
+ animation: fadeup 0.8s ease forwards;
+}
+
+@keyframes fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
