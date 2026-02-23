@@ -130,9 +130,7 @@ subtitle: {
 },
 
  container: {
-    minHeight: "100vh",
-    width: "100vw",
-    background: "#0a3d62",
+    width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
