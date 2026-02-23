@@ -12,7 +12,7 @@ export default function Register({ goLogin }) {
   const register = () => {
   setError("");
 
-  // 1. Validation Logic
+
   if (!name || !email || !password) {
     setError("All fields are required");
     return;
@@ -102,9 +102,7 @@ const handleGoogleResponse = (response) => {
 
 const styles = {
   container: {
-    minHeight: "100vh",
-    width: "100vw",
-    background: "#0a3d62",
+    width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
