@@ -18,7 +18,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 60px 20px;
 }
 
 
@@ -135,12 +135,11 @@ body {
 }
 
 .service-card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(14px);
-  padding: 30px;
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: 0.4s ease;
+  display: flex;
+  grid-template-columns: repeat(3,1fr);
+  gap: 40px;
+  margin-top: 60px;
+  align-items: center;
 }
 
 .service-card:hover {
@@ -189,9 +188,9 @@ body {
 
 .site-footer {
   background: #ffffff;
-  color: #374151;
-  padding: 60px 5% 20px;
+  padding: 60px 0 30px;
   margin-top: 100px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .footer-bottom {
@@ -199,11 +198,9 @@ body {
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .footer-bottom {
@@ -346,6 +343,7 @@ body {
 section {
   color: white;
  animation: fadeup 0.8s ease forwards;
+ padding: 80px 0;
 }
 
 @keyframes fadeup {
@@ -357,4 +355,16 @@ section {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.mission-section {
+ max-width: 700px;
+ margin: 80px auto;
+ text-align: center;
+}
+
+.mission-section p {
+  max-width: 700px;
+  margin: 20px auto;
+  line-height: 1.7;
 }
