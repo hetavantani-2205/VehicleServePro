@@ -29,13 +29,13 @@ function MaintenanceHistory() {
       <input
         placeholder="Enter Vehicle Number (e.g. GJ01AB1234)"
         value={vehicleNo}
-        onChange={(e) => setVehicleNo(e.target.value)}
+        onChange={(e) => setVehicleNo(e.target.value.toUpperCase())}
       />
 
       <button onClick={handleSearch}>Search</button>
 
       {records.length > 0 ? (
-        <table style={{ marginTop: "20px", width: "100%" }}>
+        <table>
           <thead>
             <tr>
               <th>Date</th>
@@ -54,7 +54,7 @@ function MaintenanceHistory() {
           </tbody>
         </table>
       ) : (
-        vehicleNo && <p style={{ marginTop: "15px" }}>No records found.</p>
+        vehicleNo && <p className="no-records">No records found.</p>
       )}
     </div>
   );
