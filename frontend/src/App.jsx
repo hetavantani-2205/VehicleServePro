@@ -137,7 +137,7 @@ function App() {
         </div>
 
         <div className="user-profile-section">
-          <button className="logout-icon-btn" onClick={handleLogout} title="Logout">Logout</button>
+          <button className="logout-btn" onClick={handleLogout} title="Logout">Logout</button>
           <div className="user-avatar">
             <div className="avatar-circle">
               {(user.name || "U").charAt(0).toUpperCase()}
