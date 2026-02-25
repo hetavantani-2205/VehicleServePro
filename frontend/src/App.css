@@ -206,10 +206,31 @@ body {
 .site-footer {
   background: #2563eb;
   padding: 60px 0 30px;
-  margin-top: 100px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid #e2e8f0;
 }
 
+.footer-grid h4 {
+  color: var(--text-main);
+  margin-bottom: 15px;
+
+}
+
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer grid li {
+  margin-bottom: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.footer-grid li:hover {
+  color: var(--primary);
+}
 .footer-bottom {
   color: #6b7280;
 }
@@ -218,11 +239,17 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 40px;
+  text-align: left;
 }
 
 .footer-bottom {
   text-align: center;
+  margin-top: 40px;
   padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
   color: var(--text-dim);
   font-size: 0.9rem;
 }
