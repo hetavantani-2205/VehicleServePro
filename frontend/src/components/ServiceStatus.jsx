@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function ServiceStatus({ vehicles }) {
 
-  if (!vehicles || vehicles.length === 0) {
+  if (!vehicles || !Array.isArray(vehicles) || vehicles.length === 0) {
     return (
       <div style={{ padding: "40px" }}>
         <h3>No active bookings found.</h3>
