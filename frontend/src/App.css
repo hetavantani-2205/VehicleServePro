@@ -151,18 +151,21 @@ body {
 .service-card {
   background:#ffffff;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  display: flex;
-  grid-template-columns: repeat(3,1fr);
-  gap: 40px;
-  margin-top: 60px;
-  align-items: center;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  transition: 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .service-card:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-  border-color: var(--primary);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.15);
+}
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .icon-main {
