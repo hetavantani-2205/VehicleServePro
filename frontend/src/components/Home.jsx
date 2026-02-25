@@ -79,10 +79,6 @@ export default function Home({ onBookClick, onViewDashboard }) {
         <li>Transparent Health Metrics</li>
         <li>Verified Service Partners</li>
       </ul>
-
-      <span className="mission-year">
-        VehicleServePro • Established 2026
-      </span>
     </div>
 
 
