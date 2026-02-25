@@ -404,29 +404,32 @@ section {
   }
 }
 
-
 .mission-section {
-  padding: 100px 20px;
+  padding: 120px 20px;
   background: var(--bg-light);
 }
 
 .mission-layout {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 100px;
   align-items: center;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+.mission-left {
+  text-align: left;
+}
+
 .mission-left h2 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 20px;
   color: var(--text-main);
 }
 
 .mission-left p {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
   color: var(--text-dim);
   margin-bottom: 25px;
@@ -435,13 +438,14 @@ section {
 .mission-list {
   list-style: none;
   padding: 0;
+  margin-bottom: 30px;
 }
 
 .mission-list li {
   margin-bottom: 12px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-main);
-  padding-left: 28px;
+  padding-left: 30px;
   position: relative;
 }
 
@@ -451,6 +455,12 @@ section {
   left: 0;
   color: var(--primary);
   font-weight: bold;
+}
+
+.mission-year {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  opacity: 0.7;
 }
 
 .contact-section {

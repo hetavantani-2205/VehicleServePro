@@ -62,26 +62,32 @@ export default function Home({ onBookClick, onViewDashboard }) {
           </div>
         </div>
 
-        {/* MISSION SECTION */}
-        <div className="mission-section">
-          <div className="mission-layout">
-            <h3 className="mission left">Our Mission</h3>
-            <p>
-              VehicleServePro was born out of a simple idea: making vehicle maintenance 
-              as seamless as driving itself. We digitize the entire lifecycle of your vehicle.
-            </p>
-            <ul className="mission-list">
-              <li><span>✅</span> Automated Service Reminders</li>
-              <li><span>✅</span> Transparent Health Metrics</li>
-              <li><span>✅</span> Verified Service Partners</li>
-            </ul>
-          </div>
-          
-          <div className="mission-right">
-             <div className="brand-logo">VehicleServePro</div>
-             <div className="badge">Established 2026</div>
-          </div>
-        </div>
+        <section className="mission-section">
+  <div className="mission-layout">
+
+    <div className="mission-left">
+      <h2>Our Mission</h2>
+
+      <p>
+        VehicleServePro was born out of a simple idea: making vehicle
+        maintenance as seamless as driving itself. We digitize the entire
+        lifecycle of your vehicle.
+      </p>
+
+      <ul className="mission-list">
+        <li>Automated Service Reminders</li>
+        <li>Transparent Health Metrics</li>
+        <li>Verified Service Partners</li>
+      </ul>
+
+      <span className="mission-year">
+        VehicleServePro • Established 2026
+      </span>
+    </div>
+
+
+  </div>
+</section>
       </div>
     </div>
   );
