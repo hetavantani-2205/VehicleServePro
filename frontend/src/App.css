@@ -1,9 +1,10 @@
 
 :root {
-  --primary: #5b8cff;
-  --surface: #11141d;
-  --text-main: #ffffff;
-  --text-dim: #a1a1aa;
+  --primary: #2563eb;
+  --surface: #ffffff;
+  --bg-light: #f8fafc;
+  --text-main: #0f172a;
+  --text-dim: #475569;
   --transition: all 0.3s ease;
 }
 
@@ -33,14 +34,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(15, 23, 42, 0.65);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
    border-radius: 40px;
    margin: 15px auto;
    width: 92%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: 0.3s ease;
 }
 
@@ -109,8 +110,8 @@ body {
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(255,255,255,0.85),
-    rgba(255,255,255,0.65),
+    rgba(255,255,255,0.75),
+    rgba(255,255,255,0.55),
   );
   display: flex;
   flex-direction: column;
@@ -122,8 +123,14 @@ body {
 .hero-overlay h2 {
   font-size: 4rem;
   font-weight: 800;
-  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  text-shadow: none;
   letter-spacing: -1px;
+  color: var(--text-main);
+}
+
+.hero-overlay p {
+  color: var(--text-dim);
+
 }
 
 .hero-buttons {
@@ -142,6 +149,9 @@ body {
 }
 
 .service-card {
+  background:#ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   display: flex;
   grid-template-columns: repeat(3,1fr);
   gap: 40px;
@@ -194,7 +204,7 @@ body {
 
 
 .site-footer {
-  background: #ffffff;
+  background: #f8fafc;
   padding: 60px 0 30px;
   margin-top: 100px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -295,7 +305,7 @@ body {
 .section-content h2 {
   font-size: 2.5rem;
   margin-bottom: 40px;
-  color: white;
+  color: var(--text-main);
 }
 
 .team-grid {
@@ -338,17 +348,17 @@ body {
 }
 
 .member-info h3 {
-  color: white;
+  color: var(--text-main);
   margin-bottom: 8px;
 }
 
 .member-info p {
-  color: #ccc;
+  color:var(--text-dim);
   font-size: 0.9rem;
 }
 
 section {
-  color: white;
+  color: var(--text-main);
  animation: fadeup 0.8s ease forwards;
  padding: 80px 0;
 }
