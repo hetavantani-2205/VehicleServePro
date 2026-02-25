@@ -23,10 +23,9 @@ const handleSubmit = () => {
   setForm({ name: "", email: "", message: "" });
 };
   return (
-    <section id="contact">
-      <div className="section-content">
+    <div className="contact-section">
+      <div className="contact-card">
         <h2>Contact Us</h2>
-      <div className="contact-form">
         <input 
         name="name"
         placeholder="Name" value={form.name}
@@ -42,6 +41,5 @@ const handleSubmit = () => {
         <button onClick={handleSubmit}>Send</button>
       </div>
       </div>
-    </section>
   );
 }
