@@ -10,6 +10,8 @@ import com.autocare.vehicleservepro.entity.Booking;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
+    List<Booking> findByEmail(String email);
+
 
    
     @Query("SELECT SUM(b.price) FROM Booking b")

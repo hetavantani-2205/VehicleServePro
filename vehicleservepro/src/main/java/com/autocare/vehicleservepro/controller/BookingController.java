@@ -68,9 +68,12 @@ public ResponseEntity<Booking> saveBooking(@RequestBody Booking booking) {
     }
 }
 
-  
-    @GetMapping
-       public List<Booking> getBookings() {
+   @GetMapping
+public List<Booking> getBookings(@RequestParam(value = "email", required = false) String email) {
+    if (email != null && !email.isEmpty()) {
+       
+        return bookingRepository.findByEmail(email);
+    }
     return bookingRepository.findAll();
 }
 
