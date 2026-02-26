@@ -29,7 +29,10 @@ export default function ServiceStatus({ vehicles }) {
             <div key={booking.id} className="status-card">
 
               <div className="status-header">
-                <h3>{booking.carNumber}</h3>
+                <div>
+                  <h2>{booking.carName || "Vehicle"}</h2>
+                  <p className="car-number">{booking.carNumber}</p>
+                </div>
                 <span className={`badge ${booking.status.replace(" ", "")}`}>
                   {booking.status}
                 </span>

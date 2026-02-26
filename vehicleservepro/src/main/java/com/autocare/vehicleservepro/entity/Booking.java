@@ -14,6 +14,9 @@ public class Booking {
     private String city;
     private String email;
 
+    @Column(name = "car_name")
+    private String carName;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -106,6 +109,14 @@ public class Booking {
 
 public void setEmail(String email) {
     this.email = email;
+}
+
+public String getCarName() {
+    return carName;
+}
+
+public void setCarName(String carName) {
+    this.carName = carName;
 }
 }
 
