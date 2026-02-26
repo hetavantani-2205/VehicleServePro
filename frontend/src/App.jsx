@@ -152,6 +152,7 @@ useEffect(() => {
               <button className="book-btn-small ai-btn" onClick={() => setPage("ai-mechanic")}>
                 🤖 AI Mechanic
               </button>
+              <button className={page === "feedback" ? "active" : ""} onClick={() => setPage("feedback")}>Feedback</button>
             </>
           )}
         </div>
@@ -187,7 +188,7 @@ useEffect(() => {
           {page === "centers" && <ServiceCenters />}
           {page === "billing" && <Billing user={user} />}
           {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
-          {page === "feedback" && user.role === "CUSTOMER" && <Feedback />}
+          {page === "feedback"  && <Feedback />}
           {page === "ai-mechanic" && <VirtualMechanic />}
 
           {page === "track" && (
