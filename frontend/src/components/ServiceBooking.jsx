@@ -11,7 +11,7 @@ const servicePrices = {
   "Wheel Alignment": 1000
 };
 
-function ServiceBooking({ onComplete }) {
+function ServiceBooking({ onComplete,user }) {
   const [formData, setFormData] = useState({
     name: '',
     carName: '',
@@ -85,11 +85,11 @@ function ServiceBooking({ onComplete }) {
       return;
     }
 
-const loggedUser = JSON.parse(localStorage.getItem("user"));  
+  
 
     const payload = {
       name: formData.name,
-      email: loggedUser?.email,
+      email: user?.email,
       carName: formData.carName,
       carNumber: formData.carNo,
       chassisNumber: formData.chassisNo,

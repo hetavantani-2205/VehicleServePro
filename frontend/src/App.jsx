@@ -227,7 +227,9 @@ useEffect(() => {
 
           {page === "booking" && (
             user.role === "CUSTOMER" ? 
-              <ServiceBooking onComplete={() => {
+              <ServiceBooking
+               user={user}
+               onComplete={() => {
                 fetchBookings();
               }} /> : 
               <div className="service-card centered-card">
