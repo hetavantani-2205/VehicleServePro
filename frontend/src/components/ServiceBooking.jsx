@@ -14,6 +14,7 @@ const servicePrices = {
 function ServiceBooking({ onComplete }) {
   const [formData, setFormData] = useState({
     name: '',
+    carName: '',
     carNo: '',
     chassisNo: '',
     serviceType: 'General Service',
@@ -67,7 +68,7 @@ function ServiceBooking({ onComplete }) {
     return;
   }
 
-    if (!formData.name.trim() || !formData.carNo.trim() || !formData.chassisNo.trim() || !formData.city || !formData.serviceCenter) {
+    if (!formData.name.trim() || !formData.carName.trim() || !formData.carNo.trim() || !formData.chassisNo.trim() || !formData.city || !formData.serviceCenter) {
       setNotification({ message: "❌ Please fill all required fields", type: "error" });
       return;
     }
@@ -86,6 +87,7 @@ function ServiceBooking({ onComplete }) {
 
     const payload = {
       name: formData.name,
+      carName: formData.carName,
       carNumber: formData.carNo,
       chassisNumber: formData.chassisNo,
       serviceType: formData.serviceType,
@@ -106,7 +108,8 @@ function ServiceBooking({ onComplete }) {
         localStorage.setItem("bookingId", savedBooking.id);
         setNotification({ message: "✅ Booking successful!", type: "success" });
         setFormData({
-          name: "", carNo: "", chassisNo: "", serviceType: "General Service", city: "", serviceCenter: ""
+          name: "", carName:"",
+           carNo: "", chassisNo: "", serviceType: "General Service", city: "", serviceCenter: ""
         });
       } else {
         setNotification({ message: "❌ Server error occurred", type: "error" });
@@ -141,6 +144,14 @@ function ServiceBooking({ onComplete }) {
             placeholder="e.g. Rahul Sharma"
             value={formData.name}
             onChange={(e) => setFormData({...formData, name: e.target.value})} 
+          />
+          <label style={styles.label}>Car Name *</label>
+          <input 
+            style={styles.input}
+            type="text" 
+            placeholder="e.g. Toyota Fortuner"
+            value={formData.carName}
+            onChange={(e) => setFormData({...formData, carName: e.target.value})} 
           />
 
           <label style={styles.label}>Car Number *</label>
