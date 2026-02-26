@@ -655,3 +655,82 @@ body {
   background: var(--primary);
   color: #000;
 }
+
+/* 1. INPUT BAR - HIGH CONTRAST */
+.add-vehicle-bar-v2 {
+  display: flex;
+  gap: 15px;
+  background: var(--surface);
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.mgmt-input {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 12px 20px;
+  color: white;
+  min-width: 200px;
+}
+
+/* 2. VEHICLE ROW - THE GLASS PLATE */
+.vehicle-item-row-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 15px 25px;
+  margin-bottom: 12px;
+  transition: var(--transition);
+}
+
+.vehicle-item-row-v2:hover {
+  border-color: var(--primary);
+  background: rgba(56, 189, 248, 0.05);
+  transform: scale(1.01);
+}
+
+.v-id { font-weight: 900; color: var(--primary); opacity: 0.5; width: 40px; }
+
+.v-details { flex: 2; display: flex; flex-direction: column; }
+.v-owner { font-weight: 700; font-size: 1.1rem; }
+.v-model { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; }
+
+.v-plate-box {
+  background: #f1f5f9; /* Classic White Plate Look */
+  color: #0f172a;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 800;
+  border: 2px solid #0f172a;
+}
+
+.v-actions { display: flex; gap: 10px; }
+
+.edit-mini-btn, .delete-mini-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.delete-mini-btn:hover { background: #ef4444; color: white; }
+
+/* 3. RESTRICTED VIEW */
+.restricted-access-v2 {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
