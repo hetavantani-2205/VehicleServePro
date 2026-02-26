@@ -157,14 +157,22 @@ useEffect(() => {
         </div>
 
         <div className="user-profile-section">
-          <button className="logout-btn" onClick={handleLogout} title="Logout">Logout</button>
-          <div className="user-avatar">
-            <div className="avatar-circle">
-              {(user.name || "U").charAt(0).toUpperCase()}
-            </div>
-            <span className="user-name-label">{user.name || "User"}</span>
-          </div>
-        </div>
+  {  /* Theme Toggle could go here too */}
+  
+  <div className="user-info-group">
+    <div className="user-details">
+      <span className="user-name-label">{user.name || "User"}</span>
+      <span className="user-role">Account Active</span>
+    </div>
+    <div className="avatar-circle">
+      {(user.name || "U").charAt(0).toUpperCase()}
+    </div>
+  </div>
+  
+  <button className="logout-btn" onClick={handleLogout} title="Logout">
+    Logout
+  </button>
+</div>
       </nav>
 
       {/* 2. PAGE CONTENT AREA */}
