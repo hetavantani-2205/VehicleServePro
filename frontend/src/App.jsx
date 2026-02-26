@@ -229,7 +229,6 @@ useEffect(() => {
             user.role === "CUSTOMER" ? 
               <ServiceBooking onComplete={() => {
                 fetchBookings();
-                setPage("track");
               }} /> : 
               <div className="service-card centered-card">
                 <h2>Access Denied</h2>
