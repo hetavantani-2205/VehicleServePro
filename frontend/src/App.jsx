@@ -81,7 +81,7 @@ useEffect(() => {
       })
       .catch((err) => {
         console.error("Database connection error:", err);
-        setUserVehicles([]); 
+        setUserVehicles([]);
       });
   }
 }, [isLoggedIn, user]);

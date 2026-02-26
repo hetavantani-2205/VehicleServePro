@@ -631,3 +631,99 @@ section {
   font-size: 1rem;
   color: var(--text-dim);
 }
+
+/* ===== SERVICE STATUS ===== */
+
+.status-wrapper {
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 20px;
+}
+
+.status-title {
+  text-align: center;
+  font-size: 2.6rem;
+  margin-bottom: 50px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.status-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+  transition: 0.3s ease;
+}
+
+.status-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* STATUS BADGE */
+
+.badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.badge.COMPLETED {
+  background: #16a34a;
+}
+
+.badge.INPROGRESS {
+  background: #f59e0b;
+}
+
+.badge.PENDING {
+  background: #ef4444;
+}
+
+/* PROGRESS BAR */
+
+.progress-bar {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #2563eb;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.status-note {
+  margin-top: 40px;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.status-empty {
+  text-align: center;
+  padding: 80px;
+}
