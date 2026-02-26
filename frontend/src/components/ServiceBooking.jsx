@@ -107,6 +107,7 @@ function ServiceBooking({ onComplete }) {
         const savedBooking = await response.json();
         localStorage.setItem("bookingId", savedBooking.id);
         setNotification({ message: "✅ Booking successful!", type: "success" });
+        onComplete();
         setFormData({
           name: "", carName:"",
            carNo: "", chassisNo: "", serviceType: "General Service", city: "", serviceCenter: ""

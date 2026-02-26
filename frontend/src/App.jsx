@@ -63,26 +63,32 @@ function App() {
     window.scrollTo(0, 0);
   }, [page]);
 
-useEffect(() => {
-  if (isLoggedIn && user?.email) {
+const fetchBookings = () => {
+  if (user?.email) {
     fetch(`${import.meta.env.VITE_API_URL}/api/bookings?email=${user.email}`)
       .then((res) => {
-        // If server returns 500, throw error instead of passing data to .map()
-        if (!res.ok) throw new Error("Server error"); 
+        if (!res.ok) throw new Error("Server error");
         return res.json();
       })
       .then((data) => {
-        
         if (Array.isArray(data)) {
           setUserVehicles(data);
         } else {
-          setUserVehicles([]); 
+          setUserVehicles([]);
         }
       })
       .catch((err) => {
         console.error("Database connection error:", err);
         setUserVehicles([]);
       });
+  }
+};
+
+
+
+useEffect(() => {
+  if (isLoggedIn && user?.email) {
+    fetchBookings();
   }
 }, [isLoggedIn, user]);
 
@@ -221,7 +227,10 @@ useEffect(() => {
 
           {page === "booking" && (
             user.role === "CUSTOMER" ? 
-              <ServiceBooking onComplete={() => setPage("home")} /> : 
+              <ServiceBooking onComplete={() => {
+                fetchBookings();
+                setPage("track");
+              }} /> : 
               <div className="service-card centered-card">
                 <h2>Access Denied</h2>
                 <button className="book-btn-small" onClick={() => setPage("home")}>Go Home</button>
