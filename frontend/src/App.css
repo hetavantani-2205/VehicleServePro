@@ -479,7 +479,6 @@ body {
   transform: translateY(-3px);
 }
 
-/* FOOTER BOTTOM STRIP */
 .footer-bottom {
   max-width: 1250px;
   margin: 60px auto 0;
@@ -492,7 +491,7 @@ body {
   opacity: 0.7;
 }
 
-/* MOBILE RESPONSIVENESS */
+
 @media (max-width: 900px) {
   .footer-grid {
     grid-template-columns: 1fr;
@@ -512,4 +511,54 @@ body {
     transform: none;
     color: var(--primary);
   }
+}
+
+.services-bento-section {
+  padding: 80px 0;
+  background: var(--bg-deep);
+}
+
+.section-header-v2 {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+
+.sub-service-view {
+  animation: fadeup 0.5s ease forwards;
+}
+
+.back-btn {
+  margin-bottom: 30px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+
+.service-highlight {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), var(--surface));
+  border: 1px solid var(--primary);
+}
+
+.admin-special {
+  background: linear-gradient(90deg, rgba(129, 140, 248, 0.15), var(--surface));
+  border: 1px dashed var(--accent);
+}
+
+
+.bento-card p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 8px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bento-card h3, .bento-card h4 {
+  color: var(--text-main);
+  margin: 10px 0 0;
 }
