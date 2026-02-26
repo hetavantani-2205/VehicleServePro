@@ -1,86 +1,64 @@
 import { useState } from "react";
 
 export default function Feedback() {
-
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [msg, setMsg] = useState("");
 
   const submitFeedback = () => {
-
     if (rating === 0 || comment.trim() === "") {
-      setMsg("❌ Please give appropriate feedback.");
+      setMsg("❌ Please provide a rating and a comment.");
       return;
     }
-
-    
-    console.log("Feedback :", { rating, comment });
-
+    console.log("Feedback Submitted:", { rating, comment });
     setMsg("✅ Thank you for your feedback!");
     setRating(0);
     setComment("");
+    setTimeout(() => setMsg(""), 3000); 
   };
 
   return (
-    <div style={card}>
-      <h2 style={{color:"#0a3d62"}}>Customer Feedback</h2>
-      <p style={{color:"#666"}}>Help us improve our service</p>
+    <section className="feedback-bento-section">
+      <div className="container">
+        <div className="bento-card feedback-card-v2">
+          <div className="card-header-clean">
+            <span className="platform-tag">Community</span>
+            <h2 className="main-title-clean">Customer <span>Feedback</span></h2>
+            <p>Your insights drive our precision.</p>
+          </div>
 
-      <div style={{margin:"15px 0"}}>
-        {[1,2,3,4,5].map(n => (
-          <span
-            key={n}
-            onClick={() => setRating(n)}
-            style={{
-              fontSize:"28px",
-              cursor:"pointer",
-              color: n <= rating ? "#f4b400" : "#ccc"
-            }}
-          >
-            ★
-          </span>
-        ))}
+          <div className="star-rating-v2">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <span
+                key={n}
+                className={n <= rating ? "star active" : "star"}
+                onClick={() => setRating(n)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          <div className="feedback-form-group">
+            <textarea
+              className="mgmt-input text-area-v2"
+              placeholder="Tell us about your experience..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            
+            <button className="primary-glass-btn feedback-submit-btn" onClick={submitFeedback}>
+              Submit Review
+            </button>
+          </div>
+
+          {msg && (
+            <div className={`feedback-toast ${msg.includes('❌') ? 'error' : 'success'}`}>
+              {msg}
+            </div>
+          )}
+        </div>
       </div>
-
-      <textarea
-        placeholder="Write your feedback..."
-        value={comment}
-        onChange={e => setComment(e.target.value)}
-        style={input}
-      />
-
-      <button onClick={submitFeedback} style={btn}>
-        Submit Feedback
-      </button>
-
-      {msg && <p style={{marginTop:"10px"}}>{msg}</p>}
-    </div>
+    </section>
   );
 }
-
-const card = {
-  maxWidth:"500px",
-  margin:"auto",
-  background:"white",
-  padding:"30px",
-  borderRadius:"12px",
-  boxShadow:"0 10px 25px rgba(0,0,0,0.1)"
-};
-
-const input = {
-  width:"100%",
-  minHeight:"100px",
-  padding:"10px",
-  borderRadius:"8px",
-  border:"1px solid #ccc"
-};
-
-const btn = {
-  marginTop:"15px",
-  padding:"10px 18px",
-  border:"none",
-  borderRadius:"8px",
-  background:"#0a3d62",
-  color:"white",
-  cursor:"pointer"
-};
