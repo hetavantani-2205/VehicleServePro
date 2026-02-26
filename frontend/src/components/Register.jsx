@@ -76,6 +76,22 @@ const handleGoogleResponse = (response) => {
 
 
   return (
+
+     <div style={styles.container}>
+
+      <div style = {styles.contentWrapper}>
+
+
+          <div style={styles.titleContainer}>
+        <h1 style={styles.mainTitle}>VehicleServePro</h1>
+        <p style={styles.subtitle}>Secure Access to Your Garage Dashboard</p>
+
+
+        </div>
+
+
+
+
     <div style={styles.container}>
       <div style={styles.card}>
       <h2>Register</h2>
@@ -95,6 +111,10 @@ const handleGoogleResponse = (response) => {
         <span style={styles.link} onClick={goLogin}> Login</span>
       </p>
     </div>
+    </div>
+
+    </div>
+
     </div>
    
   );
