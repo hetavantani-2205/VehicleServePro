@@ -85,8 +85,11 @@ function ServiceBooking({ onComplete }) {
       return;
     }
 
+const loggedUser = JSON.parse(localStorage.getItem("user"));  
+
     const payload = {
       name: formData.name,
+      email: loggedUser?.email,
       carName: formData.carName,
       carNumber: formData.carNo,
       chassisNumber: formData.chassisNo,
