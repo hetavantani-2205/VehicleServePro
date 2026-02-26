@@ -704,7 +704,7 @@ body {
 .v-model { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; }
 
 .v-plate-box {
-  background: #f1f5f9; /* Classic White Plate Look */
+  background: #f1f5f9; 
   color: #0f172a;
   padding: 4px 12px;
   border-radius: 6px;
@@ -726,11 +726,81 @@ body {
 
 .delete-mini-btn:hover { background: #ef4444; color: white; }
 
-/* 3. RESTRICTED VIEW */
+
 .restricted-access-v2 {
   height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.contact-grid-v2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact-info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-card-large {
+  padding: 40px;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 40px;
+}
+
+.form-card-large h3 {
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  color: var(--text-main);
+}
+
+
+.modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.text-area-v2 {
+  min-height: 150px;
+  resize: none;
+}
+
+.send-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+
+.accent-card {
+  border-color: #22c55e33;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), var(--surface));
+}
+
+.accent-card h4 { color: #22c55e; }
+
+
+@media (max-width: 850px) {
+  .contact-grid-v2 {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    flex-direction: column;
+  }
 }
