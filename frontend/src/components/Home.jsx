@@ -1,39 +1,20 @@
 import { useEffect, useState } from "react";
-import banner_1 from "../assets/banner_1.jpg";
-import banner_2 from "../assets/banner_2.jpg";
-import banner_3 from "../assets/banner_3.jpg";
-
-const images = [banner_1, banner_2, banner_3];
 
 export default function Home({ onBookClick, onViewDashboard }) {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="home-v2">
-      {/* 1. IMMERSIVE HERO SECTION */}
-      <section className="modern-hero">
-        <div className="hero-bg-wrapper">
-          <img src={images[current]} alt="banner" className="hero-fade-image" />
-          <div className="hero-glass-overlay"></div>
-        </div>
-
-        <div className="hero-content-v2">
-          <span className="badge">Established 2026</span>
-          <h1 className="main-title">
-            VehicleServe<span>Pro</span>
+      {/* 1. TYPOGRAPHY HERO (No Images) */}
+      <header className="minimal-hero">
+        <div className="hero-text-stack">
+          <span className="platform-tag">VehicleServePro — 2026 Edition</span>
+          <h1 className="main-title-clean">
+            Precision <span>Automotive</span> Management.
           </h1>
-          <p className="hero-subtitle">
-            Digitizing your vehicle's lifecycle with real-time tracking 
-            and expert care.
+          <p className="hero-description">
+            The intelligent hub for your vehicle's lifecycle. Track status, 
+            store documents, and manage maintenance with zero friction.
           </p>
-          <div className="hero-cta-group">
+          <div className="hero-cta-clean">
             <button className="primary-glass-btn" onClick={onBookClick}>
               Book Service
             </button>
@@ -42,56 +23,53 @@ export default function Home({ onBookClick, onViewDashboard }) {
             </button>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* 2. BENTO ARCHITECTURE SECTION */}
+      {/* 2. BENTO ARCHITECTURE (The main focus now) */}
       <section className="bento-section">
         <div className="container">
           <div className="bento-grid-v2">
             
-            {/* Main Feature Tile */}
-            <div className="bento-card large-card" onClick={onViewDashboard}>
-              <div className="card-header">
-                <span className="live-dot"></span>
-                <span>Real-time Status</span>
+            {/* Primary Action Card */}
+            <div className="bento-card large-card track-card" onClick={onViewDashboard}>
+              <div className="card-top">
+                <div className="live-indicator">
+                  <span className="live-dot"></span>
+                  LIVE STATUS
+                </div>
               </div>
-              <h3>Monitor Every Move</h3>
-              <p>Track your vehicle through service stages instantly.</p>
-              <div className="card-icon">⚡</div>
+              <div className="card-body">
+                <h3>Vehicle Diagnostics</h3>
+                <p>Access real-time health metrics and service progress logs.</p>
+              </div>
+              <div className="card-footer-icon">📊</div>
             </div>
 
-            {/* Document Tile */}
+            {/* Document Card */}
             <div className="bento-card small-card">
-              <div className="card-icon">🛡️</div>
-              <h4>Cloud Locker</h4>
-              <p>Secure RC, Insurance & PUC storage.</p>
+              <div className="card-icon">📂</div>
+              <h4>Locker</h4>
+              <p>Secure cloud storage for RC & Insurance.</p>
             </div>
 
-            {/* Expert Tile */}
+            {/* Service Card */}
             <div className="bento-card small-card">
               <div className="card-icon">🛠️</div>
-              <h4>Expert Network</h4>
-              <p>Finest verified service centers.</p>
+              <h4>Network</h4>
+              <p>Connect with 15+ verified centers.</p>
             </div>
 
-            {/* Mission Tile (Wide) */}
-            <div className="bento-card wide-card">
-              <div className="mission-content">
-                <h3>Our Mission</h3>
-                <p>We make maintenance as seamless as driving itself through automated reminders and transparent health metrics.</p>
+            {/* Mission Card (Minimalist) */}
+            <div className="bento-card wide-card mission-card">
+              <div className="mission-content-clean">
+                <h3>Our Philosophy</h3>
+                <p>Automated maintenance reminders and transparent metrics designed to keep you moving without the headache.</p>
               </div>
             </div>
 
           </div>
         </div>
       </section>
-
-      {/* 3. QUICK STATS STRIP */}
-      <div className="stats-strip">
-        <div className="stat-item"><b>15+</b> Partners</div>
-        <div className="stat-item"><b>24/7</b> Support</div>
-        <div className="stat-item"><b>100%</b> Digital</div>
-      </div>
     </div>
   );
 }
