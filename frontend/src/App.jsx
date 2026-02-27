@@ -187,7 +187,16 @@ useEffect(() => {
           {page === "vehicle" && <Dashboard />}
           {page === "centers" && <ServiceCenters />}
           {page === "billing" && <Billing user={user} />}
-          {page === "sales-report" && user.role === "ADMIN" && <AdminSalesReport />}
+          {page === "sales-report" && user.role === "ADMIN" && 
+          <>
+         <AdminSalesReport />
+         
+         <hr className="glass-divider" />
+         <AdminFeedback />
+
+         </>
+         
+         }
           {page === "feedback"  && <Feedback />}
           {page === "ai-mechanic" && <VirtualMechanic />}
 

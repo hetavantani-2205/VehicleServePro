@@ -1,63 +1,72 @@
 import { useState } from "react";
+import axios from "axios";
 
-export default function Feedback() {
+export default function Feedback({ user }) { 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [msg, setMsg] = useState("");
 
-  const submitFeedback = () => {
+  const submitFeedback = async () => {
     if (rating === 0 || comment.trim() === "") {
       setMsg("❌ Please provide a rating and a comment.");
       return;
     }
-    console.log("Feedback Submitted:", { rating, comment });
-    setMsg("✅ Thank you for your feedback!");
-    setRating(0);
-    setComment("");
-    setTimeout(() => setMsg(""), 3000); 
+
+    const feedbackData = {
+      userName: user?.name || "Anonymous",
+      userEmail: user?.email,
+      rating: rating,
+      comment: comment,
+      date: new Date().toISOString()
+    };
+
+    try {
+      // POINT TO YOUR BACKEND API
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/feedback`, feedbackData);
+      
+      setMsg("✅ Feedback stored in database!");
+      setRating(0);
+      setComment("");
+      setTimeout(() => setMsg(""), 4000);
+    } catch (err) {
+      console.error("Database Error:", err);
+      setMsg("⚠️ Server Error: Could not save feedback.");
+    }
   };
 
   return (
-    <section className="feedback-bento-section">
-      <div className="container">
-        <div className="bento-card feedback-card-v2">
-          <div className="card-header-clean">
-            <span className="platform-tag">Community</span>
-            <h2 className="main-title-clean">Customer <span>Feedback</span></h2>
-            <p>Your insights drive our precision.</p>
-          </div>
-
-          <div className="star-rating-v2">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <span
-                key={n}
-                className={n <= rating ? "star active" : "star"}
-                onClick={() => setRating(n)}
-              >
-                ★
-              </span>
-            ))}
-          </div>
-
-          <div className="feedback-form-group">
-            <textarea
-              className="mgmt-input text-area-v2"
-              placeholder="Tell us about your experience..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            
-            <button className="primary-glass-btn feedback-submit-btn" onClick={submitFeedback}>
-              Submit Review
-            </button>
-          </div>
-
-          {msg && (
-            <div className={`feedback-toast ${msg.includes('❌') ? 'error' : 'success'}`}>
-              {msg}
-            </div>
-          )}
+    <section className="feedback-section-v2">
+      <div className="bento-card feedback-container">
+        <div className="mgmt-header">
+          <span className="ai-badge">Secure Feedback</span>
+          <h2>Customer <span>Insights</span></h2>
         </div>
+
+        <div className="star-rating-box">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <span
+              key={n}
+              className={n <= rating ? "star-v2 active" : "star-v2"}
+              onClick={() => setRating(n)}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+
+        <div className="feedback-inputs">
+          <textarea
+            className="mgmt-input text-area-v2"
+            placeholder="Share your thoughts with our engineering team..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button className="primary-glass-btn" onClick={submitFeedback}>
+            Send to Database
+          </button>
+        </div>
+
+        {msg && <div className={`feedback-toast ${msg.includes('❌') || msg.includes('⚠️') ? 'error' : 'success'}`}>{msg}</div>}
       </div>
     </section>
   );
