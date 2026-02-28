@@ -71,9 +71,6 @@ const handleGoogleResponse = async (response) => {
       { token: response.credential }
     );
 
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("user", JSON.stringify(res.data));
-
     onLogin(res.data);
   } catch (err) {
     console.error("Google Login Error:", err);
