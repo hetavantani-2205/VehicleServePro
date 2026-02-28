@@ -12,25 +12,27 @@ export default function Feedback({ user }) {
       return;
     }
 
+   
     const feedbackData = {
       userName: user?.name || "Anonymous",
-      userEmail: user?.email,
+      userEmail: user?.email || "guest@vsp.com",
       rating: rating,
-      comment: comment,
-      date: new Date().toISOString()
+      comment: comment
+     
     };
 
     try {
-      // POINT TO YOUR BACKEND API
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/feedback`, feedbackData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/feedback`, feedbackData);
       
-      setMsg("✅ Feedback stored in database!");
-      setRating(0);
-      setComment("");
-      setTimeout(() => setMsg(""), 4000);
+      if (response.status === 200 || response.status === 201) {
+        setMsg("✅ Feedback stored in database!");
+        setRating(0);
+        setComment("");
+        setTimeout(() => setMsg(""), 4000);
+      }
     } catch (err) {
-      console.error("Database Error:", err);
-      setMsg("⚠️ Server Error: Could not save feedback.");
+      console.error("Database Error:", err.response?.data || err.message);
+      setMsg("⚠️ Server Error: Check Backend Console.");
     }
   };
 
