@@ -23,6 +23,7 @@ public class Feedback {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String comment;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
   
