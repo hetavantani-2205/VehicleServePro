@@ -166,10 +166,11 @@ export default function Billing({ user }) {
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         {user?.role === "CUSTOMER" && (
           <>
-            <button onClick={() => setShowPopup(true)} className="inovice-btn"> 
+            <button onClick={() => setShowPopup(true)} className="invoice-btn"> 
               Download Invoice PDF
             </button>
-            <button onClick={handlePayment}> 
+            <button onClick={handlePayment}
+            className="payment-btn">
               💳 Pay Now (Razorpay)
             </button>
           </>
