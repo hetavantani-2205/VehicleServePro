@@ -35,19 +35,30 @@ const VirtualMechanic = () => {
     <div style={{ maxWidth: "600px", margin: "20px auto", padding: "20px", border: "1px solid #ddd", borderRadius: "15px", background: "#f9f9f9" }}>
       <h3 style={{ color: "#0a3d62" }}>🛠️ AI Virtual Mechanic</h3>
       <div style={{ height: "300px", overflowY: "auto", marginBottom: "15px", padding: "10px", background: "#fff", borderRadius: "10px" }}>
-        {chat.map((msg, i) => (
-          <div key={i} style={{ textAlign: msg.role === "user" ? "right" : "left", margin: "10px 0" }}>
-            <span style={{ 
-              display: "inline-block", 
-              padding: "8px 12px", 
-              borderRadius: "15px", 
-              background: msg.role === "user" ? "#FFFFFF" : "#eee",
-              color: msg.role === "user" ? "white" : "black"
-            }}>
-              {msg.text}
-            </span>
-          </div>
-        ))}
+       {chat.map((msg, i) => (
+  <div
+    key={i}
+    style={{
+      display: "flex",
+      justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+      margin: "8px 0"
+    }}
+  >
+    <div
+      style={{
+        maxWidth: "75%",
+        padding: "10px 14px",
+        borderRadius: "18px",
+        background: msg.role === "user" ? "#0a3d62" : "#f1f1f1",
+        color: msg.role === "user" ? "#fff" : "#333",
+        fontSize: "14px",
+        lineHeight: "1.5"
+      }}
+    >
+      {msg.text}
+    </div>
+  </div>
+))}
         {loading && <p>Mechanic is thinking...</p>}
       </div>
       <div style={{ display: "flex", gap: "10px" }}>
