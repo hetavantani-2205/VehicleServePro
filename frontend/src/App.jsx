@@ -18,6 +18,7 @@ import MechanicChecklist from "./components/MechanicChecklist";
 import VirtualMechanic from "./components/VirtualMechanic";
 import "./App.css";
 import workshop from "./assets/workshop.jpeg";
+import AdminFeedback from "./components/AdminFeedback";
 
 const normalizeRole = (role) => {
   if (!role) return "CUSTOMER";
