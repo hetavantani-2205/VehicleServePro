@@ -48,7 +48,7 @@ public Map<String,Object> login(@RequestBody User user) {
     return Map.of("status","failed");
 }
 @PostMapping("/google")
-public String googleLogin(@RequestBody Map<String, String> data) {
+public Map<String, Object> googleLogin(@RequestBody Map<String, String> data) {
 
     try {
         String token = data.get("token");
@@ -65,7 +65,8 @@ public String googleLogin(@RequestBody Map<String, String> data) {
 
         GoogleIdToken idToken = verifier.verify(token);
 
-        if (idToken == null) return "LOGIN_FAILED";
+        if (idToken == null)
+            return Map.of("status", "failed");
 
         GoogleIdToken.Payload payload = idToken.getPayload();
 
@@ -79,14 +80,20 @@ public String googleLogin(@RequestBody Map<String, String> data) {
             user.setEmail(email);
             user.setName(name);
             user.setPassword("GOOGLE_USER");
+            user.setRole("CUSTOMER");
             repo.save(user);
         }
 
-        return "LOGIN_SUCCESS";
+        return Map.of(
+                "status", "success",
+                "name", user.getName(),
+                "email", user.getEmail(),
+                "role", user.getRole() == null ? "CUSTOMER" : user.getRole()
+        );
 
     } catch (Exception e) {
         e.printStackTrace();
-        return "LOGIN_FAILED";
+        return Map.of("status", "failed");
     }
 }
 
