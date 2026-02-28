@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/feedback")
-@CrossOrigin(origins = "*") 
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app") 
 public class FeedbackController {
 
     @Autowired
