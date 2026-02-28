@@ -27,9 +27,6 @@ export default function Team() {
                   Specializing in 2026 automotive cloud infrastructure and real-time diagnostic systems.
                 </p>
               </div>
-              <div className="member-footer">
-                <button className="contact-mini-btn">Connect</button>
-              </div>
             </div>
           ))}
         </div>
