@@ -198,7 +198,7 @@ useEffect(() => {
          </>
          
          }
-          {page === "feedback"  && <Feedback />}
+          {page === "feedback"  && <Feedback user={user} />}
           {page === "ai-mechanic" && <VirtualMechanic />}
 
           {page === "track" && (

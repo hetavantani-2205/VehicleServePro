@@ -32,7 +32,7 @@ export default function AdminFeedback() {
               <p className="admin-comment">"{f.comment}"</p>
             </div>
             <div className="v-plate-box">
-              <span className="v-plate">{new Date(f.date).toLocaleDateString()}</span>
+              <span className="v-plate">{f.createdAt ? new Date(f.createdAt).toLocaleDateString() : "New"}</span>
             </div>
           </div>
         )) : <p>No feedback received yet.</p>}
