@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 export default function Billing({ user }) {
   const [items, setItems] = useState([]);
   const [gst, setGst] = useState(18);
+  const [showPopup, setShowPopup] = useState(false);
   const [services, setServices] = useState([
   { id: 1, name: "Oil Change", price: 1200 },
   { id: 2, name: "Brake Inspection", price: 800 },
@@ -165,15 +166,32 @@ export default function Billing({ user }) {
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         {user?.role === "CUSTOMER" && (
           <>
-            <button onClick={downloadPDF} style={{ padding: '10px 20px', background: '#0a3d62', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+            <button onClick={() => setShowPopup(true)} className="inovice-btn"> 
               Download Invoice PDF
             </button>
-            <button onClick={handlePayment} style={{ marginLeft: "10px", padding: '10px 20px', background: '#27ae60', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+            <button onClick={handlePayment}> 
               💳 Pay Now (Razorpay)
             </button>
           </>
         )}
       </div>
+      {showPopup && (
+  <div className="popup-overlay">
+    <div className="popup-box">
+      <h3>🚧 Feature in Development</h3>
+      <p>
+        Invoice download feature is currently under development.
+        It will be available in the next update.
+      </p>
+      <button
+        onClick={() => setShowPopup(false)}
+        className="popup-close"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 }
