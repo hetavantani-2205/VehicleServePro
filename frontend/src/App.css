@@ -1506,3 +1506,29 @@ body {
     width: 100%;
   }
 }
+/* =========================================
+   SALES REPORT VISIBILITY FIX
+   ========================================= */
+
+/* Targeted fix for the white-background sales table */
+.section-content table tbody tr td {
+    color: #0f172a !important; /* Force dark blue-black text */
+    font-weight: 500;
+}
+
+/* Ensure headers are visible but dimmed */
+.section-content table th {
+    color: #475569 !important; 
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+.section-content tbody tr:hover {
+    background: rgba(56, 189, 248, 0.1) !important;
+    transform: none; /* Keep it stable on white backgrounds */
+}
+
+
+.section-content td:last-child {
+    color: #0369a1 !important; /* Stronger Blue for the ₹ amounts */
+    font-weight: 800;
+}
