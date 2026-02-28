@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const API = `${import.meta.env.VITE_API_URL}/api/auth/register`;
 
@@ -55,24 +55,42 @@ export default function Register({ goLogin }) {
     });
 };
 
+useEffect(() => {
+  
+  if (window.google) {
+    window.google.accounts.id.initialize({
+      client_id: "645510715190-0tl07v4hkijppe2903l30bt9onh2uf3q.apps.googleusercontent.com",
+      callback: handleGoogleResponse,
+    });
 
- const googleLogin = () => {
-  window.google.accounts.id.initialize({
-    client_id: "645510715190-tbj3q0l1p4nqmg4055nbk0rlf6os0bm4.apps.googleusercontent.com",
-    callback: handleGoogleResponse,
-  });
+    window.google.accounts.id.renderButton(
+      document.getElementById("googleRegisterBtn"),
+      {
+        theme: "outline",
+        size: "large",
+        width: 300,
+      }
+    );
+  }
+}, []);
 
-  window.google.accounts.id.prompt();
+const handleGoogleResponse = async (response) => {
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/google`,
+      { token: response.credential }
+    );
+
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("user", JSON.stringify(res.data));
+
+    goLogin();
+  } catch (err) {
+    console.error("Google Register Error:", err);
+    setError("Google registration failed.");
+  }
 };
-
-const handleGoogleResponse = (response) => {
-  axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
-    token: response.credential
-  }).then(res => {
-    localStorage.setItem("loggedIn", "true");
-    onLogin();
-  });
-};
+ 
 
 
   return (
@@ -96,6 +114,9 @@ const handleGoogleResponse = (response) => {
       <div style={styles.card}>
       <h2>Register</h2>
 
+        <div style = {{ marginTop: "20px" }}>
+          <div id="googleRegisterBtn"></div>
+        </div>
           {error && <p style={{ color: "red" }}>{error}</p>}
 
       <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} style={styles.input} />

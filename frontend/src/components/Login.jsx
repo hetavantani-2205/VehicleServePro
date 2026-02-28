@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Login({ onLogin, goRegister }) {
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
@@ -44,6 +45,42 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
     }
   };
 
+  useEffect(() => {
+  
+  if (window.google) {
+    window.google.accounts.id.initialize({
+      client_id: "645510715190-0tl07v4hkijppe2903l30bt9onh2uf3q.apps.googleusercontent.com",
+      callback: handleGoogleResponse,
+    });
+
+    window.google.accounts.id.renderButton(
+      document.getElementById("googleBtn"),
+      {
+        theme: "outline",
+        size: "large",
+        width: 350,
+      }
+    );
+  }
+}, []);
+
+const handleGoogleResponse = async (response) => {
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/google`,
+      { token: response.credential }
+    );
+
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("user", JSON.stringify(res.data));
+
+    onLogin(res.data);
+  } catch (err) {
+    console.error("Google Login Error:", err);
+    setError("Google login failed");
+  }
+};
+
   return (
     <div style={styles.container}>
 
@@ -59,6 +96,10 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
 
        <div style={styles.card}>
         <h2>Login</h2>
+
+        <div style = {{ marginBottom: "20px" }}>
+          <div id="googleBtn"></div>
+        </div>
 
         {error && <p style={styles.error}>{error}</p>}
 
