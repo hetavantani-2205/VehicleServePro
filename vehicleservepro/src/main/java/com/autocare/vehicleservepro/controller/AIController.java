@@ -45,12 +45,17 @@ public class AIController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            String prompt = "You are a professional senior car mechanic. A customer says: \""
-                    + symptom
-                    + "\". 1. Briefly explain what might be wrong. "
-                    + "2. Suggest 2-3 maintenance checks. "
-                    + "3. Keep it professional and concise. "
-                    + "4. End with: Would you like to book an inspection?";
+            String prompt = """
+            You are an expert automobile mechanic.
+
+            If the user mentions a car brand or model, tailor your advice specifically to that vehicle.
+            If no car model is mentioned, give general advice.
+
+           Give a short and practical answer (maximum 8 lines).
+           Avoid long explanations.
+
+           User Problem:
+           """ + symptom;
 
             Map<String, Object> body = Map.of(
                     "contents", List.of(
