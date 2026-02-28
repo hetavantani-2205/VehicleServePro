@@ -49,7 +49,7 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
   
   if (window.google) {
     window.google.accounts.id.initialize({
-      client_id: "645510715190-0tl07v4hkijppe2903l30bt9onh2uf3q.apps.googleusercontent.com",
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       callback: handleGoogleResponse,
     });
 
