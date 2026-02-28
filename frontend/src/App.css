@@ -1134,3 +1134,126 @@ body {
   }
   .star-v2 { font-size: 32px; }
 }
+
+
+.billing-wrapper {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  min-height: 80vh;
+}
+
+
+.billing-card {
+  background: var(--surface); 
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.billing-card h2 {
+  color: var(--primary);
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 15px;
+}
+
+.billing-card input[type="text"], 
+.billing-card input[type="number"] {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 12px 15px;
+  color: white;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.billing-card input:focus {
+  border-color: var(--primary);
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+.billing-card h4 {
+  margin: 20px 0 15px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.billing-card div[key] {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.billing-card div[key]:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.billing-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+
+.bill-summary {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px dashed var(--glass-border);
+}
+
+.bill-summary div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.bill-summary .total {
+  margin-top: 15px;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #27ae60; 
+}
+
+
+.billing-wrapper button {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.billing-wrapper button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.billing-wrapper button:active {
+  transform: scale(0.95);
+}
+
+
+@media (max-width: 600px) {
+  .billing-card {
+    padding: 25px;
+    border-radius: 20px;
+  }
+}
