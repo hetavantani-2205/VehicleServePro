@@ -64,7 +64,7 @@ export default function Feedback({ user }) {
             onChange={(e) => setComment(e.target.value)}
           />
           <button className="primary-glass-btn" onClick={submitFeedback}>
-            Send to Database
+            Submit Feedback
           </button>
         </div>
 
