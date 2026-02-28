@@ -1,35 +1,60 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+
+
 
 const VirtualMechanic = () => {
   const [input, setInput] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+    const navigate = useNavigate();
+    
   const handleDiagnose = async () => {
-    if (!input) return;
-    setLoading(true);
-    
-    const newChat = [...chat, { role: "user", text: input }];
-    setChat(newChat);
+  if (!input.trim()) return;
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/diagnose`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ symptom: input }),
-      });
-      const data = await response.json();
-      
-    
+  const userText = input.trim().toLowerCase();
 
-      setChat([...newChat, { role: "bot", text: data.advice }]);
-      setInput("");
-    } catch (err) {
-      console.error("AI Error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
+  if (userText === "yes" || userText === "yes please") {
+    navigate("/booking");
+    return;
+  }
+
+ 
+  if (userText === "no" || userText === "no thanks") {
+    setChat([
+      ...chat,
+      { role: "user", text: input },
+      { role: "bot", text: "No problem 👍 Drive safe! If you need help anytime, I’m here." }
+    ]);
+    setInput("");
+    return;
+  }
+
+  setLoading(true);
+
+  const newChat = [...chat, { role: "user", text: input }];
+  setChat(newChat);
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/diagnose`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ symptom: input }),
+    });
+
+    const data = await response.json();
+
+    setChat([...newChat, { role: "bot", text: data.advice }]);
+    setInput("");
+  } catch (err) {
+    console.error("AI Error:", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div style={{ maxWidth: "600px", margin: "20px auto", padding: "20px", border: "1px solid #ddd", borderRadius: "15px", background: "#f9f9f9" }}>
