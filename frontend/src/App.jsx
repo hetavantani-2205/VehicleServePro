@@ -44,6 +44,7 @@ function App() {
   });
 
   const [page, setPage] = useState(isLoggedIn ? "home" : "login");
+  const [isBackendReady, setIsBackendReady] = useState(false);
   const [user, setUser] = useState(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (!storedUser || !isLoggedIn) return { role: "CUSTOMER" };
@@ -64,6 +65,20 @@ function App() {
     setActiveSubService(null);
     window.scrollTo(0, 0);
   }, [page]);
+
+  useEffect(() => {
+  const wakeBackend = async () => {
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/health`);
+      setIsBackendReady(true);
+    } catch (err) {
+      console.log("Backend waking...");
+      setTimeout(wakeBackend, 5000);
+    }
+  };
+
+  wakeBackend();
+}, []);
 
 const fetchBookings = () => {
   if (user?.email) {
@@ -93,6 +108,33 @@ useEffect(() => {
     fetchBookings();
   }
 }, [isLoggedIn, user]);
+
+  if (!isBackendReady) {
+  return (
+    <div style={{
+      height: "100vh",
+      background: "linear-gradient(135deg, #0a3d62, #1e5799)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
+      color: "white"
+    }}>
+      <h1>VehicleServePro</h1>
+      <div style={{
+        width: "50px",
+        height: "50px",
+        border: "5px solid rgba(255,255,255,0.3)",
+        borderTop: "5px solid white",
+        borderRadius: "50%",
+        animation: "spin 1s linear infinite",
+        margin: "20px"
+      }}></div>
+      <p>Starting secure servers...</p>
+      <small>⚡ First visit may take 30–60 seconds (Free hosting)</small>
+    </div>
+  );
+}
 
   if (!isLoggedIn) {
   return (
