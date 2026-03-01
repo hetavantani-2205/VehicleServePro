@@ -7,47 +7,40 @@ export default function Feedback({ user }) {
   const [msg, setMsg] = useState("");
 
   const submitFeedback = async () => {
-    if (rating === 0 || comment.trim() === "") {
-      setMsg("❌ Please provide a rating and a comment.");
-      return;
-    }
-
-    const userDataString = localStorage.getItem("user");
-    let finalName = "Guest User";
-    let finalEmail = "guest@vsp.com";
-
-    if (userDataString) {
-    try {
-      const parsedUser = JSON.parse(userDataString);
-      finalName = parsedUser.name || "Guest User";
-      finalEmail = parsedUser.email || "guest@vsp.com";
-    } catch (e) {
-      console.error("Error parsing user data from localStorage", e);
-    }
+  if (rating === 0 || comment.trim() === "") {
+    setMsg("❌ Please provide a rating and a comment.");
+    return;
   }
-   
-  const feedbackData = {
-      userName: finalName,
-      userEmail: finalEmail,
-      rating: rating,
-      comment: comment
-    };
 
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/feedback`, feedbackData);
-      
-      if (response.status === 200 || response.status === 201) {
-        setMsg("✅ Feedback stored in database!");
-        setRating(0);
-        setComment("");
-        setTimeout(() => setMsg(""), 4000);
-      }
-    } catch (err) {
-      console.error("Database Error:", err.response?.data || err.message);
-      setMsg("⚠️ Server Error: Check Backend Console.");
-    }
+  if (!user?.email) {
+    setMsg("⚠️ Please login to submit feedback.");
+    return;
+  }
+
+  const feedbackData = {
+    userName: user.name,
+    userEmail: user.email,
+    rating,
+    comment
   };
 
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/feedback`,
+      feedbackData
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      setMsg("✅ Feedback stored in database!");
+      setRating(0);
+      setComment("");
+      setTimeout(() => setMsg(""), 4000);
+    }
+  } catch (err) {
+    console.error("Database Error:", err.response?.data || err.message);
+    setMsg("⚠️ Server Error: Check Backend Console.");
+  }
+};
   return (
     <section className="feedback-section-v2">
       <div className="bento-card feedback-container">
