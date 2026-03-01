@@ -12,13 +12,23 @@ export default function Feedback({ user }) {
       return;
     }
 
-    const currentUserName = user?.name || localStorage.getItem("userName") || "Guest User";
-    const currentUserEmail = user?.email || localStorage.getItem("userEmail") || "guest@vsp.com";
+    const userDataString = localStorage.getItem("user");
+    let finalName = "Guest User";
+    let finalEmail = "guest@vsp.com";
 
+    if (userDataString) {
+    try {
+      const parsedUser = JSON.parse(userDataString);
+      finalName = parsedUser.name || "Guest User";
+      finalEmail = parsedUser.email || "guest@vsp.com";
+    } catch (e) {
+      console.error("Error parsing user data from localStorage", e);
+    }
+  }
    
   const feedbackData = {
-      userName: currentUserName,
-      userEmail: currentUserEmail,
+      userName: finalName,
+      userEmail: finalEmail,
       rating: rating,
       comment: comment
     };
