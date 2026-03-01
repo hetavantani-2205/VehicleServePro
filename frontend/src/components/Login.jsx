@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { color } from "html2canvas/dist/types/css/types/color";
+
 
 function Login({ onLogin, goRegister }) {
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
