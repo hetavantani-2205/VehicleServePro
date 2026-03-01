@@ -1533,3 +1533,34 @@ body {
   100% { transform: rotate(360deg); }
   
 }
+.heading {
+  color:#0a3d62;
+}
+
+
+.login-box h2 {
+  color: #000000 !important; 
+}
+
+.login-box p {
+  color: #000000 !important; 
+}
+
+.login-box span {
+  color: #0a3d62 !important; 
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-box span:hover {
+  text-decoration: underline;
+}
+
+.login-box input {
+  color: #000000 !important;
+}
+
+
+.login-box input::placeholder {
+  color: #666666;
+}

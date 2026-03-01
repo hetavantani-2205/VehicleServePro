@@ -112,7 +112,7 @@ const handleGoogleResponse = async (response) => {
 
     <div style={styles.container}>
       <div style={styles.card}>
-      <h2>Register</h2>
+      <h2 style={styles.heading}>Register</h2>
 
         <div style = {{ marginTop: "20px" }}>
           <div id="googleRegisterBtn"></div>
