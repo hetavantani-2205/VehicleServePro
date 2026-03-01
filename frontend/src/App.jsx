@@ -30,20 +30,8 @@ const normalizeRole = (role) => {
 };
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const status = localStorage.getItem("isLoggedIn") === "true";
-    const timestamp = localStorage.getItem("loginTimestamp");
-    const currentTime = new Date().getTime();
-    const SESSION_LIMIT = 24 * 60 * 60 * 1000;
-
-    if (status && timestamp && currentTime - timestamp > SESSION_LIMIT) {
-      localStorage.clear();
-      return false;
-    }
-    return status;
-  });
-
-  const [page, setPage] = useState(isLoggedIn ? "home" : "login");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [page, setPage] = useState("login");
   const [isBackendReady, setIsBackendReady] = useState(false);
   const [user, setUser] = useState(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
