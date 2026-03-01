@@ -131,7 +131,7 @@ useEffect(() => {
         margin: "20px"
       }}></div>
       <p>Starting secure servers...</p>
-      <small>⚡ First visit may take 30–60 seconds (Free hosting)</small>
+      <small>⚡ First visit may take 30–60 seconds</small>
     </div>
   );
 }

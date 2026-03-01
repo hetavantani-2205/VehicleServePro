@@ -387,9 +387,7 @@ body {
   color: white;
 }
 
-/* =========================================
-   CLEAN FOOTER ARCHITECTURE (2026)
-   ========================================= */
+
 .site-footer {
   background: var(--bg-deep);
   border-top: 1px solid var(--glass-border);
@@ -403,12 +401,12 @@ body {
   max-width: 1250px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr; /* Balanced 3-column layout */
+  grid-template-columns: 1.5fr 1fr 1fr;
   gap: 60px;
   padding: 0 40px;
 }
 
-/* BRAND COLUMN */
+
 .footer-brand h3 {
   font-size: 1.8rem;
   font-weight: 900;
@@ -841,7 +839,6 @@ body {
   transform: translateY(-5px);
 }
 
-/* HEADER WITHIN CARD */
 .status-header-v2 {
   display: flex;
   justify-content: space-between;
@@ -883,7 +880,7 @@ body {
   box-shadow: 0 0 10px currentColor;
 }
 
-/* NEON PROGRESS BAR */
+
 .progress-bar-v2 {
   height: 8px;
   background: rgba(255, 255, 255, 0.05);
@@ -1439,12 +1436,11 @@ body {
   box-shadow: 0 10px 20px var(--primary-glow);
 }
 
-/* THE GLASS TABLE */
 .section-content table {
   width: 100%;
   margin-top: 40px;
   border-collapse: separate;
-  border-spacing: 0 12px; /* Adds space between rows */
+  border-spacing: 0 12px; 
 }
 
 .section-content th {
@@ -1524,12 +1520,12 @@ body {
 
 .section-content tbody tr:hover {
     background: rgba(56, 189, 248, 0.1) !important;
-    transform: none; /* Keep it stable on white backgrounds */
+    transform: none; 
 }
 
 
 .section-content td:last-child {
-    color: #0369a1 !important; /* Stronger Blue for the ₹ amounts */
+    color: #0369a1 !important;
     font-weight: 800;
 }
 
