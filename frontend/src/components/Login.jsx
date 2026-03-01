@@ -35,7 +35,11 @@ const [password, setPassword] = useState(localStorage.getItem("password") || "")
 
       if (data.status === "success") {
         setError("");
-        onLogin(data.user || data); 
+        onLogin({
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        }); 
       } else {
         setError(data.message || "Invalid email or password");
       }
