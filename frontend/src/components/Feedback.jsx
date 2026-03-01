@@ -12,13 +12,15 @@ export default function Feedback({ user }) {
       return;
     }
 
+    const currentUserName = user?.name || localStorage.getItem("userName") || "Guest User";
+    const currentUserEmail = user?.email || localStorage.getItem("userEmail") || "guest@vsp.com";
+
    
-    const feedbackData = {
-      userName: user?.name || "Anonymous",
-      userEmail: user?.email || "guest@vsp.com",
+  const feedbackData = {
+      userName: currentUserName,
+      userEmail: currentUserEmail,
       rating: rating,
       comment: comment
-     
     };
 
     try {
