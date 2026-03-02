@@ -3,6 +3,7 @@ package com.autocare.vehicleservepro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.autocare.vehicleservepro.entity.User;
 import com.autocare.vehicleservepro.repository.UserRepository;
@@ -20,11 +21,14 @@ import com.google.api.client.json.gson.GsonFactory;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class AuthController {
 
     @Autowired
     private UserRepository repo;
+
+    @Value("${GOOGLE_CLIENT_ID}")
+    private String googleClientId;
 
     @PostMapping("/register")
     public String register(@RequestBody User user) {
@@ -59,7 +63,7 @@ public Map<String, Object> googleLogin(@RequestBody Map<String, String> data) {
                         GsonFactory.getDefaultInstance()
                 )
                 .setAudience(Collections.singletonList(
-                        "645510715190-tbj3q0l1p4nqmg4055nbk0rlf6os0bm4.apps.googleusercontent.com"
+                        googleClientId
                 ))
                 .build();
 

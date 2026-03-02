@@ -76,7 +76,12 @@ const handleGoogleResponse = async (response) => {
       { token: response.credential }
     );
 
-    onLogin(res.data);
+    if(res.data.status === "success") {
+
+    onLogin(res.data.user);
+    } else {
+      setError("Google login failed");
+    }
   } catch (err) {
     console.error("Google Login Error:", err);
     setError("Google login failed");

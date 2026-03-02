@@ -30,8 +30,8 @@ const normalizeRole = (role) => {
 };
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-const [page, setPage] = useState("login");
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+const [page, setPage] = useState(isLoggedIn ? "home" : "login");
   const [isBackendReady, setIsBackendReady] = useState(false);
   const [user, setUser] = useState(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -280,7 +280,8 @@ useEffect(() => {
               <ServiceBooking
                user={user}
                onComplete={() => {
-                fetchBookings();
+                fetchBookings()
+                setPage("home");
               }} /> : 
               <div className="service-card centered-card">
                 <h2>Access Denied</h2>
