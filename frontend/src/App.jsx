@@ -60,6 +60,13 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
   }, [page]);
 
   useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
+
+  useEffect(() => {
   const wakeBackend = async () => {
     try {
       await fetch(`${import.meta.env.VITE_API_URL}/api/health`);
@@ -70,15 +77,12 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
     }
   };
 
-  useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  if (storedUser) {
-    setUser(JSON.parse(storedUser));
-  }
-}, []);
+
 
   wakeBackend();
 }, []);
+
+  
 
 const fetchBookings = () => {
   if (user?.email) {
