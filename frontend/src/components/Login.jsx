@@ -77,8 +77,11 @@ const handleGoogleResponse = async (response) => {
     );
 
     if(res.data.status === "success") {
-
-    onLogin(res.data.user);
+    onLogin({
+      name: res.data.name,
+      email: res.data.email,
+      role: res.data.role,
+    });
     } else {
       setError("Google login failed");
     }

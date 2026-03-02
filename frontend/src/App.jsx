@@ -42,6 +42,11 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
   const [activeSubService, setActiveSubService] = useState(null);
   const [userVehicles, setUserVehicles] = useState([]);
 
+  const handleLogin = (userData) => {
+  localStorage.setItem("user", JSON.stringify(userData));
+  setUser(userData);
+};
+
   const handleLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
@@ -64,6 +69,13 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
       setTimeout(wakeBackend, 5000);
     }
   };
+
+  useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
 
   wakeBackend();
 }, []);
