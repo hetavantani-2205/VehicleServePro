@@ -8,7 +8,7 @@ export default function Home({ onBookClick, onViewDashboard }) {
         <div className="hero-text-stack">
           <span className="platform-tag">VehicleServePro — 2026 Edition</span>
           <h1 className="main-title-clean">
-            Precision <span>Automotive</span> Management.
+            Precision <span>Automotive</span> Management
           </h1>
           <p className="hero-description">
             The intelligent hub for your vehicle's lifecycle. Track status, 
