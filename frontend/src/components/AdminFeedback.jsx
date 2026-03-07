@@ -19,7 +19,7 @@ export default function AdminFeedback() {
   return (
     <div className="admin-feedback-panel">
       <div className="mgmt-header">
-        <span className="ai-badge">Admin Review</span>
+        <span className="ai-badge"></span>
         <h2>Client <span>Testimonials</span></h2>
       </div>
 
