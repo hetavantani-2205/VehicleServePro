@@ -112,7 +112,7 @@ export default function Billing({ user }) {
             <div><span>Subtotal</span><span>₹{total.toFixed(2)}</span></div>
             <div>
               <span>GST (%)</span>
-              <span className="fixed-gst">18% (Fixed)</span>
+              <span className="fixed-gst">18%</span>
             </div>
             <div><span>GST Amount</span><span>₹{gstAmount.toFixed(2)}</span></div>
             <hr />
