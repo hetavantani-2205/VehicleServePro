@@ -4,7 +4,7 @@ import html2canvas from "html2canvas";
 
 export default function Billing({ user }) {
   const [items, setItems] = useState([]);
-  const [gst, setGst] = useState(18);
+  const GST_RATE = 18;
   const [showPopup, setShowPopup] = useState(false);
   const [services, setServices] = useState([
   { id: 1, name: "Oil Change", price: 1200 },
@@ -29,7 +29,7 @@ export default function Billing({ user }) {
     0
   );
 
-  const gstAmount = (total * gst) / 100;
+  const gstAmount = (total * GST_RATE) / 100;
   const grandtotal = total + gstAmount;
 
   const downloadPDF = () => {
@@ -112,7 +112,7 @@ export default function Billing({ user }) {
             <div><span>Subtotal</span><span>₹{total.toFixed(2)}</span></div>
             <div>
               <span>GST (%)</span>
-              <input type="number" value={gst} onChange={(e) => setGst(e.target.value)} />
+              <span className="fixed-gst">18% (Fixed)</span>
             </div>
             <div><span>GST Amount</span><span>₹{gstAmount.toFixed(2)}</span></div>
             <hr />
