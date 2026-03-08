@@ -1575,3 +1575,15 @@ body {
 .login-box input::placeholder {
   color: #666666;
 }
+
+.review-section {
+  margin-top: 40px;
+}
+
+.review-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}

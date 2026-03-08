@@ -15,7 +15,6 @@ import Feedback from "./components/Feedback";
 import VehicleHealth from "./components/VehicleHealth";
 import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
-import MechanicChecklist from "./components/MechanicChecklist";
 import VirtualMechanic from "./components/VirtualMechanic";
 import "./App.css";
 import workshop from "./assets/workshop.jpeg";
@@ -41,6 +40,7 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
 
   const [activeSubService, setActiveSubService] = useState(null);
   const [userVehicles, setUserVehicles] = useState([]);
+
 
   const handleLogin = (userData) => {
   localStorage.setItem("user", JSON.stringify(userData));
@@ -81,6 +81,8 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
 
   wakeBackend();
 }, []);
+
+
 
   
 

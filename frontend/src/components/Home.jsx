@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 
 export default function Home({ onBookClick, onViewDashboard }) {
+
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+  fetch(`${import.meta.env.VITE_API_URL}/api/feedback/public`)
+    .then(res => res.json())
+    .then(data => setReviews(data));
+}, []);
+
   return (
     <div className="home-v2">
       {/* 1. TYPOGRAPHY HERO (No Images) */}
@@ -70,6 +79,19 @@ export default function Home({ onBookClick, onViewDashboard }) {
           </div>
         </div>
       </section>
+      <div className="review-section">
+  <h2>Customer Reviews</h2>
+
+  {reviews.slice(0,5).map((r) => (
+
+    <div key={r.id} className="review-card">
+      <h4>{r.userName}</h4>
+      <p>{r.comment}</p>
+      <span>⭐ {r.rating}/5</span>
+    </div>
+
+  ))}
+</div>
     </div>
   );
 }
