@@ -40,6 +40,7 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
 
   const [activeSubService, setActiveSubService] = useState(null);
   const [userVehicles, setUserVehicles] = useState([]);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
 
   const handleLogin = (userData) => {
@@ -52,6 +53,15 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
     setIsLoggedIn(false);
     setUser({ role: "CUSTOMER" });
     setPage("login");
+  };
+
+  useEffect(() => {
+    document.body.className = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   useEffect(() => {
@@ -179,7 +189,7 @@ useEffect(() => {
 }
 
   return (
-    <div className="app-main-layout">
+      <div className="app-main-layout">
       {/* 1. STICKY NAVIGATION */}
       <nav className="modern-nav">
         <div className="nav-logo" onClick={() => setPage("home")}>VSP</div>
@@ -219,6 +229,10 @@ useEffect(() => {
       {(user.name || "U").charAt(0).toUpperCase()}
     </div>
   </div>
+
+   <button onClick={toggleTheme} className="toggle-btn">
+        {theme === "dark" ? "🌞 Light" : "🌙 Dark"}
+      </button>
   
   <button className="logout-btn" onClick={handleLogout} title="Logout">
     Logout

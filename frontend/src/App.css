@@ -1666,3 +1666,20 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.light {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+}
+
+
+.dark {
+  --bg-color: #0b0f19;
+  --text-color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: 0.3s ease;
+}
