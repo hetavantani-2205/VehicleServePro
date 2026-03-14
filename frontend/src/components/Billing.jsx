@@ -124,43 +124,49 @@ export default function Billing({ user }) {
         </div>
       )}
 
-      {/* 2. READ-ONLY HIDDEN VERSION - FOR CUSTOMER (Used for PDF generation) */}
-      {user?.role === "CUSTOMER" && (
-        <div id="bill-area" style={{ position: "absolute", left: "-9999px", top: "0", background: "white", padding: "40px", width: "800px" }}>
-          <h2 style={{ textAlign: 'center', color: '#0a3d62' }}>VehicleServePro Official Invoice</h2>
-          <hr />
-          <p><strong>Customer Name:</strong> {user?.name || "Valued Customer"}</p>
-          <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
-  <thead>
-    <tr style={{ background: '#eee' }}>
-      <th style={{ textAlign: 'left', padding: '10px' }}>Service</th>
-      <th style={{ textAlign: 'right', padding: '10px' }}>Price</th>
-      <th style={{ textAlign: 'center', padding: '10px' }}>Qty</th>
-      <th style={{ textAlign: 'right', padding: '10px' }}>Total</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {items.map((item) => (
-      <tr key={item.id} style={{ borderBottom: '1px solid #ddd' }}>
-        <td style={{ padding: '10px' }}>{item.name}</td>
-        <td style={{ textAlign: 'right', padding: '10px' }}>₹{item.price}</td>
-        <td style={{ textAlign: 'center', padding: '10px' }}>{item.qty}</td>
-        <td style={{ textAlign: 'right', padding: '10px' }}>
-          ₹{(item.price * item.qty).toFixed(2)}
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-          
-          <div style={{ textAlign: 'right', marginTop: '20px' }}>
-            <p>Subtotal: ₹{total.toFixed(2)}</p>
-            <p>GST ({gst}%): ₹{gstAmount.toFixed(2)}</p>
-            <h3 style={{ color: '#0a3d62' }}>Grand Total: ₹{grandtotal.toFixed(2)}</h3>
-          </div>
-        </div>
-      )}
+     {/* 2. READ-ONLY HIDDEN VERSION - FOR CUSTOMER (Used for PDF generation) */}
+{user?.role === "CUSTOMER" && (
+  <div id="bill-area" style={{ position: "absolute", left: "-9999px", top: "0", background: "white", padding: "40px", width: "800px", color: "black" }}>
+    <h2 style={{ textAlign: 'center', color: '#0a3d62' }}>VehicleServePro Official Invoice</h2>
+    <hr />
+    <p><strong>Customer Name:</strong> {user?.name || "Valued Customer"}</p>
+    <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
+      <thead>
+        <tr style={{ background: '#eee' }}>
+          <th style={{ textAlign: 'left', padding: '10px' }}>Service</th>
+          <th style={{ textAlign: 'right', padding: '10px' }}>Price</th>
+          <th style={{ textAlign: 'center', padding: '10px' }}>Qty</th>
+          <th style={{ textAlign: 'right', padding: '10px' }}>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.length > 0 ? (
+          items.map((item) => (
+            <tr key={item.id} style={{ borderBottom: '1px solid #ddd' }}>
+              <td style={{ padding: '10px' }}>{item.name}</td>
+              <td style={{ textAlign: 'right', padding: '10px' }}>₹{item.price}</td>
+              <td style={{ textAlign: 'center', padding: '10px' }}>{item.qty}</td>
+              <td style={{ textAlign: 'right', padding: '10px' }}>
+                ₹{(item.price * item.qty).toFixed(2)}
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>No services selected</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+    
+    <div style={{ textAlign: 'right', marginTop: '20px' }}>
+      <p>Subtotal: ₹{total.toFixed(2)}</p>
+      {/* FIXED: Changed {gst} to {GST_RATE} */}
+      <p>GST ({GST_RATE}%): ₹{gstAmount.toFixed(2)}</p>
+      <h3 style={{ color: '#0a3d62' }}>Grand Total: ₹{grandtotal.toFixed(2)}</h3>
+    </div>
+  </div>
+)}
 
       {/* 3. VISIBLE BUTTONS FOR CUSTOMER */}
       <div style={{ textAlign: "center", marginTop: "30px" }}>
