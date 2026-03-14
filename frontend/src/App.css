@@ -1624,7 +1624,7 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* 3. Reviewer Name */
+
 .review-card h3, 
 .review-card strong {
   font-size: 1.25rem;
@@ -1650,4 +1650,19 @@ body {
   font-size: 1rem;
   text-shadow: 0 0 10px rgba(244, 180, 0, 0.3);
   margin-bottom: 10px;
+}
+
+.login-box [id^="google-signin"], 
+.login-box iframe {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin: 20px 0 !important; 
+}
+
+
+.login-box > div:has(iframe) {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
