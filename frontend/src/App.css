@@ -1587,3 +1587,67 @@ body {
   margin-bottom: 10px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
+/* =========================================
+   MODERN 2026 CUSTOMER REVIEWS GRID
+   ========================================= */
+
+/* 1. The Grid Container */
+.review-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 40px 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* 2. The Card - Replacing the solid blue with Glassmorphism */
+.review-card {
+  background: var(--surface) !important; /* Overrides the 'blue' background */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 30px;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  height: 100%;
+}
+
+.review-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--primary);
+  background: rgba(30, 41, 59, 0.9) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 3. Reviewer Name */
+.review-card h3, 
+.review-card strong {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+  display: block;
+}
+
+
+.review-card p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 15px 0;
+  display: block; 
+}
+
+
+.review-card .stars {
+  color: #f4b400;
+  font-size: 1rem;
+  text-shadow: 0 0 10px rgba(244, 180, 0, 0.3);
+  margin-bottom: 10px;
+}
