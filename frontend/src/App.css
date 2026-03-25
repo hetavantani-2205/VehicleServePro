@@ -1614,9 +1614,8 @@ body {
   margin: 0 auto;
 }
 
-/* 2. The Card - Replacing the solid blue with Glassmorphism */
 .review-card {
-  background: var(--surface) !important; /* Overrides the 'blue' background */
+  background: var(--surface) !important; 
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--glass-border);
@@ -1695,4 +1694,68 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: 0.3s ease;
+}
+.news-container {
+  padding: 20px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.news-card h3 {
+  font-size: 16px;
+  margin: 10px;
+}
+
+.news-card p {
+  font-size: 14px;
+  margin: 10px;
+  color: gray;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+}
+
+.modal-content img {
+  width: 100%;
+  margin: 10px 0;
 }

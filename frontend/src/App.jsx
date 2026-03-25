@@ -16,6 +16,7 @@ import VehicleHealth from "./components/VehicleHealth";
 import DocumentLocker from "./components/DocumentLocker";
 import AdminSalesReport from "./components/AdminSalesReport";
 import VirtualMechanic from "./components/VirtualMechanic";
+import VehicleNews from "./components/VehicleNews";
 import "./App.css";
 import workshop from "./assets/workshop.jpeg";
 import AdminFeedback from "./components/AdminFeedback";
@@ -199,6 +200,7 @@ useEffect(() => {
           <button className={page === "services" ? "active" : ""} onClick={() => setPage("services")}>Services</button>
           <button className={page === "team" ? "active" : ""} onClick={() => setPage("team")}>Team</button>
           <button className={page === "contact" ? "active" : ""} onClick={() => setPage("contact")}>Contact</button>
+          <button className={page === "news" ? "active" : ""} onClick={() => setPage("news")}>📰 News</button>
 
           {user?.role === "ADMIN" && (
             <button className="book-btn-small" onClick={() => setPage("sales-report")}>
@@ -250,6 +252,7 @@ useEffect(() => {
           {page === "contact" && <Contact />}
           {page === "vehicle" && <Dashboard />}
           {page === "centers" && <ServiceCenters />}
+          {page === "news" && <VehicleNews />}
           {page === "billing" && <Billing user={user} />}
           {page === "sales-report" && user.role === "ADMIN" && 
           <>
