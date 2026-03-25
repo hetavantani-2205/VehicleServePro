@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/news")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class NewsController {
 
     private final NewsService newsService;
