@@ -1735,7 +1735,6 @@ body {
   color: gray;
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1746,6 +1745,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
+  overflow: hidden;
 }
 
 .modal-content {
@@ -1753,6 +1754,8 @@ body {
   padding: 20px;
   border-radius: 10px;
   width: 60%;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-content img {
