@@ -200,7 +200,7 @@ useEffect(() => {
           <button className={page === "services" ? "active" : ""} onClick={() => setPage("services")}>Services</button>
           <button className={page === "team" ? "active" : ""} onClick={() => setPage("team")}>Team</button>
           <button className={page === "contact" ? "active" : ""} onClick={() => setPage("contact")}>Contact</button>
-          <button className={page === "news" ? "active" : ""} onClick={() => setPage("news")}>📰 News</button>
+          
 
           {user?.role === "ADMIN" && (
             <button className="book-btn-small" onClick={() => setPage("sales-report")}>
