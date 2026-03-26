@@ -7,7 +7,7 @@ function VehicleNews() {
   const [selected, setSelected] = useState(null);
 
   const fetchNews = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/news/vehicle`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/news/vehicle?t = ${Date.now()}`);
     setNews(res.data);
   };
 
@@ -18,6 +18,16 @@ function VehicleNews() {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+  const handleFocus = () => {
+    fetchNews(); 
+  };
+
+  window.addEventListener("focus", handleFocus);
+
+  return () => window.removeEventListener("focus", handleFocus);
+}, []);
 
   return (
     <div className="news-container">
