@@ -43,7 +43,16 @@ function VehicleNews() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>{selected.title}</h2>
             <img src={selected.urlToImage} alt="" />
-            <p>{selected.content}</p>
+            <p>{selected.description}</p>
+
+             <a 
+                  href={selected.url} 
+                  target="_blank" 
+                 rel="noopener noreferrer"
+                 className="read-more-btn"
+             >
+                  Read Full Article →
+             </a>
 
             <button onClick={() => setSelected(null)}>Close</button>
           </div>
