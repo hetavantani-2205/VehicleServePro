@@ -244,7 +244,19 @@ useEffect(() => {
 
       {/* 2. PAGE CONTENT AREA */}
       <main className="content-area">
-        {page === "home" && <Home onBookClick={() => setPage("booking")} onViewDashboard={() => setPage("track")} />}
+        {page === "home" && (
+  <>
+    <Home 
+      onBookClick={() => setPage("booking")} 
+      onViewDashboard={() => setPage("track")} 
+    />
+
+    {/* Vehicle News BELOW Home */}
+    <div style={{ marginTop: "30px" }}>
+      <VehicleNews />
+    </div>
+  </>
+)}
         
         <div className="container">
           {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
@@ -252,7 +264,6 @@ useEffect(() => {
           {page === "contact" && <Contact />}
           {page === "vehicle" && <Dashboard />}
           {page === "centers" && <ServiceCenters />}
-          {page === "news" && <VehicleNews />}
           {page === "billing" && <Billing user={user} />}
           {page === "sales-report" && user.role === "ADMIN" && 
           <>
