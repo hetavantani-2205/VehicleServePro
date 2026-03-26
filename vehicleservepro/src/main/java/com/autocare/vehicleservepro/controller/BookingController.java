@@ -3,9 +3,9 @@ package com.autocare.vehicleservepro.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import com.autocare.vehicleservepro.entity.Booking;
@@ -15,6 +15,9 @@ import com.autocare.vehicleservepro.repository.BookingRepository;
 @RequestMapping("/api/bookings")
 @CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class BookingController {
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     private BookingRepository bookingRepository;
@@ -84,25 +87,26 @@ public List<Booking> getBookings(@RequestParam(value = "email", required = false
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    
-    @PutMapping("/update-status/{id}")
-    public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> data) {
+   @PutMapping("/update-status/{id}")
+public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> data) {
 
-        if (!data.containsKey("status")) {
-            return ResponseEntity.badRequest().body("Missing status");
-        }
-
-        return bookingRepository.findById(id)
-                .map(booking -> {
-                    String newStatus = data.get("status").trim().toUpperCase();
-                    booking.setStatus(newStatus);
-
-                    Booking updated = bookingRepository.save(booking);
-
-                   
-
-                    return ResponseEntity.ok(updated);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    if (!data.containsKey("status")) {
+        return ResponseEntity.badRequest().body("Missing status");
     }
+
+    return bookingRepository.findById(id)
+            .map(booking -> {
+
+                String newStatus = data.get("status").trim().toUpperCase();
+                booking.setStatus(newStatus);
+
+                Booking updated = bookingRepository.save(booking);
+
+           
+                messagingTemplate.convertAndSend("/topic/status/" + booking.getEmail(), updated);
+
+                return ResponseEntity.ok(updated);
+            })
+            .orElse(ResponseEntity.notFound().build());
 }
+    }
