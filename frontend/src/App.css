@@ -1695,70 +1695,116 @@ body {
   color: var(--text-color);
   transition: 0.3s ease;
 }
+/* MAIN CONTAINER */
 .news-container {
-  padding: 20px;
+  padding: 30px;
+  color: white;
 }
 
+/* GRID LAYOUT */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
 }
 
+/* GLASS CARD */
 .news-card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
+
 
 .news-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 255, 150, 0.25);
+  border: 1px solid rgba(0, 255, 150, 0.4);
 }
+
 
 .news-card img {
   width: 100%;
-  height: 150px;
+  height: 160px;
   object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
+
 
 .news-card h3 {
   font-size: 16px;
-  margin: 10px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fff;
 }
 
+/* DESCRIPTION */
 .news-card p {
-  font-size: 14px;
-  margin: 10px;
-  color: gray;
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.4;
 }
 
+/* MODAL */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
-  overflow: hidden;
+  z-index: 999;
 }
 
 .modal-content {
-  background: black;
-  padding: 20px;
-  border-radius: 10px;
-  width: 60%;
-  max-height: 90vh;
-  overflow-y: auto;
+  width: 80%;
+  max-width: 800px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  border-radius: 20px;
+
+  padding: 25px;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+
+  animation: fadeIn 0.3s ease;
 }
 
+/* MODAL IMAGE */
 .modal-content img {
   width: 100%;
-  margin: 10px 0;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+
+.modal-content button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #00c853, #00e676);
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
