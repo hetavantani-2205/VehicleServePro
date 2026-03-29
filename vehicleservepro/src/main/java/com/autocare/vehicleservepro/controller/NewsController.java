@@ -20,6 +20,7 @@ public class NewsController {
 
     @GetMapping("/vehicle")
     public List<Map<String, Object>> getVehicleNews() {
-        return newsService.getVehicleNews().subList(0, 8);
+        return newsService.getVehicleNews();
+
     }
 }
