@@ -26,13 +26,13 @@ public class NewsService {
 
     public List<Map<String, Object>> getVehicleNews() {
         try {
-            // Validate API key exists
+            
             if (apiKey == null || apiKey.trim().isEmpty()) {
                 System.err.println("WARNING: NEWS_API_KEY environment variable is not set! Using default news.");
                 return getDefaultNews();
             }
 
-            // Configure WebClient with timeout
+           
             ConnectionProvider connectionProvider = ConnectionProvider.builder("custom")
                     .maxConnections(50)
                     .maxIdleTime(java.time.Duration.ofSeconds(20))
@@ -50,19 +50,19 @@ public class NewsService {
                     .build();
 
             Map response = webClient.get()
-                    .uri("https://newsapi.org/v2/everything?q=vehicle repair OR car maintenance&apiKey=" + apiKey + "&sortBy=publishedAt&language=en&pageSize=20")
+                    .uri("https://newsapi.org/v2/everything?q=car OR vehicle OR automobile OR repair OR maintenance OR EV&apiKey=" + apiKey + "&sortBy=publishedAt&language=en&pageSize=20")
                     .retrieve()
                     .bodyToMono(Map.class)
                     .timeout(java.time.Duration.ofSeconds(12))
                     .block();
 
-            // Check if response is valid
+            
             if (response == null || response.isEmpty()) {
                 System.err.println("NEWS API returned empty response. Using default news.");
                 return getDefaultNews();
             }
 
-            // Check API response status
+           
             String status = (String) response.get("status");
             if (!"ok".equals(status)) {
                 String message = (String) response.get("message");
@@ -77,7 +77,35 @@ public class NewsService {
             }
 
             System.out.println("Successfully fetched " + articles.size() + " articles from NEWS API");
-            return articles;
+            List<Map<String, Object>> filtered = articles.stream()
+    .filter(article -> {
+
+        String title = article.get("title") != null 
+            ? article.get("title").toString().toLowerCase() 
+            : "";
+
+        String desc = article.get("description") != null 
+            ? article.get("description").toString().toLowerCase() 
+            : "";
+
+        return title.contains("car") ||
+               title.contains("vehicle") ||
+               title.contains("automobile") ||
+               title.contains("repair") ||
+               title.contains("maintenance") ||
+               title.contains("electric") ||
+               desc.contains("car") ||
+               desc.contains("vehicle") ||
+               desc.contains("repair") ||
+               desc.contains("maintenance") ||
+               desc.contains("electric");
+    })
+    .limit(5)  
+    .toList();
+
+System.out.println("Filtered vehicle news count: " + filtered.size());
+
+return filtered;
 
         } catch (WebClientRequestException e) {
             System.err.println("Connection error fetching news from newsapi.org: " + e.getMessage());
