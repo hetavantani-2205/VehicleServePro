@@ -1,75 +1,89 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./admin.css";
 
-const AdminSalesReport = () => {
-  const [stats, setStats] = useState(null);
+export default function AdminSalesReport() {
+  const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/admin/dashboard-stats`)
-      .then((res) => res.json())
-      .then((data) => {
-        setStats(data);
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/admin/stats`)
+      .then((res) => {
+        setStats(res.data);
         setLoading(false);
       })
-      .catch((err) => console.error("Error fetching report:", err));
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
-  if (loading) return <div style={{ padding: "50px", textAlign: "center" }}><h3>Generating Report...</h3></div>;
+  if (loading) {
+    return <h2 style={{ textAlign: "center" }}>Loading Admin Dashboard...</h2>;
+  }
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>📊 Sales & Revenue Report</h2>
+    <div className="admin-container">
 
-      {/* KPI Cards */}
-      <div style={styles.statsGrid}>
-        <div style={styles.card}>
-          <p style={styles.label}>Total Revenue</p>
-          <h2 style={{ ...styles.value, color: "#27ae60" }}>
-            ₹{stats.totalRevenue?.toLocaleString() || 0}
-          </h2>
-        </div>
-        <div style={styles.card}>
-          <p style={styles.label}>Total Bookings</p>
-          <h2 style={{ ...styles.value, color: "#2980b9" }}>{stats.totalBookings}</h2>
-        </div>
+      {/* HEADER */}
+      <div className="admin-header">
+        <h2>Welcome Admin 👨‍💼</h2>
+        <p>Monitor all system activity in real-time</p>
       </div>
 
-      <div style={styles.tableSection}>
-        <h3>Revenue by Service Type</h3>
-        <table style={styles.table}>
-          <thead>
-            <tr style={styles.tableHeader}>
-              <th>Service</th>
-              <th>Bookings</th>
-              <th>Total Revenue</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stats.serviceBreakdown.map((row, index) => (
-              <tr key={index} style={styles.tableRow}>
-                <td>{row[0]}</td>
-                <td>{row[1]}</td>
-                <td>₹{row[2]?.toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* CARDS */}
+      <div className="admin-grid">
+
+        <div className="admin-card">
+          <h4>Total Users</h4>
+          <p>{stats.totalUsers}</p>
+        </div>
+
+        <div className="admin-card">
+          <h4>Total Bookings</h4>
+          <p>{stats.totalBookings}</p>
+        </div>
+
+        <div className="admin-card">
+          <h4>Total Revenue</h4>
+          <p>₹{stats.totalRevenue}</p>
+        </div>
+
+        <div className="admin-card success">
+          <h4>Completed</h4>
+          <p>{stats.completed}</p>
+        </div>
+
+        <div className="admin-card warning">
+          <h4>In Progress</h4>
+          <p>{stats.inProgress}</p>
+        </div>
+
+        <div className="admin-card danger">
+          <h4>Pending</h4>
+          <p>{stats.pending}</p>
+        </div>
+
       </div>
+
+      {/* OVERVIEW SECTION */}
+      <div className="admin-overview">
+
+        <div className="overview-box">
+          <h3>System Overview</h3>
+          <p>Total Services Processed: {stats.totalBookings}</p>
+          <p>Active Services: {stats.inProgress}</p>
+        </div>
+
+        <div className="overview-box">
+          <h3>Revenue Insights</h3>
+          <p>Total Earnings: ₹{stats.totalRevenue}</p>
+          <p>Completed Jobs: {stats.completed}</p>
+        </div>
+
+      </div>
+
     </div>
   );
-};
-
-const styles = {
-  container: { padding: "40px", maxWidth: "1000px", margin: "0 auto", fontFamily: "Arial" },
-  title: { color: "#0a3d62", marginBottom: "30px" },
-  statsGrid: { display: "flex", gap: "20px", marginBottom: "40px" },
-  card: { flex: 1, padding: "20px", background: "white", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)", textAlign: "center" },
-  label: { color: "#666", fontSize: "14px", margin: "0" },
-  value: { fontSize: "32px", margin: "10px 0" },
-  tableSection: { background: "white", padding: "20px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" },
-  table: { width: "100%", borderCollapse: "collapse" },
-  tableHeader: { background: "#0a3d62", color: "white", textAlign: "left" },
-  tableRow: { borderBottom: "1px solid #eee" }
-};
-
-export default AdminSalesReport;
+}
