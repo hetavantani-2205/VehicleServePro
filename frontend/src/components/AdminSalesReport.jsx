@@ -3,23 +3,27 @@ import axios from "axios";
 import "./admin.css";
 
 export default function AdminSalesReport() {
-  const [stats, setStats] = useState({});
+  const [stats, setStats] = useState(null);   // 🔥 IMPORTANT CHANGE
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("API URL:", import.meta.env.VITE_API_URL);
+
     axios
       .get(`${import.meta.env.VITE_API_URL}/api/admin/stats`)
       .then((res) => {
+        console.log("API DATA:", res.data);   // 🔥 DEBUG
         setStats(res.data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("API ERROR:", err);
         setLoading(false);
       });
   }, []);
 
-  if (loading) {
+  // 🔥 SAFE LOADING
+  if (loading || !stats) {
     return <h2 style={{ textAlign: "center" }}>Loading Admin Dashboard...</h2>;
   }
 
@@ -37,49 +41,49 @@ export default function AdminSalesReport() {
 
         <div className="admin-card">
           <h4>Total Users</h4>
-          <p>{stats.totalUsers}</p>
+          <p>{stats.totalUsers ?? 0}</p>
         </div>
 
         <div className="admin-card">
           <h4>Total Bookings</h4>
-          <p>{stats.totalBookings}</p>
+          <p>{stats.totalBookings ?? 0}</p>
         </div>
 
         <div className="admin-card">
           <h4>Total Revenue</h4>
-          <p>₹{stats.totalRevenue}</p>
+          <p>₹{stats.totalRevenue ?? 0}</p>
         </div>
 
         <div className="admin-card success">
           <h4>Completed</h4>
-          <p>{stats.completed}</p>
+          <p>{stats.completed ?? 0}</p>
         </div>
 
         <div className="admin-card warning">
           <h4>In Progress</h4>
-          <p>{stats.inProgress}</p>
+          <p>{stats.inProgress ?? 0}</p>
         </div>
 
         <div className="admin-card danger">
           <h4>Pending</h4>
-          <p>{stats.pending}</p>
+          <p>{stats.pending ?? 0}</p>
         </div>
 
       </div>
 
-      {/* OVERVIEW SECTION */}
+      {/* OVERVIEW */}
       <div className="admin-overview">
 
         <div className="overview-box">
           <h3>System Overview</h3>
-          <p>Total Services Processed: {stats.totalBookings}</p>
-          <p>Active Services: {stats.inProgress}</p>
+          <p>Total Services Processed: {stats.totalBookings ?? 0}</p>
+          <p>Active Services: {stats.inProgress ?? 0}</p>
         </div>
 
         <div className="overview-box">
           <h3>Revenue Insights</h3>
-          <p>Total Earnings: ₹{stats.totalRevenue}</p>
-          <p>Completed Jobs: {stats.completed}</p>
+          <p>Total Earnings: ₹{stats.totalRevenue ?? 0}</p>
+          <p>Completed Jobs: {stats.completed ?? 0}</p>
         </div>
 
       </div>
