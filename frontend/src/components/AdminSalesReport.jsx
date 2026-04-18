@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./admin.css";
+
 
 export default function AdminSalesReport() {
   const [stats, setStats] = useState(null);   // 🔥 IMPORTANT CHANGE
