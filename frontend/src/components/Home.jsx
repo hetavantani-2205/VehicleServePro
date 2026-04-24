@@ -82,7 +82,7 @@ export default function Home({ onBookClick, onViewDashboard }) {
       <div className="review-section">
   <h2>Customer Reviews</h2>
 
-  {reviews.slice(0,5).map((r) => (
+  {reviews.slice(0,6).map((r) => (
 
     <div key={r.id} className="review-card">
       <h4>{r.userName}</h4>

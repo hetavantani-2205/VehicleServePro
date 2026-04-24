@@ -42,6 +42,15 @@ public class Booking {
     @Column(name = "battery_health")
     private Integer batteryHealth;
 
+    @Column(name = "bill_generated")
+    private Boolean billGenerated = false;
+
+    @Column(name = "final_amount")
+    private Double finalAmount;
+
+    @Column(name = "bill_date")
+    private String billDate;
+
    
 
     public Long getId() {
@@ -117,6 +126,30 @@ public String getCarName() {
 
 public void setCarName(String carName) {
     this.carName = carName;
+}
+
+public Boolean getBillGenerated() {
+    return billGenerated;
+}
+
+public void setBillGenerated(Boolean billGenerated) {
+    this.billGenerated = billGenerated;
+}
+
+public Double getFinalAmount() {
+    return finalAmount;
+}
+
+public void setFinalAmount(Double finalAmount) {
+    this.finalAmount = finalAmount;
+}
+
+public String getBillDate() {
+    return billDate;
+}
+
+public void setBillDate(String billDate) {
+    this.billDate = billDate;
 }
 }
 
