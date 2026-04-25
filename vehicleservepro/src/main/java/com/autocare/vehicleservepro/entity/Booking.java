@@ -48,8 +48,7 @@ public class Booking {
     @Column(name = "final_amount")
     private Double finalAmount;
 
-    @Column(name = "bill_date")
-    private String billDate;
+  
 
    
 
@@ -144,13 +143,7 @@ public void setFinalAmount(Double finalAmount) {
     this.finalAmount = finalAmount;
 }
 
-public String getBillDate() {
-    return billDate;
-}
 
-public void setBillDate(String billDate) {
-    this.billDate = billDate;
-}
 }
 
 
