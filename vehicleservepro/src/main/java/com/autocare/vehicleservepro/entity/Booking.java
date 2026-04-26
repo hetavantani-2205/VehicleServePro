@@ -42,8 +42,7 @@ public class Booking {
     @Column(name = "battery_health")
     private Integer batteryHealth;
 
-    @Column(name = "bill_generated")
-    private Boolean billGenerated = false;
+  
 
     @Column(name = "final_amount")
     private Double finalAmount;
@@ -127,13 +126,7 @@ public void setCarName(String carName) {
     this.carName = carName;
 }
 
-public Boolean getBillGenerated() {
-    return billGenerated;
-}
 
-public void setBillGenerated(Boolean billGenerated) {
-    this.billGenerated = billGenerated;
-}
 
 public Double getFinalAmount() {
     return finalAmount;
