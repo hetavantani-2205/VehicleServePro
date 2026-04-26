@@ -162,8 +162,7 @@ function ServiceBooking({ onComplete,user }) {
       </div>
     )}
 
-    {/* FORM BELOW */}
-    <form onSubmit={handleSubmit}></form>
+ 
 
         <form onSubmit={handleBooking} style={styles.form}>
           <label style={styles.label}>Customer Name *</label>
