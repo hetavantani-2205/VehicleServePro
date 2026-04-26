@@ -1980,3 +1980,25 @@ body {
     word-break: break-word;
   }
 }
+
+@media (max-width: 768px) {
+
+  .modern-nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .user-profile-section {
+    order: 2;
+  }
+
+  .nav-links {
+    order: 3;
+  }
+
+  .nav-logo {
+    order: 1;
+  }
+
+}
