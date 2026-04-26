@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 const formatCarNumber = (value) => {
   return value.replace(/\s/g, '').toUpperCase();
 };
@@ -12,6 +14,7 @@ const servicePrices = {
 };
 
 function ServiceBooking({ onComplete,user }) {
+  const[success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     carName: '',
@@ -110,7 +113,11 @@ function ServiceBooking({ onComplete,user }) {
         const savedBooking = await response.json();
         localStorage.setItem("bookingId", savedBooking.id);
         setNotification({ message: "✅ Booking successful!", type: "success" });
-        onComplete();
+        setSuccess(true);
+
+        setTimeout(() => {
+          onComplete();
+        }, 2000);
         setFormData({
           name: "", carName:"",
            carNo: "", chassisNo: "", serviceType: "General Service", city: "", serviceCenter: ""
@@ -139,6 +146,24 @@ function ServiceBooking({ onComplete,user }) {
             {notification.message}
           </div>
         )}
+
+    {/* 🔥 ADD HERE */}
+    {success && (
+      <div style={{
+        background: "rgba(34,197,94,0.1)",
+        color: "#22c55e",
+        padding: "15px",
+        borderRadius: "12px",
+        marginBottom: "20px",
+        textAlign: "center",
+        fontWeight: "600"
+      }}>
+        ✅ Booking Successful! Redirecting...
+      </div>
+    )}
+
+    {/* FORM BELOW */}
+    <form onSubmit={handleSubmit}></form>
 
         <form onSubmit={handleBooking} style={styles.form}>
           <label style={styles.label}>Customer Name *</label>

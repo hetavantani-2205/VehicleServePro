@@ -22,7 +22,6 @@ export default function AdminSalesReport() {
       });
   }, []);
 
-  // 🔥 SAFE LOADING
   if (loading || !stats) {
     return <h2 style={{ textAlign: "center" }}>Loading Admin Dashboard...</h2>;
   }
