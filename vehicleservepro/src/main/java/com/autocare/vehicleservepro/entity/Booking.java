@@ -44,8 +44,7 @@ public class Booking {
 
   
 
-    @Column(name = "final_amount")
-    private Double finalAmount;
+  
 
   
 
@@ -128,13 +127,6 @@ public void setCarName(String carName) {
 
 
 
-public Double getFinalAmount() {
-    return finalAmount;
-}
-
-public void setFinalAmount(Double finalAmount) {
-    this.finalAmount = finalAmount;
-}
 
 
 }
