@@ -2002,3 +2002,24 @@ body {
   }
 
 }
+
+@media (max-width: 768px) {
+
+  .user-info-group {
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .user-details {
+    text-align: right;
+  }
+
+  .avatar-circle {
+    order: 2;
+  }
+
+  .user-details {
+    order: 1;
+  }
+
+}
