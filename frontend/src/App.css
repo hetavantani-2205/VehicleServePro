@@ -1,3 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 html, body {
   width: 100%;
   overflow-x: hidden;
@@ -1874,4 +1888,95 @@ body {
   padding: 20px;
   border-radius: 15px;
   border: 1px solid rgba(255,255,255,0.1);
+}
+@media (max-width: 768px) {
+  .modern-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .nav-links button {
+    width: 100%;
+    text-align: left;
+  }
+
+  .user-profile-section {
+    width: 100%;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .modern-hero {
+    height: auto;
+    padding: 80px 20px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .primary-glass-btn,
+  .secondary-outline-btn {
+    width: 100%;
+    margin: 8px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-bento-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .status-bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .billing-wrapper {
+    padding: 20px 10px;
+  }
+
+  .billing-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-content {
+    padding: 20px;
+  }
+
+  .section-content table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  h1, h2, h3 {
+    word-break: break-word;
+  }
 }
