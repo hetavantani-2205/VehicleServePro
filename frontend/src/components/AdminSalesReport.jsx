@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 export default function AdminSalesReport() {
-  const [stats, setStats] = useState(null);   // 🔥 IMPORTANT CHANGE
+  const [stats, setStats] = useState(null);   
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function AdminSalesReport() {
     axios
       .get(`${import.meta.env.VITE_API_URL}/api/admin/stats`)
       .then((res) => {
-        console.log("API DATA:", res.data);   // 🔥 DEBUG
+        console.log("API DATA:", res.data); 
         setStats(res.data);
         setLoading(false);
       })
@@ -32,7 +32,7 @@ export default function AdminSalesReport() {
 
       {/* HEADER */}
       <div className="admin-header">
-        <h2>Welcome Admin 👨‍💼</h2>
+        <h2>Welcome Hetav 👨‍💼</h2>
         <p>Monitor all system activity in real-time</p>
       </div>
 
