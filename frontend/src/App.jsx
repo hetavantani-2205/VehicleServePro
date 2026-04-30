@@ -44,10 +44,16 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
 
-  const handleLogin = (userData) => {
-  localStorage.setItem("user", JSON.stringify(userData));
-  setUser(userData);
-};
+ useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (storedUser) {
+    setUser({
+      ...storedUser,
+      role: normalizeRole(storedUser.role)
+    });
+  }
+}, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -70,10 +76,14 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
     window.scrollTo(0, 0);
   }, [page]);
 
-  useEffect(() => {
-  const storedUser = localStorage.getItem("user");
+ useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
   if (storedUser) {
-    setUser(JSON.parse(storedUser));
+    setUser({
+      ...storedUser,
+      role: normalizeRole(storedUser.role)
+    });
   }
 }, []);
 
