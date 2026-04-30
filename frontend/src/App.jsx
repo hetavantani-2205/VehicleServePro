@@ -31,6 +31,8 @@ const normalizeRole = (role) => {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+  const [showNav, setShowNav] = useState(true);
+const [lastScrollY, setLastScrollY] = useState(0);
 const [page, setPage] = useState(isLoggedIn ? "home" : "login");
   const [isBackendReady, setIsBackendReady] = useState(false);
   const [user, setUser] = useState(() => {
@@ -44,6 +46,7 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
 
+
  useEffect(() => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
@@ -54,6 +57,23 @@ const [page, setPage] = useState(isLoggedIn ? "home" : "login");
     });
   }
 }, []);
+
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > lastScrollY) {
+      // scrolling DOWN
+      setShowNav(false);
+    } else {
+      // scrolling UP
+      setShowNav(true);
+    }
+    setLastScrollY(window.scrollY);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [lastScrollY]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -202,7 +222,7 @@ useEffect(() => {
   return (
       <div className="app-main-layout">
       {/* 1. STICKY NAVIGATION */}
-      <nav className="modern-nav">
+      <nav className={`modern-nav ${showNav ? "nav-visible" : "nav-hidden"}`}>
         <div className="nav-logo" onClick={() => setPage("home")}>VSP</div>
         
         <div className="nav-links">
