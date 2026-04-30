@@ -272,7 +272,7 @@ useEffect(() => {
           {page === "services" && <Services openBilling={() => setPage("billing")} openvehicle={() => setPage("vehicle")} openCenters={() => setPage("centers")} openBooking={() => setPage("booking")} user={user} />}
           {page === "team" && <Team />}
           {page === "contact" && <Contact />}
-          {page === "vehicle" && <Dashboard />}
+          {page === "vehicle" && <Dashboard  user={user}/>}
           {page === "centers" && <ServiceCenters />}
           {page === "billing" && <Billing user={user} />}
           {page === "sales-report" && user.role === "ADMIN" && 
