@@ -10,6 +10,9 @@ export default function VehicleCrud({ user }) {
   const [number, setNumber] = useState("");
   const [editId, setEditId] = useState(null);
 
+  console.log("User:", user);
+  console.log("Role:", user?.role);
+
   
   const isMechanic = user?.role?.toUpperCase() === "MECHANIC" || user?.role?.toUpperCase() === "ADMIN";
 
