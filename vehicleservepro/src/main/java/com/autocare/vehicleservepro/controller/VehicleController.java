@@ -10,7 +10,7 @@ import com.autocare.vehicleservepro.service.VehicleService;
 
 @RestController
 @RequestMapping("/api/vehicles")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://vehicle-serve-pro.vercel.app")
 public class VehicleController {
 
     @Autowired
